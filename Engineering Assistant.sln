@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Engineering Assistant", "Engineering Assistant.vbproj", "{A08375E6-8280-423C-AD1C-875FFC464482}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Engineering Assistant Installer", "Engineering Assistant Installer\Engineering Assistant Installer.vdproj", "{ED97AF34-CE5D-4C95-830F-B659198F54FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48DB4D5F-204E-4CC8-9FD8-00129F64EB21}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A08375E6-8280-423C-AD1C-875FFC464482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A08375E6-8280-423C-AD1C-875FFC464482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A08375E6-8280-423C-AD1C-875FFC464482}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A08375E6-8280-423C-AD1C-875FFC464482}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{ED97AF34-CE5D-4C95-830F-B659198F54FC}.Debug|Any CPU.ActiveCfg = Debug
+		{ED97AF34-CE5D-4C95-830F-B659198F54FC}.Debug|Any CPU.Build.0 = Debug
+		{ED97AF34-CE5D-4C95-830F-B659198F54FC}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A393553-E660-472E-92D0-2384C3C897B4}
+	EndGlobalSection
+EndGlobal

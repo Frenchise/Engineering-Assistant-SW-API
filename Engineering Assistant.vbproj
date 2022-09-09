@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A08375E6-8280-423C-AD1C-875FFC464482}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Engineering_Assistant.My.MyApplication</StartupObject>
+    <RootNamespace>Engineering_Assistant</RootNamespace>
+    <AssemblyName>Engineering Assistant</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Engineering Assistant.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Engineering Assistant.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ICON.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PDMWorks.Interop.pdmworks">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\PDMWorks.Interop.pdmworks.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.cosworks">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.cosworks.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.dsgnchk">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.dsgnchk.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.fworks">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.fworks.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.gtswutilities">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.gtswutilities.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.sldcostingapi">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sldcostingapi.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.sldtoolboxconfigureaddin">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sldtoolboxconfigureaddin.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.sldworks">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.sustainability">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sustainability.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.sw3dprinter">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sw3dprinter.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swbrowser">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swbrowser.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swcommands">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swcommands.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swconst">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swconst.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swdimxpert">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swdimxpert.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swdocumentmgr">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swmotionstudy">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swmotionstudy.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swpublished">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swpublished.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.SWRoutingLib">
+      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.SWRoutingLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Xarial.XCad, Version=0.6.10.0, Culture=neutral, PublicKeyToken=60dcaf351d4060db, processorArchitecture=MSIL">
+      <HintPath>packages\Xarial.XCad.0.6.10\lib\net461\Xarial.XCad.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aircraft Frames.designer.vb">
+      <DependentUpon>Aircraft Frames.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Aircraft Frames.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AND_ExtrusionsDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AND_ExtrusionsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="BOM Hardware.designer.vb">
+      <DependentUpon>BOM Hardware.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BOM Hardware.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contour Plate.designer.vb">
+      <DependentUpon>Contour Plate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Contour Plate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cross Product.designer.vb">
+      <DependentUpon>Cross Product.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Cross Product.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Error Message.designer.vb">
+      <DependentUpon>Error Message.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Error Message.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Existing Aircraft Stringers.designer.vb">
+      <DependentUpon>Existing Aircraft Stringers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Existing Aircraft Stringers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Existing Aircrafts.designer.vb">
+      <DependentUpon>Existing Aircrafts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Existing Aircrafts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Existing Electrical Aircrafts.designer.vb">
+      <DependentUpon>Existing Electrical Aircrafts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Existing Electrical Aircrafts.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FinalizedDataset.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="FinalizedDataset.vb">
+      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Functions.vb" />
+    <Compile Include="L ANGLE CONSTRUCTOR.designer.vb">
+      <DependentUpon>L ANGLE CONSTRUCTOR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="L ANGLE CONSTRUCTOR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lib_Feat_Add.designer.vb">
+      <DependentUpon>Lib_Feat_Add.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Lib_Feat_Add.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Load Analysis.Designer.vb">
+      <DependentUpon>Load Analysis.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Load Analysis.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Material Data.designer.vb">
+      <DependentUpon>Material Data.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Material Data.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model Builder.designer.vb">
+      <DependentUpon>Model Builder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Model Builder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="New Drawing.designer.vb">
+      <DependentUpon>New Drawing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="New Drawing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Radius Finder.Designer.vb">
+      <DependentUpon>Radius Finder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Radius Finder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Start Window.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Start Window.Designer.vb">
+      <DependentUpon>Start Window.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SW Functions.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Aircraft Frames.resx">
+      <DependentUpon>Aircraft Frames.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BOM Hardware.resx">
+      <DependentUpon>BOM Hardware.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contour Plate.resx">
+      <DependentUpon>Contour Plate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cross Product.resx">
+      <DependentUpon>Cross Product.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Error Message.resx">
+      <DependentUpon>Error Message.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Existing Aircraft Stringers.resx">
+      <DependentUpon>Existing Aircraft Stringers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Existing Aircrafts.resx">
+      <DependentUpon>Existing Aircrafts.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Existing Electrical Aircrafts.resx">
+      <DependentUpon>Existing Electrical Aircrafts.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="L ANGLE CONSTRUCTOR.resx">
+      <DependentUpon>L ANGLE CONSTRUCTOR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lib_Feat_Add.resx">
+      <DependentUpon>Lib_Feat_Add.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Load Analysis.resx">
+      <DependentUpon>Load Analysis.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Material Data.resx">
+      <DependentUpon>Material Data.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model Builder.resx">
+      <DependentUpon>Model Builder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="New Drawing.resx">
+      <DependentUpon>New Drawing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Radius Finder.resx">
+      <DependentUpon>Radius Finder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Start Window.resx">
+      <DependentUpon>Start Window.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="AND_ExtrusionsDataSet.xsc">
+      <DependentUpon>AND_ExtrusionsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="AND_ExtrusionsDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AND_ExtrusionsDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AND_ExtrusionsDataSet.xss">
+      <DependentUpon>AND_ExtrusionsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="FinalizedDataset.xsc">
+      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
+    </None>
+    <None Include="FinalizedDataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FinalizedDataset.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="FinalizedDataset.xss">
+      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AND Extrusions.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AND Extrusions_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>AND Extrusions.mdf</DependentUpon>
+    </Content>
+    <Content Include="Finalized Data.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Finalized Data_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Finalized Data.mdf</DependentUpon>
+    </Content>
+    <Content Include="ICON.ico" />
+    <None Include="packages.config" />
+    <None Include="Resources\Box Resulting Forces.JPG" />
+    <Content Include="Resources\Custom L-Angle.jpg" />
+    <Content Include="Resources\Custom Z-Angle.jpg" />
+    <None Include="Resources\U Channel.JPG" />
+    <None Include="Resources\Gusset.JPG" />
+    <Content Include="Resources\Radius Finder.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SldWorks">
+      <Guid>{83A33D31-27C5-11CE-BFD4-00400513BB57}</Guid>
+      <VersionMajor>28</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SwCommands">
+      <Guid>{0AC1DE9F-3FBC-4C25-868D-7D4E9139CCE0}</Guid>
+      <VersionMajor>28</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SwConst">
+      <Guid>{4687F359-55D0-4CD3-B6CF-2EB42C11F989}</Guid>
+      <VersionMajor>28</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
