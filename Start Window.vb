@@ -725,24 +725,24 @@ Public Class Start_Window
 					CusProperties = swModelDocExt.CustomPropertyManager("")
 
 					Select Case PC_USER
-						Case "mfrench"
-							PC_USER = "M. FRENCH"
-						Case "scisler"
-							PC_USER = "S. CISLER"
-						Case "ehaycraft"
-							PC_USER = "E. Haycraft"
-						Case "jfox"
-							PC_USER = "J. FOX"
-						Case "nbrown"
-							PC_USER = "N. BROWN"
-						Case "lsova"
-							PC_USER = "L. SOVA"
-						Case "KArthurs"
-							PC_USER = "K. ARTHURS"
-						Case "acrowe"
-							PC_USER = "A. CROWE"
-						Case "dcarter"
-							PC_USER = "D. CARTER"
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
+						Case ""
+							PC_USER = ""
 						Case Else
 							PC_USER = "UNKNOWN"
 							Functions.Error_Form("User Name Error", "PC User Name doesn't match the list",, "Manually input Drawnby name",, False, Me)
@@ -1199,7 +1199,7 @@ Public Class Start_Window
 		AlwaysOnTopToolStripMenuItem.Checked = False
 		AlwaysOnTopToolStripMenuItem_Click()
 
-		If System.Environment.UserName = "mfrench" Or System.Environment.UserName = "ehaycraft" Then
+		If System.Environment.UserName = "Us1" Or System.Environment.UserName = "Us2" Then
 
 			Process.Start("T:\Engineering\Non-Site Specific\APPROVED DOCUMENTS\EXCEL DATABASE")
 
