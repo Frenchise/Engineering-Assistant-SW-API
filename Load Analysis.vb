@@ -80,54 +80,30 @@
 		Dim Fastener_Dis As Decimal
 		Dim Force_Dis As Decimal
 		Dim Force As Decimal
-
 		Side_Load_Force_Output.Text = "Fastener Force"
 
+		Try
 
-		If Double.TryParse(Vd_Aircraft_Input.Text, VD_Aircraft) Then
-			'Original_VD = Vd_Aircraft_Input.Text
-			'Vd_Aircraft_Input.Text = Original_VD & " MPH"
-		Else
-			Functions.Error_Form("Incorrect Input", Vd_Aircraft_Input.Text & " is not a number",,,,, Me)
-		End If
+			VD_Aircraft = Vd_Aircraft_Input.Text
+			SA_Aircraft = SA_Antenna_Input.Text
+			Force_Dis = Force_Distance_Input.Text
+			Fastener_num = Antenna_Fastener_Num_Input.Text
+			Fastener_Dis = Fastener_Dist_Input.Text
 
-		If Double.TryParse(SA_Antenna_Input.Text, SA_Aircraft) Then
-			'Original_SA = SA_Antenna_Input.Text
-			'SA_Antenna_Input.Text = Original_SA & " ft^2"
-		Else
-			Functions.Error_Form("Incorrect Input", SA_Antenna_Input.Text & " is not a number",,,,, Me)
-		End If
+			Force = SA_Aircraft * (0.00256 * (VD_Aircraft ^ 2)) * 1.2
+			Force = System.Decimal.Round(Force, 2, MidpointRounding.AwayFromZero)
 
-		If Decimal.TryParse(Force_Distance_Input.Text, Force_Dis) Then
-			'Original_ForceD = Force_Distance_Input.Text
-			'Force_Distance_Input.Text = Original_ForceD & " in"
-		Else
-			Functions.Error_Form("Incorrect Input", Force_Distance_Input.Text & " is not a number",,,,, Me)
-		End If
+			Force = (Force * Force_Dis) / (Fastener_num * Fastener_Dis)
+			Force = System.Decimal.Round(Force, 2, MidpointRounding.AwayFromZero)
 
-		If Double.TryParse(Antenna_Fastener_Num_Input.Text, Fastener_num) Then
-			'Original_FN = Fastener_Num_Input.Text
-			'Fastener_Num_Input.Text = Original_FN
-		Else
-			Functions.Error_Form("Incorrect Input", Antenna_Fastener_Num_Input.Text & " is not a number",,,,, Me)
-		End If
+			Side_Load_Force_Output.Text = Force.ToString() & " lbs"
 
-		If Double.TryParse(Fastener_Dist_Input.Text, Fastener_Dis) Then
-			'Original_FastenerD = Fastener_Dist_Input.Text
-			'Fastener_Dist_Input.Text = Original_FastenerD & " in"
-		Else
-			Functions.Error_Form("Incorrect Input", Fastener_Dist_Input.Text & " is not a number",,,,, Me)
-		End If
+		Catch ex As InvalidCastException
 
-		Force = SA_Aircraft * (0.00256 * (VD_Aircraft ^ 2)) * 1.2
-		Force = System.Decimal.Round(Force, 2, MidpointRounding.AwayFromZero)
+			Functions.Error_Form("Null Value", "All inputs must be numerical",,,,, Me)
 
-		Force = (Force * Force_Dis) / (Fastener_num * Fastener_Dis)
-		Force = System.Decimal.Round(Force, 2, MidpointRounding.AwayFromZero)
+		End Try
 
-		Side_Load_Force_Output.Text = Force.ToString() & " lbs"
-
-		'Load_Analysis_Load()
 	End Sub
 
 	Private Sub Feed_Thru_Button_Click(sender As Object, e As EventArgs) Handles Feed_Thru_Button.Click
@@ -140,36 +116,37 @@
 		Dim Bearing_Strength As Decimal
 		Dim Fastener_Strength As Decimal
 		Dim Force As Decimal
-
 		Fast_Num_Output.Text = "Fastener Number"
 
-		Doubler_Tensile = Doubler_Tensile_Input.Text
+		Try
 
-		Skin_Mat_Thick = Skin_Thick_Input.Text
+			Doubler_Tensile = Doubler_Tensile_Input.Text
+			Skin_Mat_Thick = Skin_Thick_Input.Text
+			Skin_Bear_Strength = Skin_Bearing_Strength.Text
+			Hole_Diam = Hole_Diameter_Input.Text
+			Fastener_Diam = Fastener_Diameter.Text
+			Fastener_Tensile_Spec = Fastener_Tension_Spec_Input.Text
 
-		Skin_Bear_Strength = Skin_Bearing_Strength.Text
+			Bearing_Strength = Fastener_Diam * Skin_Mat_Thick * Skin_Bear_Strength
+			If Bearing_Strength < Fastener_Tensile_Spec Then
+				Fastener_Strength = Bearing_Strength
+			Else
+				Fastener_Strength = Fastener_Tensile_Spec
+			End If
 
-		Hole_Diam = Hole_Diameter_Input.Text
+			Force = (Doubler_Tensile * Skin_Mat_Thick * Hole_Diam) / Fastener_Strength
+			Force = Math.Ceiling(Force)
 
-		Fastener_Diam = Fastener_Diameter.Text
+			Fast_Num_Output.BackColor = Color.LightGreen
+			Fast_Num_Output.Text = Force.ToString() & " per side"
 
-		Fastener_Tensile_Spec = Fastener_Tension_Spec_Input.Text
+			'Load_Analysis_Load()
+		Catch ex As InvalidCastException
 
+			Functions.Error_Form("Null Value", "All inputs must be numerical",,,,, Me)
 
-		Bearing_Strength = Fastener_Diam * Skin_Mat_Thick * Skin_Bear_Strength
-		If Bearing_Strength < Fastener_Tensile_Spec Then
-			Fastener_Strength = Bearing_Strength
-		Else
-			Fastener_Strength = Fastener_Tensile_Spec
-		End If
+		End Try
 
-		Force = (Doubler_Tensile * Skin_Mat_Thick * Hole_Diam) / Fastener_Strength
-		Force = Math.Ceiling(Force)
-
-		Fast_Num_Output.BackColor = Color.LightGreen
-		Fast_Num_Output.Text = Force.ToString() & " per side"
-
-		'Load_Analysis_Load()
 	End Sub
 
 	Private Sub Resultant_Forces_Button_Click(sender As Object, e As EventArgs) Handles Resultant_Forces_Button.Click
@@ -283,12 +260,13 @@
 			Functions.Status = True
 
 		Else
-			Functions.Error_Form("Input Error", "Gravity drop down box has an incorrect entry",,,,, Me)
+			Functions.Error_Form("Input Error", "Enter values into all fields",,,,, Me)
 			Functions.Status = False
 		End If
 
 	End Sub
 
+#Region "Box Loads"
 	Private Sub Box_Weight_Input_TextChanged(sender As Object, e As EventArgs) Handles Box_Weight_Input.Validating
 
 		If Box_Weight_Input.Text <> "" Then
@@ -304,39 +282,43 @@
 
 	End Sub
 
+#End Region
+
+
+#Region "Doubler Loads"
 	Private Sub Doubler_Tensile_Input_TextChanged(sender As Object, e As EventArgs) Handles Doubler_Tensile_Input.Validating
 		If Doubler_Tensile_Input.Text <> "" Then
-			Functions.Text_Validate(Doubler_Tensile_Input, "Decimal", Me, "Fastener input")
+			Functions.Text_Validate(Doubler_Tensile_Input, "Decimal", Me, "Doubler Tensile input")
 		End If
 	End Sub
 
 	Private Sub Skin_Thick_Input_TextChanged(sender As Object, e As EventArgs) Handles Skin_Thick_Input.Validating
 		If Skin_Thick_Input.Text <> "" Then
-			Functions.Text_Validate(Skin_Thick_Input, "Decimal", Me, "Fastener input")
+			Functions.Text_Validate(Skin_Thick_Input, "Decimal", Me, "Skin Thickness input")
 		End If
 	End Sub
 
 	Private Sub Skin_Bearing_Strength_TextChanged(sender As Object, e As EventArgs) Handles Skin_Bearing_Strength.Validating
 		If Skin_Bearing_Strength.Text <> "" Then
-			Functions.Text_Validate(Skin_Bearing_Strength, "Decimal", Me, "Fastener input")
+			Functions.Text_Validate(Skin_Bearing_Strength, "Decimal", Me, "Skin Bearing Strength input")
 		End If
 	End Sub
 
 	Private Sub Hole_Diameter_Input_TextChanged(sender As Object, e As EventArgs) Handles Hole_Diameter_Input.Validating
 		If Hole_Diameter_Input.Text <> "" Then
-			Functions.Text_Validate(Hole_Diameter_Input, "Decimal", Me, "Fastener input")
+			Functions.Text_Validate(Hole_Diameter_Input, "Decimal", Me, "Hole Diameter input")
 		End If
 	End Sub
 
 	Private Sub Fastener_Diameter_TextChanged(sender As Object, e As EventArgs) Handles Fastener_Diameter.Validating
 		If Fastener_Diameter.Text <> "" Then
-			Functions.Text_Validate(Fastener_Diameter, "Decimal", Me, "Fastener input")
+			Functions.Text_Validate(Fastener_Diameter, "Decimal", Me, "Fastener Diameter input")
 		End If
 	End Sub
 
 	Private Sub Fastener_Tension_Spec_Input_TextChanged(sender As Object, e As EventArgs) Handles Fastener_Tension_Spec_Input.Validating
 		If Fastener_Tension_Spec_Input.Text <> "" Then
-			Functions.Text_Validate(Fastener_Tension_Spec_Input, "Decimal", Me, "Fastener input")
+			Functions.Text_Validate(Fastener_Tension_Spec_Input, "Decimal", Me, "Fastener Spec input")
 		End If
 	End Sub
 
@@ -348,17 +330,45 @@
 				Fast_Num_Output.BackColor = SystemColors.Window
 			End If
 		Next
-
-		'Doubler_Tensile_Input.Text = ""
-
-		'Skin_Thick_Input.Text = ""
-
-		'Skin_Bearing_Strength.Text = ""
-
-		'Hole_Diam = Hole_Diameter_Input.Text
-
-		'Fastener_Diam = Fastener_Diameter.Text
-
-		'Fastener_Tensile_Spec = Fastener_Tension_Spec_Input.Text
 	End Sub
+
+#End Region
+
+
+#Region "Antenna Loads"
+	Private Sub Vd_Aircraft_Input_TextChanged(sender As Object, e As EventArgs) Handles Vd_Aircraft_Input.Validating
+		If Vd_Aircraft_Input.Text <> "" Then
+			Functions.Text_Validate(Vd_Aircraft_Input, "Double", Me, "Dive Speed input")
+		End If
+	End Sub
+
+	Private Sub SA_Antenna_Input_TextChanged(sender As Object, e As EventArgs) Handles SA_Antenna_Input.Validating
+		If SA_Antenna_Input.Text <> "" Then
+			Functions.Text_Validate(SA_Antenna_Input, "Double", Me, "Antenna SA input")
+		End If
+	End Sub
+
+	Private Sub Force_Distance_Input_TextChanged(sender As Object, e As EventArgs) Handles Force_Distance_Input.Validating
+		If Force_Distance_Input.Text <> "" Then
+			Functions.Text_Validate(Force_Distance_Input, "Decimal", Me, "Force Distance input")
+		End If
+	End Sub
+
+	Private Sub Antenna_Fastener_Num_Input_TextChanged(sender As Object, e As EventArgs) Handles Antenna_Fastener_Num_Input.Validating
+		If Antenna_Fastener_Num_Input.Text <> "" Then
+			Functions.Text_Validate(Antenna_Fastener_Num_Input, "Integer", Me, "Fastener Num input")
+		End If
+	End Sub
+
+	Private Sub Fastener_Dist_Input_TextChanged(sender As Object, e As EventArgs) Handles Fastener_Dist_Input.Validating
+		If Fastener_Dist_Input.Text <> "" Then
+			Functions.Text_Validate(Fastener_Dist_Input, "Decimal", Me, "Fastener Distance input")
+		End If
+	End Sub
+
+
+
+#End Region
+
+
 End Class

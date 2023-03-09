@@ -31,7 +31,9 @@ Partial Class Error_Message
 		'
 		'Okay
 		'
-		Me.Okay.Location = New System.Drawing.Point(91, 116)
+		Me.Okay.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+		Me.Okay.AutoSize = True
+		Me.Okay.Location = New System.Drawing.Point(105, 116)
 		Me.Okay.Name = "Okay"
 		Me.Okay.Size = New System.Drawing.Size(75, 23)
 		Me.Okay.TabIndex = 1
@@ -88,7 +90,10 @@ Partial Class Error_Message
 		Me.Controls.Add(Me.Okay)
 		Me.ForeColor = System.Drawing.SystemColors.WindowText
 		Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+		Me.MaximumSize = New System.Drawing.Size(300, 190)
+		Me.MinimumSize = New System.Drawing.Size(300, 190)
 		Me.Name = "Error_Message"
+		Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
 		Me.Text = "Error Message"
 		Me.ResumeLayout(False)
 		Me.PerformLayout()

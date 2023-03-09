@@ -3,8 +3,6 @@ Imports System.Runtime.InteropServices
 
 Public Class Existing_Aircrafts
 
-	Dim dir = "T:\Engineering\Non-Site Specific\AIRCRAFT DATA"
-	Dim Native_Dir = "T:\Engineering\Non-Site Specific\APPROVED DOCUMENTS\NATIVE DOCUMENTS"
 	Dim Nat_Folder As String
 	Dim PDF_dir As String
 	Dim PDF_Analysis As String
@@ -45,6 +43,8 @@ Public Class Existing_Aircrafts
 		Open_PDF.Visible = False
 		Chrono_Sort.Visible = False
 		DWG_Sort.Visible = False
+		Search_PDF_Names_Input.Visible = False
+		PDF_Names_Label.Visible = False
 		Form_Resize()
 
 		AddHandler Chrono_Sort.CheckedChanged, New EventHandler(AddressOf Sort_CheckedChanged)
@@ -52,14 +52,13 @@ Public Class Existing_Aircrafts
 		AddHandler DWG_Num_Options.SelectedIndexChanged, New EventHandler(AddressOf Sort_CheckedChanged)
 
 
-		Dir_Exist = Directory.Exists(dir)
 		Aircraft_Type_Label.Visible = False
 		Aircraft_Type.Visible = False
 		Existing_Structural_PDFs.Visible = False
 		Opt_DWG_NUM.Visible = False
 		DWG_Num_Options.Visible = False
 
-		If Dir_Exist Then
+		If Directory.Exists(Network_Locations.Aircraft_Data_Dir) Then
 
 			Directory_Exist.Text = "Aircraft Data Directory Exists"
 
@@ -70,7 +69,7 @@ Public Class Existing_Aircrafts
 			Dim folder = String.Empty
 			Dim Folder_name = String.Empty
 
-			For Each folder In System.IO.Directory.GetDirectories(dir)
+			For Each folder In System.IO.Directory.GetDirectories(Network_Locations.Aircraft_Data_Dir)
 
 				Folder_name = System.IO.Path.GetFileNameWithoutExtension(folder)
 
@@ -103,10 +102,9 @@ Public Class Existing_Aircrafts
 
 		Air.Manufacturer = Manufacturer.Text
 
-		dir_Manufacturer = dir + "\" + Manufacturer.Text
+		dir_Manufacturer = Network_Locations.Aircraft_Data_Dir + "\" + Manufacturer.Text
 
-		Dir_Exist = Directory.Exists(dir_Manufacturer)
-		If Dir_Exist Then
+		If Directory.Exists(dir_Manufacturer) Then
 
 			Dim folder = String.Empty
 			Dim Folder_name = String.Empty
@@ -133,6 +131,7 @@ Public Class Existing_Aircrafts
 		DWG_Num_Options.SelectedIndex = 0
 		DWG_Num_Options.Visible = True
 
+		OG_LIST.Clear()
 		Existing_Structural_PDFs.Items.Clear()
 		Existing_Structural_PDFs.Text = ""
 
@@ -140,8 +139,8 @@ Public Class Existing_Aircrafts
 
 		dir_Aircraft = dir_Manufacturer + "\" + Aircraft_Type.Text
 
-		Dir_Exist = Directory.Exists(dir_Aircraft)
-		If Dir_Exist Then
+
+		If Directory.Exists(dir_Aircraft) Then
 
 			Dim file = String.Empty
 			Dim File_name = String.Empty
@@ -152,7 +151,8 @@ Public Class Existing_Aircrafts
 
 			For Each Folder In System.IO.Directory.GetDirectories(dir_Aircraft)
 
-				For Each Structural_Folder In System.IO.Directory.GetDirectories(Folder, "STRUCTURES")
+
+				For Each Structural_Folder In System.IO.Directory.GetDirectories(Folder, "STRUCTURES") 'Some folders are named STRUCTURES
 
 					Folder_name = System.IO.Path.GetFileNameWithoutExtension(Folder)
 
@@ -166,6 +166,19 @@ Public Class Existing_Aircrafts
 
 				Next
 
+				For Each Structural_Folder In System.IO.Directory.GetDirectories(Folder, "STRUCTURAL") 'Some folders are named STRUCTURAL
+
+					Folder_name = System.IO.Path.GetFileNameWithoutExtension(Folder)
+
+					For Each file In System.IO.Directory.GetFiles(Structural_Folder, "*.pdf")
+
+						File_name = System.IO.Path.GetFileNameWithoutExtension(file)
+						Existing_Structural_PDFs.Items.Add(File_name & " - " & Folder_name)
+						Item_Count = Existing_Structural_PDFs.Items.Count
+
+					Next
+
+				Next
 
 			Next
 
@@ -202,6 +215,8 @@ Public Class Existing_Aircrafts
 
 			Chrono_Sort.Visible = True
 			DWG_Sort.Visible = True
+			Search_PDF_Names_Input.Visible = True
+			PDF_Names_Label.Visible = True
 
 		End If
 
@@ -283,19 +298,18 @@ Public Class Existing_Aircrafts
 
 
 
-				For Each folder In System.IO.Directory.GetDirectories(Native_Dir & "\CURRENT GENERATION DOCUMENTS")
+				For Each folder In System.IO.Directory.GetDirectories(Network_Locations.Native_Documents_Dir & "\CURRENT GENERATION DOCUMENTS")
 					Nat_Folder = folder & "\" & Air.struct_FileName
 					If Directory.Exists(Nat_Folder) Then
 						Open_Native_Folder.Visible = True
 						Exit For
 					End If
-
 				Next
 
 
 
 				If Open_Native_Folder.Visible = False Then
-					For Each folder In System.IO.Directory.GetDirectories(Native_Dir & "\SECOND GENERATION DOCUMENTS")
+					For Each folder In System.IO.Directory.GetDirectories(Network_Locations.Native_Documents_Dir & "\SECOND GENERATION DOCUMENTS")
 						Nat_Folder = folder & "\" & Air.Struct_Drawing
 						If Directory.Exists(Nat_Folder) Then
 							Open_Native_Folder.Visible = True
@@ -306,7 +320,7 @@ Public Class Existing_Aircrafts
 				End If
 
 				If Open_Native_Folder.Visible = False Then
-					For Each folder In System.IO.Directory.GetDirectories(Native_Dir & "\FIRST GENERATION DOCUMENTS")
+					For Each folder In System.IO.Directory.GetDirectories(Network_Locations.Native_Documents_Dir & "\FIRST GENERATION DOCUMENTS")
 						Nat_Folder = folder & "\" & Air.Struct_Drawing
 						If Directory.Exists(Nat_Folder) Then
 							Open_Native_Folder.Visible = True
@@ -329,8 +343,8 @@ Public Class Existing_Aircrafts
 
 	Private Sub Open_PDF_Click(sender As Object, e As EventArgs) Handles Open_PDF.Click
 
-		PDF_dir = dir & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.Serial & "\STRUCTURES\" & Air.struct_FileName + ".pdf"
-		PDF_Analysis = dir & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.struct_FileName + ".pdf"
+		PDF_dir = Network_Locations.Aircraft_Data_Dir & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.Serial & "\STRUCTURES\" & Air.struct_FileName + ".pdf"
+		PDF_Analysis = Network_Locations.Aircraft_Data_Dir & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.struct_FileName + ".pdf"
 
 		'PDF_dir = dir_Aircraft + "\" + Aircraft_Serial + "\STRUCTURES\" + Structure_PDF + ".pdf"
 
@@ -398,6 +412,36 @@ Public Class Existing_Aircrafts
 		'End If
 
 
+	End Sub
+
+	Private Sub Label2_Click(sender As Object, e As EventArgs) Handles PDF_Names_Label.Click
+
+	End Sub
+
+	Private Sub Clear_Button_Click(sender As Object, e As EventArgs) Handles Clear_Button.Click
+		Search_PDF_Names_Input.Text = ""
+		Existing_Structural_PDFs.Items.Clear()
+		For i = 0 To OG_LIST.Count - 1
+			Existing_Structural_PDFs.Items.Add(OG_LIST(i))
+		Next
+	End Sub
+
+	Private Sub Search_Button_Click(sender As Object, e As EventArgs) Handles Search_Button.Click
+		Dim i As Integer
+
+		Existing_Structural_PDFs.Items.Clear()
+
+		For i = 0 To OG_LIST.Count - 1
+			If OG_LIST(i).ToUpper.Contains(Search_PDF_Names_Input.Text.ToUpper) Then
+				Existing_Structural_PDFs.Items.Add(OG_LIST(i))
+			End If
+		Next
+	End Sub
+
+	Private Sub Search_Keydown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Search_PDF_Names_Input.KeyDown
+		If (e.KeyCode = Keys.Enter) Then
+			Search_Button_Click(sender, e)
+		End If
 	End Sub
 
 	'Private Sub DWG_Num_Options_SelectedIndexChanged(sender As Object, e As EventArgs) Handles DWG_Num_Options.SelectedIndexChanged

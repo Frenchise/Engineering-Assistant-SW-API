@@ -3,7 +3,7 @@ Imports System.Runtime.InteropServices
 
 Public Class Material_Data
 
-	Dim dir = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Structural Docs" '"\\192.168.0.32\Shared Folders\Engineering\Non-Site Specific\PARTS\LIBRARY\Structural Docs"
+	'"\\192.168.0.32\Shared Folders\Engineering\Non-Site Specific\PARTS\LIBRARY\Structural Docs"
 	Dim PDF_dir As String
 	Dim dir_Manufacturer As String
 	Dim dir_Aircraft As String
@@ -33,7 +33,7 @@ Public Class Material_Data
 		Open_PDF.Visible = False
 
 
-		Dir_Exist = Directory.Exists(dir)
+		Dir_Exist = Directory.Exists(Network_Locations.Structural_Docs_Dir)
 
 		Directory_Display_ListView.Scrollable = True
 		Directory_Display_ListView.HeaderStyle = ColumnHeaderStyle.None
@@ -43,12 +43,12 @@ Public Class Material_Data
 
 		If Dir_Exist Then
 
-			Directory_Exist.Text = "Frame Station Directory Exists"
+			Directory_Exist.Text = "Structural Ref Directory Exists"
 
 			Dim folder = String.Empty
 			Dim Folder_name = String.Empty
 
-			For Each folder In System.IO.Directory.GetDirectories(dir)
+			For Each folder In System.IO.Directory.GetDirectories(Network_Locations.Structural_Docs_Dir)
 
 				Folder_name = System.IO.Path.GetFileNameWithoutExtension(folder)
 
@@ -61,7 +61,7 @@ Public Class Material_Data
 
 		End If
 
-		Dim Struct_Folders = Directory.GetDirectories(dir)
+		Dim Struct_Folders = Directory.GetDirectories(Network_Locations.Structural_Docs_Dir)
 
 		For i = 0 To Struct_Folders.Count - 1
 

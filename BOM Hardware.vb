@@ -409,7 +409,6 @@ Public Class BOM_Hardware
 		Dim ASSY_Add As Boolean = False
 		Dim PART_Add As Boolean = False
 
-		swApp = CreateObject("SldWorks.Application")
 		swModel = swApp.ActiveDoc
 		swDrawing = swModel
 
@@ -463,6 +462,7 @@ Public Class BOM_Hardware
 					If z = 10 Then
 						MsgBox("Verify there is a Part List General Table")
 						Me.Close()
+						Exit Sub
 
 						Exit While
 					End If
@@ -499,7 +499,13 @@ Public Class BOM_Hardware
 							If Third_File_Name_Part = "" Then
 								Second_Hit = True
 								First_EmptyRow = Part_NO_Rows - 1
+								If First_EmptyRow = -1 Then
+									First_EmptyRow = 0
+								End If
+
 							End If
+
+
 						End If
 						'Else
 						'	First_EmptyRow = -1

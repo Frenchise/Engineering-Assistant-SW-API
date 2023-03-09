@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,11 +12,13 @@
     <AssemblyName>Engineering Assistant</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -66,89 +69,39 @@
   <PropertyGroup>
     <ApplicationIcon>ICON.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>2CFB7A5AA1DEB7F349005E547604666588FAB1C2</ManifestCertificateThumbprint>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="PDMWorks.Interop.pdmworks">
       <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\PDMWorks.Interop.pdmworks.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="SolidWorks.Interop.cosworks">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.cosworks.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.dsgnchk">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.dsgnchk.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.fworks">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.fworks.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.gtswutilities">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.gtswutilities.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.sldcostingapi">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sldcostingapi.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.sldtoolboxconfigureaddin">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sldtoolboxconfigureaddin.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.sldworks">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.sustainability">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sustainability.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.sw3dprinter">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.sw3dprinter.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swbrowser">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swbrowser.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swcommands">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swcommands.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swconst">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swconst.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swdimxpert">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swdimxpert.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swdocumentmgr">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swmotionstudy">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swmotionstudy.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swpublished">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.swpublished.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.SWRoutingLib">
-      <HintPath>..\..\..\..\Program Files\SOLIDWORKS Corp\SOLIDWORKS (2)\api\redist\SolidWorks.Interop.SWRoutingLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.EF6.1.0.117.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.Linq.1.0.117.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -180,10 +133,11 @@
     <Compile Include="Aircraft Frames.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AND_ExtrusionsDataSet.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AND_ExtrusionsDataSet.xsd</DependentUpon>
+    <Compile Include="Backup.Designer.vb">
+      <DependentUpon>Backup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Backup.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="BOM Hardware.designer.vb">
       <DependentUpon>BOM Hardware.vb</DependentUpon>
@@ -227,20 +181,6 @@
     <Compile Include="Existing Electrical Aircrafts.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FinalizedDataset.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="FinalizedDataset.vb">
-      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Functions.vb" />
     <Compile Include="L ANGLE CONSTRUCTOR.designer.vb">
       <DependentUpon>L ANGLE CONSTRUCTOR.vb</DependentUpon>
@@ -272,6 +212,7 @@
     <Compile Include="Model Builder.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Network Locations.vb" />
     <Compile Include="New Drawing.designer.vb">
       <DependentUpon>New Drawing.vb</DependentUpon>
     </Compile>
@@ -295,6 +236,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -311,6 +253,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Aircraft Frames.resx">
       <DependentUpon>Aircraft Frames.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Backup.resx">
+      <DependentUpon>Backup.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BOM Hardware.resx">
       <DependentUpon>BOM Hardware.vb</DependentUpon>
@@ -332,9 +278,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Existing Electrical Aircrafts.resx">
       <DependentUpon>Existing Electrical Aircrafts.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="L ANGLE CONSTRUCTOR.resx">
       <DependentUpon>L ANGLE CONSTRUCTOR.vb</DependentUpon>
@@ -369,28 +312,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
-    <None Include="AND_ExtrusionsDataSet.xsc">
-      <DependentUpon>AND_ExtrusionsDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="AND_ExtrusionsDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>AND_ExtrusionsDataSet.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="AND_ExtrusionsDataSet.xss">
-      <DependentUpon>AND_ExtrusionsDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="FinalizedDataset.xsc">
-      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
-    </None>
-    <None Include="FinalizedDataset.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>FinalizedDataset.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="FinalizedDataset.xss">
-      <DependentUpon>FinalizedDataset.xsd</DependentUpon>
-    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -403,20 +324,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AND Extrusions.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="AND Extrusions_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>AND Extrusions.mdf</DependentUpon>
-    </Content>
-    <Content Include="Finalized Data.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Finalized Data_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Finalized Data.mdf</DependentUpon>
-    </Content>
     <Content Include="ICON.ico" />
     <None Include="packages.config" />
     <None Include="Resources\Box Resulting Forces.JPG" />
@@ -447,7 +354,7 @@
     </COMReference>
     <COMReference Include="SldWorks">
       <Guid>{83A33D31-27C5-11CE-BFD4-00400513BB57}</Guid>
-      <VersionMajor>28</VersionMajor>
+      <VersionMajor>30</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -456,7 +363,7 @@
     </COMReference>
     <COMReference Include="SwCommands">
       <Guid>{0AC1DE9F-3FBC-4C25-868D-7D4E9139CCE0}</Guid>
-      <VersionMajor>28</VersionMajor>
+      <VersionMajor>30</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -465,7 +372,7 @@
     </COMReference>
     <COMReference Include="SwConst">
       <Guid>{4687F359-55D0-4CD3-B6CF-2EB42C11F989}</Guid>
-      <VersionMajor>28</VersionMajor>
+      <VersionMajor>30</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -498,4 +405,14 @@
     <Folder Include="obj\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
+  </Target>
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
 </Project>

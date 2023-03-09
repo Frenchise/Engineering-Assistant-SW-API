@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -54,26 +54,16 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=""|DataDirectory|\AND Extrusio"& _ 
-            "ns.mdf"";Integrated Security=True")>  _
-        Public ReadOnly Property AND_ExtrusionsConnectionString() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("ALN")>  _
+        Public Property Fac_Loc() As String
             Get
-                Return CType(Me("AND_ExtrusionsConnectionString"),String)
+                Return CType(Me("Fac_Loc"),String)
             End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=""|DataDirectory|\Finalized Da"& _ 
-            "ta.mdf"";Integrated Security=True")>  _
-        Public ReadOnly Property Finalized_DataConnectionString() As String
-            Get
-                Return CType(Me("Finalized_DataConnectionString"),String)
-            End Get
+            Set
+                Me("Fac_Loc") = value
+            End Set
         End Property
     End Class
 End Namespace

@@ -41,7 +41,7 @@ Partial Class Radius_Finder
 		Me.Label1.Location = New System.Drawing.Point(219, 27)
 		Me.Label1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
 		Me.Label1.Name = "Label1"
-		Me.Label1.Size = New System.Drawing.Size(47, 16)
+		Me.Label1.Size = New System.Drawing.Size(46, 16)
 		Me.Label1.TabIndex = 0
 		Me.Label1.Text = "Height"
 		Me.Label1.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -62,7 +62,7 @@ Partial Class Radius_Finder
 		Me.Label2.Location = New System.Drawing.Point(224, 53)
 		Me.Label2.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
 		Me.Label2.Name = "Label2"
-		Me.Label2.Size = New System.Drawing.Size(42, 16)
+		Me.Label2.Size = New System.Drawing.Size(41, 16)
 		Me.Label2.TabIndex = 2
 		Me.Label2.Text = "Width"
 		Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -90,7 +90,7 @@ Partial Class Radius_Finder
 		Me.Radius_Output_Label.Location = New System.Drawing.Point(215, 79)
 		Me.Radius_Output_Label.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
 		Me.Radius_Output_Label.Name = "Radius_Output_Label"
-		Me.Radius_Output_Label.Size = New System.Drawing.Size(51, 16)
+		Me.Radius_Output_Label.Size = New System.Drawing.Size(50, 16)
 		Me.Radius_Output_Label.TabIndex = 5
 		Me.Radius_Output_Label.Text = "Radius"
 		Me.Radius_Output_Label.TextAlign = System.Drawing.ContentAlignment.TopRight

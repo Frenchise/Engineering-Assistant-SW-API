@@ -6,7 +6,7 @@ Imports SldWorks
 Public Class Lib_Feat_Add
 
     Dim LibRefs() As DispatchWrapper
-    Dim Dir As String = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Footprint Hole Features"
+	Dim Dir As String
 
 
 
@@ -21,24 +21,20 @@ Public Class Lib_Feat_Add
 		Dim file = String.Empty
 		Dim File_name = String.Empty
 
-		Functions.Check_Directory(Dir, ComboBox1)
+		Functions.Check_Directory(Network_Locations.Hole_Feature_Dir, ComboBox1)
 
 	End Sub
 
 	Private Sub Add_Lib_To_Part_Click(sender As Object, e As EventArgs) Handles Add_Lib_To_Part.Click
 
-        Dim Select_ID As New Error_Message
+		Dim Select_ID As New Error_Message
 		Dim swApp As SldWorks.SldWorks
 		Dim swDoc As ModelDoc2
         Dim Part As PartDoc
 		Dim Generic_Error As New Error_Message
 
-		swApp = CreateObject("SldWorks.Application")
+		swApp = SWFunctions.swApp
 		swDoc = swApp.ActiveDoc
-
-
-
-		'--------------------------'
 
 		Dim swSelMgr As SelectionMgr
         Dim swFeatMgr As FeatureManager
@@ -105,7 +101,7 @@ Public Class Lib_Feat_Add
 				swFeatMgr = swDoc.FeatureManager
 				swLibFeat = swFeatMgr.CreateDefinition(SwConst.swFeatureNameID_e.swFmLibraryFeature)
 
-				Dir = Dir + "\" + ComboBox1.Text + ".sldlfp"
+				Dir = Network_Locations.Hole_Feature_Dir + "\" + ComboBox1.Text + ".sldlfp"
 				boolstatus = swLibFeat.Initialize(Dir)
 
 				'RefCount = swLibFeat.GetReferencesCount
@@ -129,8 +125,8 @@ Public Class Lib_Feat_Add
 
 				'select both edges
 				Select_ID.PassedText = "CTRL Select Both Edges"
-				Select_ID.TextLine2 = "First Selected Edge Dictates Vertical"
-				Select_ID.TextLine3 = "Second Edge Is To The Right Of The First Edge"
+				Select_ID.TextLine2 = "1st Selected Edge Dictates Vertical"
+				Select_ID.TextLine3 = "2nd Edge Is Left Of The 1st Edge"
 				Select_ID.FormName = "Library Insert Selection"
 				Select_ID.StartPosition = FormStartPosition.CenterParent
 				Select_ID.ShowDialog()
@@ -159,18 +155,19 @@ Public Class Lib_Feat_Add
 				j = 0
 				Name = Sketch_Name
 				FeatName = swDoc.FirstFeature()
+				MsgBox(FeatName.ToString())
 
-				While Not FeatName Is Nothing
+				While FeatName IsNot Nothing
 					If LibFeature = FeatName.GetTypeName2() Then
 
 						swSubFeat = FeatName.GetFirstSubFeature()
 
-						While Not swSubFeat Is Nothing
+						While swSubFeat IsNot Nothing
 							If HoleWiz = swSubFeat.GetTypeName2() Then
 
 								swSubSubFeat = swSubFeat.GetFirstSubFeature()
 
-								While Not swSubSubFeat Is Nothing
+								While swSubSubFeat IsNot Nothing
 									If Name = swSubSubFeat.Name Then
 
 										j += 1

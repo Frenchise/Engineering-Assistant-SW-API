@@ -84,7 +84,7 @@ Partial Class Load_Analysis
 		Me.Label1.Location = New System.Drawing.Point(45, 23)
 		Me.Label1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 0)
 		Me.Label1.Name = "Label1"
-		Me.Label1.Size = New System.Drawing.Size(105, 16)
+		Me.Label1.Size = New System.Drawing.Size(104, 16)
 		Me.Label1.TabIndex = 0
 		Me.Label1.Text = "Box Weight (lbs)"
 		'
@@ -110,7 +110,7 @@ Partial Class Load_Analysis
 		Me.Dive_Speed.Location = New System.Drawing.Point(40, 26)
 		Me.Dive_Speed.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
 		Me.Dive_Speed.Name = "Dive_Speed"
-		Me.Dive_Speed.Size = New System.Drawing.Size(190, 16)
+		Me.Dive_Speed.Size = New System.Drawing.Size(189, 16)
 		Me.Dive_Speed.TabIndex = 2
 		Me.Dive_Speed.Text = "Dive Speed (MPH) TCD Sheet"
 		'
@@ -130,7 +130,7 @@ Partial Class Load_Analysis
 		Me.Label3.AutoSize = True
 		Me.Label3.Location = New System.Drawing.Point(6, 104)
 		Me.Label3.Name = "Label3"
-		Me.Label3.Size = New System.Drawing.Size(144, 16)
+		Me.Label3.Size = New System.Drawing.Size(143, 16)
 		Me.Label3.TabIndex = 5
 		Me.Label3.Text = "Gravity Direction 1 (G1)"
 		Me.Label3.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -140,7 +140,7 @@ Partial Class Load_Analysis
 		Me.Label4.AutoSize = True
 		Me.Label4.Location = New System.Drawing.Point(6, 136)
 		Me.Label4.Name = "Label4"
-		Me.Label4.Size = New System.Drawing.Size(144, 16)
+		Me.Label4.Size = New System.Drawing.Size(143, 16)
 		Me.Label4.TabIndex = 7
 		Me.Label4.Text = "Gravity Direction 2 (G2)"
 		Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -161,7 +161,7 @@ Partial Class Load_Analysis
 		Me.Label5.AutoSize = True
 		Me.Label5.Location = New System.Drawing.Point(6, 168)
 		Me.Label5.Name = "Label5"
-		Me.Label5.Size = New System.Drawing.Size(144, 16)
+		Me.Label5.Size = New System.Drawing.Size(143, 16)
 		Me.Label5.TabIndex = 9
 		Me.Label5.Text = "Gravity Direction 3 (G3)"
 		Me.Label5.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -191,7 +191,7 @@ Partial Class Load_Analysis
 		Me.SA_Antenna.Location = New System.Drawing.Point(47, 56)
 		Me.SA_Antenna.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
 		Me.SA_Antenna.Name = "SA_Antenna"
-		Me.SA_Antenna.Size = New System.Drawing.Size(183, 16)
+		Me.SA_Antenna.Size = New System.Drawing.Size(182, 16)
 		Me.SA_Antenna.TabIndex = 10
 		Me.SA_Antenna.Text = "Surface Area of Antenna (ft^2)"
 		'
@@ -201,7 +201,7 @@ Partial Class Load_Analysis
 		Me.Side_Load_Force_Output.Location = New System.Drawing.Point(234, 177)
 		Me.Side_Load_Force_Output.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
 		Me.Side_Load_Force_Output.Name = "Side_Load_Force_Output"
-		Me.Side_Load_Force_Output.Size = New System.Drawing.Size(99, 16)
+		Me.Side_Load_Force_Output.Size = New System.Drawing.Size(98, 16)
 		Me.Side_Load_Force_Output.TabIndex = 98
 		Me.Side_Load_Force_Output.Text = "Fastener Force"
 		'
@@ -249,7 +249,7 @@ Partial Class Load_Analysis
 		Me.Fastener_Distance.Location = New System.Drawing.Point(7, 148)
 		Me.Fastener_Distance.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
 		Me.Fastener_Distance.Name = "Fastener_Distance"
-		Me.Fastener_Distance.Size = New System.Drawing.Size(223, 16)
+		Me.Fastener_Distance.Size = New System.Drawing.Size(222, 16)
 		Me.Fastener_Distance.TabIndex = 18
 		Me.Fastener_Distance.Text = "Distance Betwen Fastener Sides (in)"
 		'
@@ -259,7 +259,7 @@ Partial Class Load_Analysis
 		Me.Force_Distance.Location = New System.Drawing.Point(13, 86)
 		Me.Force_Distance.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
 		Me.Force_Distance.Name = "Force_Distance"
-		Me.Force_Distance.Size = New System.Drawing.Size(217, 16)
+		Me.Force_Distance.Size = New System.Drawing.Size(216, 16)
 		Me.Force_Distance.TabIndex = 20
 		Me.Force_Distance.Text = "Force Distance From Fasteners (in)"
 		'
@@ -286,7 +286,7 @@ Partial Class Load_Analysis
 		Me.Label9.Location = New System.Drawing.Point(15, 177)
 		Me.Label9.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
 		Me.Label9.Name = "Label9"
-		Me.Label9.Size = New System.Drawing.Size(215, 16)
+		Me.Label9.Size = New System.Drawing.Size(214, 16)
 		Me.Label9.TabIndex = 19
 		Me.Label9.Text = "Result Tension Force per Fastener"
 		'
@@ -296,7 +296,7 @@ Partial Class Load_Analysis
 		Me.Fasteners_Per_Side.Location = New System.Drawing.Point(83, 118)
 		Me.Fasteners_Per_Side.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
 		Me.Fasteners_Per_Side.Name = "Fasteners_Per_Side"
-		Me.Fasteners_Per_Side.Size = New System.Drawing.Size(147, 16)
+		Me.Fasteners_Per_Side.Size = New System.Drawing.Size(146, 16)
 		Me.Fasteners_Per_Side.TabIndex = 16
 		Me.Fasteners_Per_Side.Text = "# of Fasteners Per Side"
 		'
@@ -331,7 +331,7 @@ Partial Class Load_Analysis
 		Me.Safety_Factor_Label.AutoSize = True
 		Me.Safety_Factor_Label.Location = New System.Drawing.Point(241, 53)
 		Me.Safety_Factor_Label.Name = "Safety_Factor_Label"
-		Me.Safety_Factor_Label.Size = New System.Drawing.Size(56, 16)
+		Me.Safety_Factor_Label.Size = New System.Drawing.Size(55, 16)
 		Me.Safety_Factor_Label.TabIndex = 17
 		Me.Safety_Factor_Label.Text = "Label17"
 		'
@@ -340,7 +340,7 @@ Partial Class Load_Analysis
 		Me.G3_Force.AutoSize = True
 		Me.G3_Force.Location = New System.Drawing.Point(241, 168)
 		Me.G3_Force.Name = "G3_Force"
-		Me.G3_Force.Size = New System.Drawing.Size(56, 16)
+		Me.G3_Force.Size = New System.Drawing.Size(55, 16)
 		Me.G3_Force.TabIndex = 16
 		Me.G3_Force.Text = "Label19"
 		'
@@ -349,7 +349,7 @@ Partial Class Load_Analysis
 		Me.G2_Force.AutoSize = True
 		Me.G2_Force.Location = New System.Drawing.Point(241, 136)
 		Me.G2_Force.Name = "G2_Force"
-		Me.G2_Force.Size = New System.Drawing.Size(56, 16)
+		Me.G2_Force.Size = New System.Drawing.Size(55, 16)
 		Me.G2_Force.TabIndex = 15
 		Me.G2_Force.Text = "Label18"
 		'
@@ -358,7 +358,7 @@ Partial Class Load_Analysis
 		Me.G1_Force.AutoSize = True
 		Me.G1_Force.Location = New System.Drawing.Point(241, 104)
 		Me.G1_Force.Name = "G1_Force"
-		Me.G1_Force.Size = New System.Drawing.Size(56, 16)
+		Me.G1_Force.Size = New System.Drawing.Size(55, 16)
 		Me.G1_Force.TabIndex = 14
 		Me.G1_Force.Text = "Label17"
 		'
@@ -369,7 +369,7 @@ Partial Class Load_Analysis
 		Me.Gravity_Note_Label.Location = New System.Drawing.Point(7, 80)
 		Me.Gravity_Note_Label.Margin = New System.Windows.Forms.Padding(4, 5, 4, 0)
 		Me.Gravity_Note_Label.Name = "Gravity_Note_Label"
-		Me.Gravity_Note_Label.Size = New System.Drawing.Size(278, 16)
+		Me.Gravity_Note_Label.Size = New System.Drawing.Size(277, 16)
 		Me.Gravity_Note_Label.TabIndex = 13
 		Me.Gravity_Note_Label.Text = "Allign Gravity with Plane FWD Direction"
 		Me.Gravity_Note_Label.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -388,7 +388,7 @@ Partial Class Load_Analysis
 		Me.Label16.Location = New System.Drawing.Point(17, 53)
 		Me.Label16.Margin = New System.Windows.Forms.Padding(4, 5, 4, 0)
 		Me.Label16.Name = "Label16"
-		Me.Label16.Size = New System.Drawing.Size(133, 16)
+		Me.Label16.Size = New System.Drawing.Size(132, 16)
 		Me.Label16.TabIndex = 11
 		Me.Label16.Text = "Number of Fasteners"
 		Me.Label16.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -452,7 +452,7 @@ Partial Class Load_Analysis
 		Me.Skin_Bearing.AutoSize = True
 		Me.Skin_Bearing.Location = New System.Drawing.Point(26, 86)
 		Me.Skin_Bearing.Name = "Skin_Bearing"
-		Me.Skin_Bearing.Size = New System.Drawing.Size(168, 16)
+		Me.Skin_Bearing.Size = New System.Drawing.Size(167, 16)
 		Me.Skin_Bearing.TabIndex = 21
 		Me.Skin_Bearing.Text = "Skin Bearing Strength (PSI)"
 		'
@@ -469,7 +469,7 @@ Partial Class Load_Analysis
 		Me.Fastener_Diameter_Label.AutoSize = True
 		Me.Fastener_Diameter_Label.Location = New System.Drawing.Point(57, 145)
 		Me.Fastener_Diameter_Label.Name = "Fastener_Diameter_Label"
-		Me.Fastener_Diameter_Label.Size = New System.Drawing.Size(140, 16)
+		Me.Fastener_Diameter_Label.Size = New System.Drawing.Size(139, 16)
 		Me.Fastener_Diameter_Label.TabIndex = 19
 		Me.Fastener_Diameter_Label.Text = "Fastener Diameter (in)"
 		'
@@ -489,7 +489,7 @@ Partial Class Load_Analysis
 		Me.Fast_Num_Output.Location = New System.Drawing.Point(203, 202)
 		Me.Fast_Num_Output.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
 		Me.Fast_Num_Output.Name = "Fast_Num_Output"
-		Me.Fast_Num_Output.Size = New System.Drawing.Size(112, 16)
+		Me.Fast_Num_Output.Size = New System.Drawing.Size(111, 16)
 		Me.Fast_Num_Output.TabIndex = 99
 		Me.Fast_Num_Output.Text = "Fastener Number"
 		'
@@ -499,7 +499,7 @@ Partial Class Load_Analysis
 		Me.Label15.Location = New System.Drawing.Point(6, 202)
 		Me.Label15.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
 		Me.Label15.Name = "Label15"
-		Me.Label15.Size = New System.Drawing.Size(191, 16)
+		Me.Label15.Size = New System.Drawing.Size(190, 16)
 		Me.Label15.TabIndex = 15
 		Me.Label15.Text = "Min Fastener Number Per Side"
 		'
@@ -541,7 +541,7 @@ Partial Class Load_Analysis
 		Me.Doubler_Tensile_Strength.Location = New System.Drawing.Point(9, 26)
 		Me.Doubler_Tensile_Strength.Margin = New System.Windows.Forms.Padding(4, 5, 4, 0)
 		Me.Doubler_Tensile_Strength.Name = "Doubler_Tensile_Strength"
-		Me.Doubler_Tensile_Strength.Size = New System.Drawing.Size(188, 16)
+		Me.Doubler_Tensile_Strength.Size = New System.Drawing.Size(187, 16)
 		Me.Doubler_Tensile_Strength.TabIndex = 0
 		Me.Doubler_Tensile_Strength.Text = "Doubler Tensile Strenght (PSI)"
 		'
@@ -550,7 +550,7 @@ Partial Class Load_Analysis
 		Me.Fastener_Tension_Label.AutoSize = True
 		Me.Fastener_Tension_Label.Location = New System.Drawing.Point(17, 175)
 		Me.Fastener_Tension_Label.Name = "Fastener_Tension_Label"
-		Me.Fastener_Tension_Label.Size = New System.Drawing.Size(180, 16)
+		Me.Fastener_Tension_Label.Size = New System.Drawing.Size(179, 16)
 		Me.Fastener_Tension_Label.TabIndex = 9
 		Me.Fastener_Tension_Label.Text = "Fastener Tension Spec (PSI)"
 		'
@@ -559,7 +559,7 @@ Partial Class Load_Analysis
 		Me.FeedThru_Diameter_Label.AutoSize = True
 		Me.FeedThru_Diameter_Label.Location = New System.Drawing.Point(81, 115)
 		Me.FeedThru_Diameter_Label.Name = "FeedThru_Diameter_Label"
-		Me.FeedThru_Diameter_Label.Size = New System.Drawing.Size(116, 16)
+		Me.FeedThru_Diameter_Label.Size = New System.Drawing.Size(115, 16)
 		Me.FeedThru_Diameter_Label.TabIndex = 5
 		Me.FeedThru_Diameter_Label.Text = "Hole Diameter (in)"
 		'
@@ -568,7 +568,7 @@ Partial Class Load_Analysis
 		Me.Skin_Thickness.AutoSize = True
 		Me.Skin_Thickness.Location = New System.Drawing.Point(26, 56)
 		Me.Skin_Thickness.Name = "Skin_Thickness"
-		Me.Skin_Thickness.Size = New System.Drawing.Size(171, 16)
+		Me.Skin_Thickness.Size = New System.Drawing.Size(170, 16)
 		Me.Skin_Thickness.TabIndex = 7
 		Me.Skin_Thickness.Text = "Skin Material Thickness (in)"
 		'

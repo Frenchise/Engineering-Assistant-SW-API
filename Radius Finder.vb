@@ -9,8 +9,6 @@
 		Height_Radius_Input.Text = ""
 		Width_Radius_Input.Text = ""
 		Radius_Image_Box.Image = My.Resources.Radius_Finder
-		'Me.Width = Radius_Image_Box.Width + Me.Width
-		'Me.Height = Radius_Image_Box.Height + Me.Height
 		Form_Resize()
 
 	End Sub
@@ -21,22 +19,13 @@
 		Dim Radius As Decimal
 		Dim Height_Check As Boolean = False
 		Dim Width_Check As Boolean = False
-
 		Radius_Output_Label.Text = "Radius"
 
-		If Decimal.TryParse(Height_Radius_Input.Text, Radius_Height) Then
-			Height_Check = True
-		Else
-			Functions.Error_Form("Input not valid", Height_Radius_Input.Text & " is not valid",,,,, Me)
-		End If
+		Try
 
-		If Decimal.TryParse(Width_Radius_Input.Text, Radius_Width) Then
-			Width_Check = True
-		Else
-			Functions.Error_Form("Input not valid", Width_Radius_Input.Text & " is not valid",,,,, Me)
-		End If
+			Radius_Height = Height_Radius_Input.Text
+			Radius_Width = Width_Radius_Input.Text
 
-		If Height_Check = True And Width_Check = True Then
 			Radius = (Radius_Height / 2) + ((Radius_Width ^ 2) / (8 * Radius_Height))
 			Radius = System.Decimal.Round(Radius, 3, MidpointRounding.AwayFromZero)
 			If Radius > 0 Then
@@ -46,7 +35,12 @@
 			Else
 				Functions.Error_Form("Error", "Something went wrong", , "Please try again",,, Me)
 			End If
-		End If
+
+		Catch ex As InvalidCastException
+
+			Functions.Error_Form("Null Value", "All inputs must be numerical",,,,, Me)
+
+		End Try
 
 	End Sub
 
@@ -55,4 +49,17 @@
 		Width_Radius_Input.Text = ""
 		Radius_Output_Label.Text = "Radius"
 	End Sub
+
+	Private Sub Height_Radius_Input_TextChanged(sender As Object, e As EventArgs) Handles Height_Radius_Input.Validating
+		If Height_Radius_Input.Text <> "" Then
+			Functions.Text_Validate(Height_Radius_Input, "Decimal", Me, "Height input")
+		End If
+	End Sub
+
+	Private Sub Width_Radius_Input_TextChanged(sender As Object, e As EventArgs) Handles Width_Radius_Input.Validating
+		If Width_Radius_Input.Text <> "" Then
+			Functions.Text_Validate(Width_Radius_Input, "Decimal", Me, "Radius input")
+		End If
+	End Sub
+
 End Class

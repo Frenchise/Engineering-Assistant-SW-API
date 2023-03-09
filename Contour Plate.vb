@@ -92,9 +92,6 @@ Public Class Contour_Plate
         Dim Rot_Angle As Double
 		Dim Aircraft_Angles As Angles
 
-		swApp = CreateObject("SldWorks.Application")
-
-
         Aircraft_Angles.FWD = Nothing
         Aircraft_Angles.Lateral = Nothing
         Aircraft_Angles.Pitch = Nothing
@@ -129,19 +126,19 @@ Public Class Contour_Plate
         'Belly Shape
         If Belly_Flat.Checked = True Then
             Aircraft_Angles.Radius = "Flat"
-            swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Contour Plates\(1) Template Wedges\Contour Plate Template - Flat.SLDPRT", 1, 0, "", fileerror, filewarning)
+            swDoc = swApp.OpenDoc6(Network_Locations.Flat_Contour_Plate_Temp, 1, 0, "", fileerror, filewarning)
             swApp.ActivateDoc("Contour Plate Template - Flat")
         End If
 
         If Belly_Radii.Checked = True Then
             Aircraft_Angles.Radius = "Radius"
-            swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Contour Plates\(1) Template Wedges\Contour Plate Template - Radius.SLDPRT", 1, 0, "", fileerror, filewarning)
+            swDoc = swApp.OpenDoc6(Network_Locations.Radius_Contour_Plate_Temp, 1, 0, "", fileerror, filewarning)
             swApp.ActivateDoc("Contour Plate Template - Radius")
         End If
 
         If Belly_Spline.Checked = True Then
             Aircraft_Angles.Radius = "Spline"
-            swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Contour Plates\(1) Template Wedges\Contour Plate Template - Spline.SLDPRT", 1, 0, "", fileerror, filewarning)
+            swDoc = swApp.OpenDoc6(Network_Locations.Spline_Contour_Plate_Temp, 1, 0, "", fileerror, filewarning)
             swApp.ActivateDoc("Contour Plate Template - Spline")
         End If
 
@@ -513,14 +510,12 @@ Public Class Contour_Plate
         AFT_Radius.Clear()
         Aft_Radius_Label.Visible = False
 
-        Dir = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Contour Plates\Flat Panels"
-
         Feature_List.Items.Clear()
 
-		Functions.Directory_List(Dir, Feature_List)
+        Functions.Directory_List(Network_Locations.Flat_panel, Feature_List)
 
 
-	End Sub
+    End Sub
 
     Private Sub Belly_Radii_CheckedChanged(sender As Object, e As EventArgs) Handles Belly_Radii.CheckedChanged
 
@@ -529,15 +524,12 @@ Public Class Contour_Plate
         AFT_Radius.Visible = True
         Aft_Radius_Label.Visible = True
 
-
-        Dir = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Contour Plates\Radii Panels"
-
         Feature_List.Items.Clear()
 
-		Functions.Directory_List(Dir, Feature_List)
+        Functions.Directory_List(Network_Locations.Radius_Panel, Feature_List)
 
 
-	End Sub
+    End Sub
 
     Private Sub Belly_Spline_CheckedChanged(sender As Object, e As EventArgs) Handles Belly_Spline.CheckedChanged
 
@@ -548,13 +540,11 @@ Public Class Contour_Plate
         AFT_Radius.Clear()
         Aft_Radius_Label.Visible = False
 
-        Dir = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Contour Plates\Radii Panels"
-
         Feature_List.Items.Clear()
 
-		Functions.Directory_List(Dir, Feature_List)
+        Functions.Directory_List(Network_Locations.Radius_Panel, Feature_List)
 
-	End Sub
+    End Sub
 
     Function ObjectArrayToDispatchWrapperArray(ByVal Objects As Object()) As DispatchWrapper()
         Dim ArraySize As Integer
@@ -585,8 +575,7 @@ Public Class Contour_Plate
         Dim Refs As Object = Nothing
         Dim RefTypes As Object = Nothing
 
-		'swApp = CreateObject("SldWorks.Application")
-		swModelDocExt = swDoc.Extension
+        swModelDocExt = swDoc.Extension
         swFeatMgr = swDoc.FeatureManager
 		swLibFeat = swFeatMgr.CreateDefinition(SwConst.swFeatureNameID_e.swFmLibraryFeature)
 

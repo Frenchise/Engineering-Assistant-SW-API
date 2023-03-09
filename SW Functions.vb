@@ -2,8 +2,6 @@
 Imports SwCommands
 Imports SwConst
 Imports System.IO
-Imports System.IO.Compression
-Imports System.IO.Compression.ZipFile
 Imports Microsoft.Office.Interop.Excel
 
 Public Class SWFunctions
@@ -21,6 +19,7 @@ Public Class SWFunctions
 	Public Shared swAssy_Docs As New List(Of Assy_Docs)
 	Public Shared swPart_Docs As New List(Of Part_Docs)
 	Public Shared swDwg_Docs As New List(Of Drawing_Docs)
+	Public Shared swHardware_Docs As New List(Of Hardware_Docs)
 	Shared swComp_Assy As String
 
 	Public Shared Rename_Files As Boolean = False
@@ -41,7 +40,7 @@ Public Class SWFunctions
 		Public Counter As Integer
 		Public Used As Boolean
 
-		Public Sub New(s1 As String, s2 As String, s3 As String, s4 As String, s5 As String, s6 As String, s7 As String, s8 As String, s9 As String, Optional s10 As String = "")
+		Public Sub New(s1 As String, s2 As String, s3 As String, s4 As String, s5 As String, s6 As String, s7 As String, s8 As String, s9 As String, s10 As String, s11 As Integer)
 			Comp = s1
 			subcomp = s2
 			instance_ID = s3
@@ -52,6 +51,7 @@ Public Class SWFunctions
 			Material = s8
 			Weight = s9
 			Parent = s10
+			Counter = s11
 
 		End Sub
 
@@ -72,7 +72,7 @@ Public Class SWFunctions
 		Public Counter As Integer
 		Public Used As Boolean
 
-		Public Sub New(s1 As String, s2 As String, s3 As String, s4 As String, s5 As String, s6 As String, s7 As String, s8 As String, s9 As String, Optional s10 As String = "")
+		Public Sub New(s1 As String, s2 As String, s3 As String, s4 As String, s5 As String, s6 As String, s7 As String, s8 As String, s9 As String, s10 As String, s11 As Integer)
 			Comp = s1
 			subcomp = s2
 			instance_ID = s3
@@ -83,6 +83,39 @@ Public Class SWFunctions
 			Material = s8
 			Weight = s9
 			Parent = s10
+			Counter = s11
+
+		End Sub
+
+	End Class
+
+	Class Hardware_Docs
+		Public Comp As String
+		Public subcomp As String
+		Public instance_ID As String
+		Public Part_Number As String = "Null"
+		Public Nomenclature As String = "Null"
+		Public Spec As String = "Null"
+		Public Description As String = "Null"
+		Public Material As String = "Null"
+		Public Weight As String = "Null"
+		Public Parent As String = "Null"
+		Public Name As String
+		Public Counter As Integer = 0
+		Public Used As Boolean
+
+		Public Sub New(s1 As String, s2 As String, s3 As String, s4 As String, s5 As String, s6 As String, s7 As String, s8 As String, s9 As String, s10 As String, s11 As Integer)
+			Comp = s1
+			subcomp = s2
+			instance_ID = s3
+			Part_Number = s4
+			Nomenclature = s5
+			Description = s6
+			Spec = s7
+			Material = s8
+			Weight = s9
+			Parent = s10
+			Counter = s11
 
 		End Sub
 
@@ -144,7 +177,6 @@ Public Class SWFunctions
 			End If
 			SWProcess = Process.GetProcessesByName("SLDWORKS")
 			If SWProcess.Count = 1 Then
-				'app1 = TryCast(CreateObject("SldWorks.Application"), SolidWorks.Interop.sldworks.ISldWorks)
 				app1 = CreateObject("SldWorks.Application")
 				Threading.Thread.Sleep(1000)
 			Else
@@ -156,7 +188,7 @@ Public Class SWFunctions
 					SW_Path = "C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS (" & i & ")"
 					'MsgBox(SW_Path & " ---- " & Directory.Exists(SW_Path))
 					If Directory.Exists(SW_Path) Then
-						SW_Path = SW_Path & "\SLDWORKS.exe"
+						SW_Path &= "\SLDWORKS.exe" 'SW_Path = SW_Path & "\SLDWORKS.exe"
 						Exit For
 					End If
 
@@ -166,7 +198,6 @@ Public Class SWFunctions
 				Threading.Thread.Sleep(1000)
 				'MsgBox(SWProcess2.Count)
 				If SWProcess2.Count = 1 Then
-					'app1 = TryCast(CreateObject("SldWorks.Application"), SolidWorks.Interop.sldworks.ISldWorks)
 					app1 = CreateObject("SldWorks.Application")
 					'MsgBox("1")
 				End If
@@ -195,84 +226,77 @@ Public Class SWFunctions
 
 
 	Shared Function Opened_Docs()
-			Dim swApp As SldWorks.SldWorks
-			Dim Open_Docs As Object
-			Dim count As Integer
+		Dim Open_Docs As Object
+		Dim count As Integer
 
-			swApp = CreateObject("SldWorks.Application")
+		count = swApp.GetDocumentCount
+		Open_Docs = swApp.GetDocuments
 
-			count = swApp.GetDocumentCount
-			Open_Docs = swApp.GetDocuments
-
-			Return Open_Docs
-		End Function
+		Return Open_Docs
+	End Function
 
 
 	Shared Function Sheet_Rename()
 
-			Dim swApp As SldWorks.SldWorks
-			Dim swDoc As ModelDoc2
-			Dim swDraw As DrawingDoc
-			Dim SWSheet As Sheet
-			Dim swModelDocExt As ModelDocExtension
+		Dim swApp_Fun As SldWorks.SldWorks
+		Dim swDoc As ModelDoc2
+		Dim swDraw As DrawingDoc
+		Dim SWSheet As Sheet
+		Dim swModelDocExt As ModelDocExtension
 
-			swApp = CreateObject("SldWorks.Application")
-			swDoc = swApp.ActiveDoc()
 
-			If swDoc Is Nothing Then
-				Functions.Error_Form()
-			Else
+		swApp_Fun = SWFunctions.swApp
+		swDoc = swApp_Fun.ActiveDoc()
 
-				If swDoc.GetType <> 3 Then
+		If swDoc Is Nothing Then
+			Functions.Error_Form()
+		Else
+
+			If swDoc.GetType <> 3 Then
 				Functions.Error_Form(, "This is not a drawing file")
 			Else
-					swDraw = swDoc
-					If swDraw Is Nothing Then
-						Functions.Error_Form(, "No Drawing sheet loaded")
-					Else
-						Dim sheetnames() As String
-						Dim Sheetnumbers As Integer
-						Start_Window.SW_Doc.Text = "Sheet Renaming in Proocess"
+				swDraw = swDoc
+				If swDraw Is Nothing Then
+					Functions.Error_Form(, "No Drawing sheet loaded")
+				Else
+					Dim sheetnames() As String
+					Dim Sheetnumbers As Integer
+					Start_Window.SW_Doc.Text = "Sheet Renaming in Proocess"
 
-						swApp.Visible = True
-						Sheetnumbers = swDraw.GetSheetCount
-						sheetnames = swDraw.GetSheetNames
+					swApp_Fun.Visible = True
+					Sheetnumbers = swDraw.GetSheetCount
+					sheetnames = swDraw.GetSheetNames
 
-						For i = 1 To (Sheetnumbers)
-							swDraw.ActivateSheet(sheetnames(i - 1))
-							SWSheet = swDraw.GetCurrentSheet
-							SWSheet.SetName("Renaming" & i)
-						Next
+					For i = 1 To (Sheetnumbers)
+						swDraw.ActivateSheet(sheetnames(i - 1))
+						SWSheet = swDraw.GetCurrentSheet
+						SWSheet.SetName("Renaming" & i)
+					Next
 
-						sheetnames = swDraw.GetSheetNames
-						For i = 1 To (Sheetnumbers)
-							swDraw.ActivateSheet(sheetnames(i - 1))
-							SWSheet = swDraw.GetCurrentSheet
-							SWSheet.SetName("Sheet" & i)
-							swModelDocExt = swDoc.Extension
-							swModelDocExt.ViewZoomToSheet()
-						Next
+					sheetnames = swDraw.GetSheetNames
+					For i = 1 To (Sheetnumbers)
+						swDraw.ActivateSheet(sheetnames(i - 1))
+						SWSheet = swDraw.GetCurrentSheet
+						SWSheet.SetName("Sheet" & i)
+						swModelDocExt = swDoc.Extension
+						swModelDocExt.ViewZoomToSheet()
+					Next
 
-					End If
 				End If
-				Return True
 			End If
+			Return True
+		End If
 
-			Return False
-		End Function
+		Return False
+	End Function
 
 
 	Shared Function PDF()
 
-		Dim swApp As SldWorks.SldWorks
 		Dim swDoc As ModelDoc2
 		Dim swExt As ModelDocExtension
-
 		Dim CusProperties As CustomPropertyManager
-
 		Dim bool As Boolean
-
-		swApp = CreateObject("SldWorks.Application")
 		swDoc = swApp.ActiveDoc
 
 		If swDoc Is Nothing Then
@@ -307,64 +331,22 @@ Public Class SWFunctions
 				Dim swLayerMgr = swDoc.GetLayerManager
 
 				PathName = swDoc.GetPathName()
-				'Debug.Print(PathName)
-
 				FileName = System.IO.Path.GetFileNameWithoutExtension(PathName)
-				'Debug.Print(FileName)
-
 				PathName = System.IO.Path.GetDirectoryName(PathName)
-				'Debug.Print(PathName)
-
 				swDoc.ClearSelection2(True)
 
 				Structural = Directory.GetParent(PathName).FullName
-				'Debug.Print(Structural)
-
 				Drawings_Major = Directory.GetParent(Structural).FullName
-				'Debug.Print(Drawings_Major)
-
 				Dim length = Drawings_Major.Length - 18
-				'Debug.Print(length)
-
 				Dim Major = Drawings_Major.Substring(length, 3)
-				'Debug.Print(Major)
-
 				Plane_Folder = Directory.GetParent(Drawings_Major).FullName
-				'Debug.Print(Plane_Folder)
-
-				'If Major = "(2)" Then
-				'	'Drawing is a major
-				'	Released_As = "Major"
-				'	PDF_Path = Path.Combine(Plane_Folder, Released_to_Inspection)
-				'	PDF_Path = Path.Combine(PDF_Path, Released_As)
-
-				'	System.IO.Directory.CreateDirectory(PDF_Path)
-
-				'ElseIf Major = "(3)" Then
-
-				'	'Drawing is a minor
-				'	Released_As = "Minor"
-
-				'	PDF_Path = Path.Combine(Drawings_Major, Released_to_Inspection)
-				'	PDF_Path = Path.Combine(PDF_Path, Released_As)
-
-				'	System.IO.Directory.CreateDirectory(PDF_Path)
-
-				'Else
 				Released_As = "PDF"
 				PDF_Path = Path.Combine(PathName, "PDF RELEASES")
 
-				'End If
-
 				CusProperties = swDoc.Extension.CustomPropertyManager("")
-
 				Title = CusProperties.Get("TITLE")
 				REV_1 = CusProperties.Get("REV 1")
 				dwg_Num= CusProperties.Get("DWG NUM")
-
-				'If FileName <> dwg_Num Then
-				'	FileName = dwg_Num
-				'End If
 
 				If REV_1.StartsWith("P") Then
 					REV = CusProperties.Get("REV 1")
@@ -434,16 +416,6 @@ Public Class SWFunctions
 
 				System.IO.Directory.CreateDirectory(PDF_Path)
 
-				'If REV = "I/R" Then
-				'	REV = "IR"
-				'	swLayer = swLayerMgr.GetLayer("SIGBLK")
-				'	swLayer.Visible = False
-				'End If
-
-				'Debug.Print(Title)
-				'Debug.Print(PDF_Path)
-				'Debug.Print(FileName)
-
 				If FileName.Length + Title.Length > 70 Then
 					Title = ""
 				End If
@@ -460,9 +432,6 @@ Public Class SWFunctions
 					PDF_Path = Path.Combine(PDF_Path, FileName)
 					Title = PDF_Path + " (" + Title + ")" + " -REV-"
 				End If
-
-				'PDF_Path = Path.Combine(PDF_Path, FileName)
-				'Title = PDF_Path + " " + REV + " (" + Title + ")"
 
 				bool = swDoc.SaveAs4(Title + ".PDF", swSaveAsVersion_e.swSaveAsCurrentVersion, swSaveAsOptions_e.swSaveAsOptions_Silent, 0, 0)
 				'bool = swExt.SaveAs3(Title + ".PDF", swSaveAsVersion_e.swSaveAsCurrentVersion, swSaveAsOptions_e.swSaveAsOptions_Silent, Nothing, Nothing, 1, 0)
@@ -502,7 +471,6 @@ Public Class SWFunctions
 
 	Shared Function PackandGoAssy()
 
-		Dim swApp As SldWorks.SldWorks
 		Dim swDoc As ModelDoc2
 		Dim swPackAndGo As PackAndGo
 
@@ -517,72 +485,66 @@ Public Class SWFunctions
 		'Dim MyFolder = String.Empty
 		Dim ExistingFile = String.Empty
 
-		swApp = CreateObject("SldWorks.Application")
-		swApp.Visible = True
-		swDoc = swApp.ActiveDoc
+		SWFunctions.swApp.Visible = True
+		swDoc = SWFunctions.swApp.ActiveDoc
 
-
-		If swDoc.GetType = swDocumentTypes_e.swDocASSEMBLY OrElse swDoc.GetType = swDocumentTypes_e.swDocDRAWING Then
-
-			swDoc.ForceRebuild3(True)
-			swDoc.Save3(1, 1, 2)
-
-			'check for existing file is true
-			ExistingFile = swDoc.GetPathName
-
-			If ExistingFile = "" Then
-
-				Functions.Error_Form("File Error", "File is not Saved",, "Please save before using Pack n Go",,,)
-
-			Else
-
-				Filename = System.IO.Path.GetFileNameWithoutExtension(ExistingFile)
-				Pathname = System.IO.Path.GetDirectoryName(ExistingFile)
-
-				swPackAndGo = swDoc.Extension.GetPackAndGo
-				swPackAndGo.IncludeDrawings = True
-				swPackAndGo.IncludeSimulationResults = False
-				swPackAndGo.IncludeSuppressed = True
-				swPackAndGo.IncludeToolboxComponents = True
-				swPackAndGo.FlattenToSingleFolder = True
-
-				status = swPackAndGo.GetDocumentSaveToNames(pgFileNames, pgFileStatus)
-
-				'Puts Pack and Go files in native Directory
-				status = swPackAndGo.SetSaveToName(True, Pathname)
-				statuses = swDoc.Extension.SavePackAndGo(swPackAndGo)
-
-				If swDoc.GetType = CInt(3) Then
-
-					swApp.QuitDoc(ExistingFile)
-					swApp.OpenDoc6(ExistingFile, 3, 1, "", 1, 2)
-
-				ElseIf swDoc.GetType = CInt(2) Then
-
-					swApp.QuitDoc(ExistingFile)
-					swApp.OpenDoc6(ExistingFile, 2, 1, "", 1, 2)
-
-				Else
-
-					Functions.Error_Form("Pack And Go Failure", "Incompatible file type to use Pack and Go feature",,,,,)
-
-				End If
-
-			End If
-
-			Return True
-
-		Else
-
+		If swDoc Is Nothing Then
 			Functions.Error_Form()
 			Return False
+		Else
+			If swDoc.GetType = swDocumentTypes_e.swDocASSEMBLY OrElse swDoc.GetType = swDocumentTypes_e.swDocDRAWING Then
 
+				swDoc.ForceRebuild3(True)
+				swDoc.Save3(1, 1, 2)
+
+				'check for existing file is true
+				ExistingFile = swDoc.GetPathName
+
+				If ExistingFile = "" Then
+					Functions.Error_Form("File Error", "File is not Saved",, "Please save before using Pack n Go",,,)
+				Else
+
+					Filename = System.IO.Path.GetFileNameWithoutExtension(ExistingFile)
+					Pathname = System.IO.Path.GetDirectoryName(ExistingFile)
+
+					swPackAndGo = swDoc.Extension.GetPackAndGo
+					swPackAndGo.IncludeDrawings = True
+					swPackAndGo.IncludeSimulationResults = False
+					swPackAndGo.IncludeSuppressed = True
+					swPackAndGo.IncludeToolboxComponents = True
+					swPackAndGo.FlattenToSingleFolder = True
+
+					status = swPackAndGo.GetDocumentSaveToNames(pgFileNames, pgFileStatus)
+
+					'Puts Pack and Go files in native Directory
+					status = swPackAndGo.SetSaveToName(True, Pathname)
+					statuses = swDoc.Extension.SavePackAndGo(swPackAndGo)
+
+					If swDoc.GetType = CInt(3) Then
+
+						swApp.QuitDoc(ExistingFile)
+						swApp.OpenDoc6(ExistingFile, 3, 1, "", 1, 2)
+
+					ElseIf swDoc.GetType = CInt(2) Then
+
+						swApp.QuitDoc(ExistingFile)
+						swApp.OpenDoc6(ExistingFile, 2, 1, "", 1, 2)
+
+					Else
+						Functions.Error_Form("Pack And Go Failure", "Incompatible file type to use Pack and Go feature",,,,,)
+					End If
+				End If
+				Return True
+			Else
+				Functions.Error_Form()
+				Return False
+			End If
 		End If
 	End Function
 
+
 	Shared Function PackandGo2()
 
-		Dim swApp As SldWorks.SldWorks
 		Dim swDoc As ModelDoc2
 		Dim swPackAndGo As PackAndGo
 		Dim swPackAndGo_Zip As PackAndGo
@@ -606,7 +568,6 @@ Public Class SWFunctions
 		Dim TimeNow As DateTime = DateTime.Now
 		Dim format As String = "MM-dd-yyyy HH-mm-ss"
 
-		swApp = CreateObject("SldWorks.Application")
 		swApp.Visible = True
 		swDoc = swApp.ActiveDoc
 
@@ -730,11 +691,11 @@ Public Class SWFunctions
 		Return False
 	End Function
 
+
 	Shared Function IR_Pack_N_Go()
 
-		Dim swApp As SldWorks.SldWorks
 		Dim swDoc As ModelDoc2
-		Dim swPackAndGo As PackAndGo
+		'Dim swPackAndGo As PackAndGo
 		Dim swPackAndGo_Zip As PackAndGo
 		Dim CusProperties As CustomPropertyManager
 
@@ -762,229 +723,236 @@ Public Class SWFunctions
 		Dim TimeNow As DateTime = DateTime.Now
 		Dim format As String = "MM-dd-yyyy HH-mm-ss"
 
-		swApp = CreateObject("SldWorks.Application")
 		swApp.Visible = True
 		swDoc = swApp.ActiveDoc
 
-		'If swDoc Is Nothing Then
-		If swDoc.GetType <> 3 Then
+		If swDoc IsNot Nothing Then
 
-			Functions.Error_Form("Document Is Not A Drawing", "Opened document is not a drawing")
-			Return False
-		Else
-
-			swDoc.ForceRebuild3(True)
-			'swDoc.Save3(1, 1, 2)
-
-			'check for existing file is true
-			ExistingFile = swDoc.GetPathName
-
-			If ExistingFile = "" Then
-
-
-				Functions.Error_Form("File Error", "File is not Saved",, "Please save before using Pack n Go",,)
-
+			If swDoc.GetType <> 3 Then
+				Functions.Error_Form("Document Is Not A Drawing", "Opened document is not a drawing")
+				Return False
 			Else
 
-				CusProperties = swDoc.Extension.CustomPropertyManager("")
+				swDoc.ForceRebuild3(True)
+				'swDoc.Save3(1, 1, 2)
 
-				Filename = System.IO.Path.GetFileNameWithoutExtension(ExistingFile)
-				Pathname = System.IO.Path.GetDirectoryName(ExistingFile)
-				ASSYname = Pathname + "\" + Filename ' + " (Pack and Go)"
+				'check for existing file is true
+				ExistingFile = swDoc.GetPathName
 
-				swPackAndGo = swDoc.Extension.GetPackAndGo
-				swPackAndGo.IncludeDrawings = True
-				swPackAndGo.IncludeSimulationResults = False
-				swPackAndGo.IncludeSuppressed = True
-				swPackAndGo.IncludeToolboxComponents = True
-				swPackAndGo.FlattenToSingleFolder = True
-
-				swPackAndGo_Zip = swDoc.Extension.GetPackAndGo
-				swPackAndGo_Zip.IncludeDrawings = True
-				swPackAndGo_Zip.IncludeSimulationResults = False
-				swPackAndGo_Zip.IncludeSuppressed = True
-				swPackAndGo_Zip.IncludeToolboxComponents = True
-				swPackAndGo_Zip.FlattenToSingleFolder = True
-
-				Dim External_Files As New List(Of String)
-				Dim exclude = {".slddrw", ".sldasm", ".sldprt", ".zip"}
-				Dim Extension As String
-
-				For Each myFile As String In Directory.GetFiles(Pathname)
-					Extension = LCase(Path.GetExtension(myFile))
-					If Extension = exclude(0) Or Extension = exclude(1) Or Extension = exclude(2) Or Extension = exclude(3) Then
-						'MsgBox("failed")
-					Else
-						External_Files.Add(myFile)
-						'MsgBox(myFile)
-					End If
-
-				Next
-
-
-
-
-				'REV = CusProperties.Get("CURRENT REV")
-				Cus_Prop_val = CusProperties.Get6("CURRENT REV", False, Valout, REV, Resolved, False)
-				Select Case REV
-					Case "P1"
-						Preliminary = True
-					Case "P2"
-						Preliminary = True
-					Case "P3"
-						Preliminary = True
-					Case "P4"
-						Preliminary = True
-					Case "P5"
-						Preliminary = True
-					Case "P6"
-						Preliminary = True
-					Case "P7"
-						Preliminary = True
-					Case "I/R"
-						REV = "IR"
-						Initial_Release = True
-					Case "A"
-						Revised = True
-					Case "B"
-						Revised = True
-					Case "C"
-						Revised = True
-					Case "D"
-						Revised = True
-					Case Else
-						REV = ""
-				End Select
-
-
-				Cus_Prop_val = CusProperties.Get6("TITLE", False, Valout, TITLE, Resolved, False)
-
-				If TITLE IsNot "" Then
-
-					If Revised = True Then
-						ASSYname = ASSYname + REV + " (" + TITLE + ")"
-					ElseIf Preliminary = True Then
-						ASSYname = ASSYname + " (" + TITLE + ")" + " " + REV
-					ElseIf Initial_Release = True Then
-						ASSYname = ASSYname + " (" + TITLE + ")"
-					Else
-						ASSYname = ASSYname + " (" + TITLE + ")" + " -REV-"
-					End If
-
+				If ExistingFile = "" Then
+					Functions.Error_Form("File Error", "File is not Saved",, "Please save before using Pack n Go",,)
 				Else
 
-					Functions.Error_Form("Document Title", "No Title Filled out on this drawing")
+					CusProperties = swDoc.Extension.CustomPropertyManager("")
+					Filename = System.IO.Path.GetFileNameWithoutExtension(ExistingFile)
+					Pathname = System.IO.Path.GetDirectoryName(ExistingFile)
+					ASSYname = Pathname + "\" + Filename ' + " (Pack and Go)"
 
-				End If
+					'swPackAndGo = swDoc.Extension.GetPackAndGo
+					'swPackAndGo.IncludeDrawings = True
+					'swPackAndGo.IncludeSimulationResults = False
+					'swPackAndGo.IncludeSuppressed = True
+					'swPackAndGo.IncludeToolboxComponents = True
+					'swPackAndGo.FlattenToSingleFolder = True
+					''swPackAndGo.RemoveExternalDocuments = False
 
-				'If REV = "I/R" Then
-				'	REV = "IR"
-				'	ASSYname = ASSYname + " " + REV
-				'ElseIf REV = "" Then
-				'	'ASSYname = ASSYname + " " + REV
-				'Else
-				'	ASSYname = ASSYname + " " + REV
-				'End If
+					swPackAndGo_Zip = swDoc.Extension.GetPackAndGo
+					swPackAndGo_Zip.IncludeDrawings = True
+					swPackAndGo_Zip.IncludeSimulationResults = False
+					swPackAndGo_Zip.IncludeSuppressed = True
+					swPackAndGo_Zip.IncludeToolboxComponents = True
+					swPackAndGo_Zip.FlattenToSingleFolder = True
+					'swPackAndGo.RemoveExternalDocuments = False
 
+					Dim External_Files As New List(Of String)
+					Dim exclude = {".slddrw", ".sldasm", ".sldprt", ".zip"}
+					Dim Extension As String
 
-				'status = swPackAndGo.AddExternalDocuments(External_Files.ToArray)
-
-				'status = swPackAndGo.SetSaveToName(True, Pathname)
-				'statuses = swDoc.Extension.SavePackAndGo(swPackAndGo)
-
-				'swPackAndGo.AddPrefix = Filename + " - "
-
-				'MsgBox(TimeNow.ToString(format))
-
-				'statuses = swDoc.Extension.SavePackAndGo(swPackAndGo)
-
-				''''Copy reference files
-				count = swApp.GetDocumentCount
-				Open_Docs = swApp.GetDocuments
-
-
-				If swDoc.GetType = CInt(3) Then
-					swDocType = swDoc.GetType
-					For i = LBound(Open_Docs) To UBound(Open_Docs)
-						swDoc = Open_Docs(i)
-						Dim F_Name As String
-						Dim errors As Integer
-						Dim MoreErr As Integer
-
-						If swDoc.GetType = 2 Or swDoc.GetType = 3 Then
-							F_Name = SW_FileName(swDoc.GetPathName())
-							swApp.IActivateDoc3(F_Name, False, errors)
-							swDoc.Save3(1, errors, MoreErr)
-							swApp.QuitDoc(F_Name)
-
+					For Each myFile As String In Directory.GetFiles(Pathname)
+						Extension = LCase(Path.GetExtension(myFile))
+						If Extension = exclude(0) Or Extension = exclude(1) Or Extension = exclude(2) Or Extension = exclude(3) Then
+							'MsgBox("failed")
+						Else
+							External_Files.Add(myFile)
+							'MsgBox(myFile)
 						End If
 
 					Next
 
-				ElseIf swDoc.GetType = CInt(2) Then
-					swDocType = swDoc.GetType
-					For i = LBound(Open_Docs) To UBound(Open_Docs)
-						swDoc = Open_Docs(i)
-						Dim F_Name As String
-						Dim errors As Integer
-						Dim MoreErr As Integer
+					'REV = CusProperties.Get("CURRENT REV")
+					Cus_Prop_val = CusProperties.Get6("CURRENT REV", False, Valout, REV, Resolved, False)
+					Select Case REV
+						Case "P1"
+							Preliminary = True
+						Case "P2"
+							Preliminary = True
+						Case "P3"
+							Preliminary = True
+						Case "P4"
+							Preliminary = True
+						Case "P5"
+							Preliminary = True
+						Case "P6"
+							Preliminary = True
+						Case "P7"
+							Preliminary = True
+						Case "I/R"
+							REV = "IR"
+							Initial_Release = True
+						Case "A"
+							Revised = True
+						Case "B"
+							Revised = True
+						Case "C"
+							Revised = True
+						Case "D"
+							Revised = True
+						Case Else
+							REV = ""
+					End Select
 
+					Cus_Prop_val = CusProperties.Get6("TITLE", False, Valout, TITLE, Resolved, False)
 
-						If swDoc.GetType = 2 Or swDoc.GetType = 3 Then
-							F_Name = SW_FileName(swDoc.GetPathName())
-							swApp.IActivateDoc3(F_Name, False, errors)
-							swDoc.Save3(1, errors, MoreErr)
+					If TITLE IsNot "" Then
 
-							swApp.QuitDoc(F_Name)
-
-							i = UBound(Open_Docs)
-
+						If Revised = True Then
+							ASSYname = ASSYname + REV + " (" + TITLE + ")"
+						ElseIf Preliminary = True Then
+							ASSYname = ASSYname + " (" + TITLE + ")" + " " + REV
+						ElseIf Initial_Release = True Then
+							ASSYname = ASSYname + " (" + TITLE + ")"
+						Else
+							ASSYname = ASSYname + " (" + TITLE + ")" + " -REV-"
 						End If
 
+					Else
+						Functions.Error_Form("Document Title", "No Title Filled out on this drawing")
+					End If
+
+					'If REV = "I/R" Then
+					'	REV = "IR"
+					'	ASSYname = ASSYname + " " + REV
+					'ElseIf REV = "" Then
+					'	'ASSYname = ASSYname + " " + REV
+					'Else
+					'	ASSYname = ASSYname + " " + REV
+					'End If
+
+
+					'status = swPackAndGo.AddExternalDocuments(External_Files.ToArray)
+
+					'status = swPackAndGo.SetSaveToName(True, Pathname)
+					'statuses = swDoc.Extension.SavePackAndGo(swPackAndGo)
+
+					'swPackAndGo.AddPrefix = Filename + " - "
+
+					'MsgBox(TimeNow.ToString(format))
+
+					'statuses = swDoc.Extension.SavePackAndGo(swPackAndGo)
+
+					''''Copy reference files
+					count = swApp.GetDocumentCount
+					Open_Docs = swApp.GetDocuments
+
+					For i = 0 To UBound(Open_Docs)
+						swDoc = Open_Docs(i)
+						Debug.Print(SW_FileName(swDoc.GetPathName()))
 					Next
 
-				Else
-					Functions.Error_Form("Pack And Go Failure", "Incompatible file type to use Pack and Go feature",,,,)
+
+					If swDoc.GetType = CInt(3) Then
+						swDocType = swDoc.GetType
+						For i = 0 To UBound(Open_Docs)
+							swDoc = Open_Docs(i)
+							Dim F_Name As String
+							Dim errors As Integer
+							Dim MoreErr As Integer
+							Debug.Print(i)
+
+							If swDoc.GetType = 2 Or swDoc.GetType = 3 Then
+								F_Name = SW_FileName(swDoc.GetPathName())
+								swApp.IActivateDoc3(F_Name, False, errors)
+								swDoc.Save3(1, errors, MoreErr)
+								swApp.QuitDoc(F_Name)
+
+							End If
+
+						Next
+
+					ElseIf swDoc.GetType = CInt(2) Then
+						swDocType = swDoc.GetType
+						For i = 0 To UBound(Open_Docs)
+							swDoc = Open_Docs(i)
+							Dim F_Name As String
+							Dim errors As Integer
+							Dim MoreErr As Integer
+							Debug.Print(i)
+
+							If swDoc.GetType = 2 Or swDoc.GetType = 3 Then
+								F_Name = SW_FileName(swDoc.GetPathName())
+								swApp.IActivateDoc3(F_Name, False, errors)
+								swDoc.Save3(1, errors, MoreErr)
+
+								swApp.QuitDoc(F_Name)
+
+								i = UBound(Open_Docs)
+
+							End If
+
+						Next
+
+					Else
+						Functions.Error_Form("Pack And Go Failure", "Incompatible file type to use Pack and Go feature",,,,)
+					End If
+
+					Dim pgFileNames2 As Object = Nothing
+					Dim pgFileStatus2 As Object = Nothing
+
+					'MsgBox(swPackAndGo_Zip.GetDocumentNamesCount())
+
+					status = swPackAndGo_Zip.GetDocumentNames(pgFileNames2)
+					If pgFileNames2 IsNot Nothing Then
+						For i = 0 To UBound(pgFileNames2)
+							Debug.Print(pgFileNames2(i))
+						Next
+					End If
+
+					status = swPackAndGo_Zip.GetDocumentSaveToNames(pgFileNames2, pgFileStatus2)
+
+					If External_Files.Count > 0 Then
+						status = swPackAndGo_Zip.AddExternalDocuments(External_Files.ToArray)
+					End If
+
+					status = swPackAndGo_Zip.SetSaveToName(True, ASSYname) ' + ".zip")
+					'swPackAndGo_Zip.AddPrefix = Filename + " - "
+
+					Dim Zipped_File As String
+					Zipped_File = ASSYname ' + ".zip"
+
+					If Directory.Exists(Zipped_File) Then
+						status = swPackAndGo_Zip.SetSaveToName(True, ASSYname + " - " + TimeNow.ToString(format)) ' + ".zip")
+						statuses = swDoc.Extension.SavePackAndGo(swPackAndGo_Zip)
+						For i = 0 To UBound(statuses)
+							Debug.Print(statuses(i).ToString)
+						Next
+					Else
+						statuses = swDoc.Extension.SavePackAndGo(swPackAndGo_Zip)
+					End If
 				End If
-
-				Dim pgFileNames2 As Object
-				Dim pgFileStatus2 As Object
-
-				status = swPackAndGo_Zip.GetDocumentSaveToNames(pgFileNames2, pgFileStatus2)
-
-				status = swPackAndGo_Zip.AddExternalDocuments(External_Files.ToArray)
-
-				status = swPackAndGo_Zip.SetSaveToName(True, ASSYname) ' + ".zip")
-				'swPackAndGo_Zip.AddPrefix = Filename + " - "
-
-
-				Dim Zipped_File As String
-				Zipped_File = ASSYname ' + ".zip"
-
-				If Directory.Exists(Zipped_File) Then
-
-					status = swPackAndGo_Zip.SetSaveToName(True, ASSYname + " - " + TimeNow.ToString(format)) ' + ".zip")
-					statuses = swDoc.Extension.SavePackAndGo(swPackAndGo_Zip)
-				Else
-
-					statuses = swDoc.Extension.SavePackAndGo(swPackAndGo_Zip)
-				End If
-
+				'swApp.QuitDoc(ExistingFile)
+				'swApp.OpenDoc6(ExistingFile, swDocType, 1, "", 1, 2)
+				Return True
 			End If
-
-			swApp.QuitDoc(ExistingFile)
-			swApp.OpenDoc6(ExistingFile, swDocType, 1, "", 1, 2)
-
-
-			Return True
+		Else
+			Return False
 		End If
 
 
 	End Function
 
+
 	Shared Function Save_Step(Filetype As String)
 
-		Dim swApp As SldWorks.SldWorks
 		Dim swDoc As ModelDoc2
 		Dim status As Boolean = False
 		Dim Alt_File_Folders As String = "Extra Model Filetypes"
@@ -992,9 +960,6 @@ Public Class SWFunctions
 		Dim FileName = String.Empty
 		Dim Extension = String.Empty
 		Dim New_Folder_Path = String.Empty
-
-
-		swApp = CreateObject("SldWorks.Application")
 		swDoc = swApp.ActiveDoc
 
 		If swDoc Is Nothing Then
@@ -1085,7 +1050,102 @@ Public Class SWFunctions
 						status = swDoc.SaveAs(PathName + Filetype)
 						'status = swDoc.SaveAs(PathName + ".STL")
 
+					ElseIf swDoc.GetType = swDocumentTypes_e.swDocPART Then ' Or swDoc.GetType = swDocumentTypes_e.swDocASSEMBLY Then
+						Dim swPart As PartDoc
+						Dim SavetoDWG As String
+						Dim Sheet_Metal_Bend As String
+						Dim OriginalPart As String
+						Dim ExportSheetOptions(11) As Double
+						Dim ExportPartAlign(11) As Double
+						Dim ExportVarAlignment As Object
+						Dim ExportBitmaskVal As Object
+						Dim ExportViews(3) As String
+						Dim VarViews As Object
+						Dim Val As Double
+						Dim TempVal As Double
+						Dim BendState As Long
+
+						ExportPartAlign(0) = 0# 'X coordinates of new origin
+						ExportPartAlign(1) = 0# 'Y coordinates of new origin
+						ExportPartAlign(2) = 0# 'Z coordinates of new origin
+						ExportPartAlign(3) = 0# 'Coordinates of new X direction vector
+						ExportPartAlign(4) = 0# 'Coordinates of new X direction vector
+						ExportPartAlign(5) = 0# 'Coordinates of new X direction vector
+						ExportPartAlign(6) = 0# 'Coordinates of new Y direction vector
+						ExportPartAlign(7) = 0# 'Coordinates of new Y direction vector
+						ExportPartAlign(8) = 0# 'Coordinates of new Y direction vector
+						ExportPartAlign(9) = 0# 'Coordinates of vector that is normal to selected faces/loops
+						ExportPartAlign(10) = 0# 'Coordinates of vector that is normal to selected faces/loops
+						ExportPartAlign(11) = 0# 'Coordinates of vector that is normal to selected faces/loops
+
+						ExportVarAlignment = ExportPartAlign
+
+						ExportViews(0) = "*Current"
+						ExportViews(1) = "*Front"
+						ExportViews(2) = "*Top"
+						ExportViews(3) = "*Right"
+
+						VarViews = ExportViews
+
+						ExportSheetOptions(0) = 1.0# 'Geometry
+						ExportSheetOptions(1) = 0.0# 'Hidden edges
+						ExportSheetOptions(2) = 1.0# 'Bend line
+						ExportSheetOptions(3) = 0.0# 'Sketches
+						ExportSheetOptions(4) = 0.0# 'Merge coplanar faces
+						ExportSheetOptions(5) = 0.0# 'Library features
+						ExportSheetOptions(6) = 0.0# 'Forming tools
+						ExportSheetOptions(7) = 0.0#
+						ExportSheetOptions(8) = 0.0#
+						ExportSheetOptions(9) = 0.0#
+						ExportSheetOptions(10) = 0.0#
+						ExportSheetOptions(11) = 0.0# 'Bounding box
+
+						'ExportVarAlignment = ExportSheetOptions
+						ExportBitmaskVal = ExportSheetOptions
+
+						PathName = swDoc.GetPathName()
+
+						If PathName = "" Then
+							Functions.Error_Form("File Is Not Saved", "Please save the file and try again")
+							Exit Function
+						End If
+
+						For i = 0 To UBound(ExportBitmaskVal) 'Val In ExportVarAlignment
+
+							If ExportBitmaskVal(i) <> 0 Then
+
+								TempVal = 2 ^ i
+								Debug.Print(Val)
+								Debug.Print(TempVal)
+								Val += TempVal
+								Debug.Print(Val)
+							End If
+
+						Next
+						OriginalPart = PathName
+						swPart = swDoc
+						FileName = SW_FileName(PathName)
+						Extension = SW_Extension(PathName)
+						swDoc.ClearSelection2(True)
+						PathName = PathName.Substring(0, PathName.LastIndexOf("."))
+						New_Folder_Path = Path.Combine(PathName.Substring(0, PathName.LastIndexOf("\")), Alt_File_Folders)
+						System.IO.Directory.CreateDirectory(New_Folder_Path)
+						Sheet_Metal_Bend = Path.Combine(New_Folder_Path, "Sheet Metal Bend-" + FileName + Filetype)
+						SavetoDWG = Path.Combine(New_Folder_Path, FileName + Filetype)
+						BendState = swDoc.GetBendState
+						If BendState = 0 Then
+							status = swPart.ExportToDWG2(SavetoDWG, OriginalPart, swExportToDWG_e.swExportToDWG_ExportAnnotationViews, True, ExportVarAlignment, False, False, 0, VarViews)
+							Functions.Error_Form(FileName + " Exported", "Current, Front, Top, and Right views shown")
+						Else
+							status = swPart.ExportToDWG2(Sheet_Metal_Bend, OriginalPart, swExportToDWG_e.swExportToDWG_ExportSheetMetal, True, ExportVarAlignment, False, False, Val, Nothing)
+							status = swPart.ExportToDWG2(SavetoDWG, OriginalPart, swExportToDWG_e.swExportToDWG_ExportAnnotationViews, True, ExportVarAlignment, False, False, Val, VarViews)
+							Functions.Error_Form(FileName + " Exported", "Bend Lines, Current, Front, Top, Right views shown.",, "Two DWGs exported")
+						End If
+
+						'status = swDoc.SaveAs(PathName + Filetype)
+						'status = swDoc.SaveAs(PathName + ".STL")
 					Else
+
 						Functions.Error_Form("Not a Drawing File", "This is not a Drawing File")
 					End If
 
@@ -1105,99 +1165,94 @@ Public Class SWFunctions
 
 	Shared Function Save_As()
 
-			Dim swApp As SldWorks.SldWorks
-			Dim swDoc As ModelDoc2
-			Dim status As Boolean = False
-			Dim bool As Boolean
+		Dim swDoc As ModelDoc2
+		Dim status As Boolean = False
+		Dim bool As Boolean
 
-			swApp = CreateObject("SldWorks.Application")
-			swDoc = swApp.ActiveDoc
+		swDoc = swApp.ActiveDoc
 
-			If swDoc Is Nothing Then
+		If swDoc Is Nothing Then
 
-				Functions.Error_Form()
+			Functions.Error_Form()
 
+		Else
+
+			Dim OG_Path As String = swDoc.GetPathName()
+			bool = swDoc.Extension.RunCommand(swCommands_e.swCommands_SaveAs, "")
+			Dim New_Path As String = swDoc.GetPathName()
+
+			If OG_Path = New_Path Then
+				status = False
 			Else
-
-				Dim OG_Path As String = swDoc.GetPathName()
-				bool = swDoc.Extension.RunCommand(swCommands_e.swCommands_SaveAs, "")
-				Dim New_Path As String = swDoc.GetPathName()
-
-				If OG_Path = New_Path Then
-					status = False
-				Else
-					status = True
-				End If
-
+				status = True
 			End If
 
-			Return status
-		End Function
+		End If
+
+		Return status
+	End Function
 
 
 	Shared Function Save_Doc()
-			Dim swApp As SldWorks.SldWorks
-			Dim bool As Boolean
-			Dim swDoc As ModelDoc2
+		Dim bool As Boolean
+		Dim swDoc As ModelDoc2
+		swDoc = swApp.ActiveDoc
 
-			swApp = CreateObject("SldWorks.Application")
-			swDoc = swApp.ActiveDoc
-
-			bool = swDoc.Extension.RunCommand(swCommands_e.swCommands_SaveAs, "")
-			Return bool
-		End Function
+		bool = swDoc.Extension.RunCommand(swCommands_e.swCommands_SaveAs, "")
+		Return bool
+	End Function
 
 
 	Shared Function View_Scale(Outline1() As Double, Optional Outline2() As Double = Nothing, Optional Outline3() As Double = Nothing)
 
-			Dim View1 As Double = 10
-			Dim View2 As Double = 10
-			Dim View3 As Double = 10
-			Dim Small_Scale As Double = 10 'Set as high value
+		Dim View1 As Double
+		Dim View2 As Double
+		Dim View3 As Double
+		Dim Small_Scale As Double = 10 'Set as high value
 
-			View1 = Boundary_box(Outline1)
+		View1 = Boundary_box(Outline1)
 
-			If Outline2 IsNot Nothing Then
-				View2 = Boundary_box(Outline2)
-			End If
+		If Outline2 IsNot Nothing Then
+			View2 = Boundary_box(Outline2)
+		End If
 
-			If Outline3 IsNot Nothing Then
-				View3 = Boundary_box(Outline3)
-			End If
+		If Outline3 IsNot Nothing Then
+			View3 = Boundary_box(Outline3)
+		End If
 
-			If View1 <> 1 Or View2 <> 1 Or View3 <> 1 Then
-				Dim Scales As Double() = {View1, View2, View3}
+		If View1 <> 1 Or View2 <> 1 Or View3 <> 1 Then
+			Dim Scales As Double() = {View1, View2, View3}
 
-				For Each element As Double In Scales
-					Small_Scale = Math.Min(Small_Scale, element)
-				Next
-				'MsgBox(View1 & ", " & View2 & ", " & View3 & ", " & Small_Scale)
+			For Each element As Double In Scales
+				Small_Scale = Math.Min(Small_Scale, element)
+			Next
+			'MsgBox(View1 & ", " & View2 & ", " & View3 & ", " & Small_Scale)
 
-			End If
+		End If
 
-			Small_Scale = Math.Round(1 / Small_Scale, 1)
-			'MsgBox(Small_Scale & " This is the scale value")
+		Small_Scale = Math.Round(1 / Small_Scale, 1)
+		'MsgBox(Small_Scale & " This is the scale value")
 
-			'If Small_Scale <= 0.5 Then
+		'If Small_Scale <= 0.5 Then
 
-			'	Small_Scale = Math.Round(1 / Small_Scale, 0)
-			'	MsgBox(Small_Scale)
+		'	Small_Scale = Math.Round(1 / Small_Scale, 0)
+		'	MsgBox(Small_Scale)
 
-			'ElseIf Small_Scale > 0.25 Then
-			'	MsgBox(Small_Scale)
-			'	Small_Scale = (1 / Small_Scale) * 2
-			'	MsgBox(Small_Scale)
-			'	Small_Scale = Math.Round(Small_Scale, 1, MidpointRounding.AwayFromZero)
-			'	MsgBox(Small_Scale)
-			'	Small_Scale = Math.Floor(Small_Scale)
-			'	'MsgBox(Small_Scale)
-			'	'Small_Scale = Small_Scale / 2
-			'	MsgBox(Small_Scale)
+		'ElseIf Small_Scale > 0.25 Then
+		'	MsgBox(Small_Scale)
+		'	Small_Scale = (1 / Small_Scale) * 2
+		'	MsgBox(Small_Scale)
+		'	Small_Scale = Math.Round(Small_Scale, 1, MidpointRounding.AwayFromZero)
+		'	MsgBox(Small_Scale)
+		'	Small_Scale = Math.Floor(Small_Scale)
+		'	'MsgBox(Small_Scale)
+		'	'Small_Scale = Small_Scale / 2
+		'	MsgBox(Small_Scale)
 
-			'End If
+		'End If
 
-			Return Small_Scale
-		End Function
+		Return Small_Scale
+	End Function
 
 
 	Shared Function Boundary_box(Outline() As Double)
@@ -1346,14 +1401,12 @@ Public Class SWFunctions
 
 	Shared Sub Add_RevInfo()
 
-		Dim swAp As SldWorks.SldWorks
 		Dim swDwg As DrawingDoc
 		Dim sw_View As View
 		Dim swNote As Note
 		Dim swAnno As Annotation
 		Dim CusProp As CustomPropertyManager
 		Dim swModelDocExt As ModelDocExtension
-
 
 		Dim error_val As Integer
 		Dim Text_Add As String
@@ -1367,7 +1420,6 @@ Public Class SWFunctions
 		Dim y_pos As Double = 0.0
 		Dim z_pos As Double = 0.0
 
-		swAp = CreateObject("SldWorks.Application")
 		swDwg = swApp.ActiveDoc
 
 		swModelDocExt = swDwg.Extension
@@ -1571,8 +1623,6 @@ Public Class SWFunctions
 
 	Shared Function Add_Docs2(ByVal swComp As Component2, ByVal nLevel As Integer)
 
-		swApp = CreateObject("SldWorks.Application")
-
 		Dim swPart As ModelDoc2
 		Dim swPart2 As ModelDoc2
 		Dim swPart3 As ModelDoc2
@@ -1584,8 +1634,10 @@ Public Class SWFunctions
 		Dim Status As Boolean = False
 		Dim Used As Boolean = False
 		Dim Add_To_List As Boolean = False
+		Dim Add_To_Hardware As Boolean = False
 		Dim isAssy As Boolean = False
 		Dim isPart As Boolean = False
+		Dim isHardware As Boolean = False
 		Dim Assy_Count As Integer
 
 
@@ -1598,10 +1650,10 @@ Public Class SWFunctions
 
 		Dim errorval As Integer
 
-		Dim CusProp As String() = {"PART NUMBER", "NOMENCLATURE", "DESCRIPTION", "SPEC", "MATERIAL", "WEIGHT"}
-		Dim RecAssyCusProp As String() = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
+		Dim CusProp As String() = {"PART NUMBER", "NOMENCLATURE", "DESCRIPTION", "SPEC", "MATERIAL", "WEIGHT", "HARDWARE"}
+		Dim RecAssyCusProp As String() = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
 
-
+		'Top level assemblies
 		If nLevel = 1 Then
 
 			swComp_Assy = swComp.Name2
@@ -1628,7 +1680,8 @@ Public Class SWFunctions
 
 				End If
 				If Add_To_List = True Then
-					swAssy_Docs.Add(New Assy_Docs(swComp_Assy, "Null", swComp.GetSelectByIDString(), RecAssyCusProp(0), RecAssyCusProp(1), RecAssyCusProp(2), RecAssyCusProp(3), RecAssyCusProp(4), RecAssyCusProp(5)))
+					swAssy_Docs.Add(New Assy_Docs(swComp_Assy, "Top Level", swComp.GetSelectByIDString(), RecAssyCusProp(0), RecAssyCusProp(1), RecAssyCusProp(2),
+												  RecAssyCusProp(3), RecAssyCusProp(4), RecAssyCusProp(5), RecAssyCusProp(6), 1))
 				End If
 
 			End If
@@ -1636,319 +1689,101 @@ Public Class SWFunctions
 
 		vChildComp = swComp.GetChildren
 
+		'Parts in each top level assemblies
 		For i = 0 To UBound(vChildComp)
 
 			Assy_Count = 0
 			Used = False
-				Dim pString = String.Empty
-				Dim aString = String.Empty
-				Dim RecCusProp = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
-				'RecCusProp(6)="Parent"
-
-				swChildComp = vChildComp(i)
-
-				If swChildComp.IsSuppressed() = False Then
-					Add_To_List = False
-					isAssy = False
-					isPart = False
-					swParent = swChildComp.GetParent
-
-					If swParent Is Nothing Then
-
-						swPart = swChildComp.GetModelDoc2
-						pString = swChildComp.Name2
-
-
-
-						While pString.IndexOf("/") <> -1
-							pString = pString.Substring(pString.IndexOf("/") + 1)
-						End While
-
-						pString = pString.Substring(0, pString.LastIndexOf("-"))
-
-						RecCusProp(6) = swComp_Assy
-
-					Else
-
-
-						Parent_name = swChildComp.Name2
-
-						Assy_Count = Parent_name.Count(Function(x) x = "/")
-						'MsgBox(Assy_Count)
-						Debug.Print(Assy_Count.ToString + " ---- " + Parent_name)
-
-						If Assy_Count > 1 Then
-							For j = 0 To Assy_Count - 2
-								Parent_name = Parent_name.Remove(0, Parent_name.IndexOf("/") + 1)
-								Debug.Print(Parent_name)
-							Next
-							Parent_name = Parent_name.Substring(0, Parent_name.LastIndexOf("/"))
-						Else
-							Parent_name = Parent_name.Remove(Parent_name.LastIndexOf("/"))
-						End If
-
-
-
-						Debug.Print(Parent_name)
-
-						'While Parent_name.IndexOf("/") <> -1
-						'	Parent_name = Parent_name.Remove(Parent_name.LastIndexOf("/")
-						'End While
-
-
-						Parent_name = Parent_name.Substring(0, Parent_name.LastIndexOf("-"))
-						Debug.Print(Parent_name)
-						RecCusProp(6) = Parent_name
-
-
-						swPart = swParent.GetModelDoc2
-						pString = swChildComp.Name2
-
-						While pString.IndexOf("/") <> -1
-							pString = pString.Substring(pString.IndexOf("/") + 1)
-						End While
-
-						pString = pString.Substring(0, pString.LastIndexOf("-"))
-					End If
-
-					If pString IsNot "" Then
-
-						If swPart_Docs.Count > 0 Then
-							For f = 0 To swPart_Docs.Count - 1
-								If swPart_Docs(f).subcomp = pString Then
-									Used = True
-									isAssy = False
-									isPart = False
-								End If
-							Next
-						End If
-
-						If Used = False Then
-
-							swPart3 = swApp.ActivateDoc3(pString, 0, 1, errorval)
-
-							If swPart3.GetType = swDocumentTypes_e.swDocPART Then
-								isPart = True
-								swModelDocExt_Part = swPart3.Extension
-								CusProperties_Part = swModelDocExt_Part.CustomPropertyManager("")
-
-								For propNum = 0 To UBound(CusProp)
-									Dash_Name = CusProperties_Part.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
-								Next
-
-								If CusProperties_Part.Get6(CusProp(0), True, ValOut, RecCusProp(0), wasResolved, linkToProp) = 2 Then
-									If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
-
-										Temp_Name = RecCusProp(0).Substring(0, 1)
-
-										If Temp_Name = "-" Then
-											Add_To_List = True
-										End If
-									End If
-
-								End If
-
-							ElseIf swPart3.GetType = swDocumentTypes_e.swDocASSEMBLY Then
-								isAssy = True
-								aString = pString
-
-								swModelDocExt_Assy = swPart3.Extension
-								CusProperties_Assy = swModelDocExt_Assy.CustomPropertyManager("")
-
-								For propNum = 0 To UBound(CusProp)
-									Dash_Name = CusProperties_Assy.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
-								Next
-
-								If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecCusProp(0), wasResolved, linkToProp) = 2 Then
-									If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
-
-										Temp_Name = RecCusProp(0).Substring(0, 1)
-
-										If Temp_Name = "-" Then
-											Add_To_List = True
-										End If
-									End If
-
-								End If
-
-							End If
-							swApp.CloseDoc(pString)
-						End If
-
-					End If
-
-					If isAssy = True And Add_To_List = True Then
-						isAssy = False
-						If swPart.GetType = swDocumentTypes_e.swDocASSEMBLY Then
-							swAssy_Docs.Add(New Assy_Docs(swComp_Assy, aString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
-														  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6)))
-						End If
-					End If
-
-					If isPart = True And Add_To_List = True Then
-						isPart = False
-						If swPart_Docs.Count = 0 Then
-							swPart_Docs.Add(New Part_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
-														  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6)))
-						Else
-							swPart_Docs.Add(New Part_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
-														  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6)))
-						End If
-					End If
-
-					Status = Add_Docs2(swChildComp, nLevel + 1)
-				End If
-			Next i
-
-			Return True
-
-	End Function
-
-	Shared Function Add_Docs(ByVal swComp As Component2, ByVal nLevel As Integer)
-
-		'try swApp.GetDocumentDependencies2 method
-
-		swApp = CreateObject("SldWorks.Application")
-
-		Dim swPart As ModelDoc2
-		Dim swPart2 As ModelDoc2
-		Dim swPart3 As ModelDoc2
-		Dim swPart4 As ModelDoc2
-		Dim swChildComp As Component2
-		Dim swParent As Component2
-
-		Dim vChildComp As Object
-
-		Dim Status As Boolean = False
-		Dim Used As Boolean = False
-		Dim Add_To_Part As Boolean = False
-		Dim Add_To_List As Boolean = False
-		Dim isAssy As Boolean = False
-		Dim isPart As Boolean = False
-
-
-		Dim ValOut = String.Empty
-		Dim Dash_XX = String.Empty
-		Dim wasResolved As Boolean
-		Dim linkToProp As Boolean
-		Dim Dash_Name = String.Empty
-		Dim Temp_Name = String.Empty
-
-		Dim errorval As Integer
-
-		Dim CusProp As String() = {"PART NUMBER", "NOMENCLATURE", "DESCRIPTION", "SPEC", "MATERIAL", "WEIGHT"}
-		Dim RecAssyCusProp As String() = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
-
-
-		If nLevel = 1 Then
-
-			'swAssy_Docs.Clear()
-			'swPart_Docs.Clear()
-			'swDwg_Docs.Clear()
-			swComp_Assy = swComp.Name2
-			swPart2 = swComp.GetModelDoc2
-
-			If swPart2.GetType = swDocumentTypes_e.swDocASSEMBLY Then
-
-				swModelDocExt_Assy = swPart2.Extension
-				CusProperties_Assy = swModelDocExt_Assy.CustomPropertyManager("")
-
-				For propNum = 0 To UBound(CusProp)
-					Dash_Name = CusProperties_Assy.Get6(CusProp(propNum), True, ValOut, RecAssyCusProp(propNum), wasResolved, linkToProp)
-				Next
-
-				If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
-					If RecAssyCusProp(0) <> "" And RecAssyCusProp(0) <> "-XX" Then
-
-						Temp_Name = RecAssyCusProp(0).Substring(0, 1)
-
-						If Temp_Name = "-" Then
-							Add_To_List = True
-						End If
-					End If
-
-				End If
-				If Add_To_List = True Then
-					swAssy_Docs.Add(New Assy_Docs(swComp_Assy, "Null", swComp.GetSelectByIDString(), RecAssyCusProp(0), RecAssyCusProp(1), RecAssyCusProp(2), RecAssyCusProp(3), RecAssyCusProp(4), RecAssyCusProp(5)))
-				End If
-
-			End If
-		End If
-
-		vChildComp = swComp.GetChildren
-		For i = 0 To UBound(vChildComp)
-
-			Used = False
 			Dim pString = String.Empty
 			Dim aString = String.Empty
-			Dim Part_To_Open = String.Empty
-			Dim RecCusProp = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
+			Dim RecCusProp = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
+			Dim Hardware_Count As Integer = 1
+			'RecCusProp(6)="Parent"
 
 			swChildComp = vChildComp(i)
 
-			If swChildComp.IsSuppressed() = False Then
+			If swChildComp.IsSuppressed() = False Then 'if suppressed do not add
 				Add_To_List = False
+				isAssy = False
+				isPart = False
 				swParent = swChildComp.GetParent
 
 				If swParent Is Nothing Then
+
 					swPart = swChildComp.GetModelDoc2
-					aString = swChildComp.Name2
-					'MsgBox("Assy - " + aString)
-
-					If swPart.GetType = 2 Then
-						isAssy = True
-						aString = aString.Substring(0, aString.LastIndexOf("-"))
-					ElseIf swPart.GetType = 1 Then
-						isPart = True
-						pString = aString.Substring(0, aString.LastIndexOf("-"))
-
-					End If
-
-				Else
-
-					Dim tString As String
-					swPart4 = swChildComp.GetModelDoc2
-					swPart = swParent.GetModelDoc2
-					If swPart4.GetType = 2 Then
-						'MsgBox("Assy ")
-						isAssy = True
-					ElseIf swPart4.GetType = 1 Then
-						'MsgBox("Part")
-						isPart = True
-					End If
-
-					tString = swParent.Name2.Substring(0, swParent.Name2.LastIndexOf("-"))
-					'aString = swChildComp.Name2
-
-					'If swPart.GetType = 2 Then
-					'	isAssy = True
-					'	aString = aString.Substring(0, aString.LastIndexOf("-"))
-					'ElseIf swPart.GetType = 1 Then
-					'	isPart = True
-					'	pString = aString.Substring(0, aString.LastIndexOf("-"))
-
-					'End If
 					pString = swChildComp.Name2
-					'MsgBox("Part - " + pString)
 
 					While pString.IndexOf("/") <> -1
 						pString = pString.Substring(pString.IndexOf("/") + 1)
 					End While
 
 					pString = pString.Substring(0, pString.LastIndexOf("-"))
+					RecCusProp(6) = swComp_Assy
 
+				Else
+
+					Parent_name = swChildComp.Name2
+
+					Assy_Count = Parent_name.Count(Function(x) x = "/")
+					'MsgBox(Assy_Count)
+					Debug.Print(Assy_Count.ToString + " ---- " + Parent_name)
+
+					If Assy_Count > 1 Then
+						For j = 0 To Assy_Count - 2
+							Parent_name = Parent_name.Remove(0, Parent_name.IndexOf("/") + 1)
+							Debug.Print(Parent_name)
+						Next
+						Parent_name = Parent_name.Substring(0, Parent_name.LastIndexOf("/"))
+					Else
+						Parent_name = Parent_name.Remove(Parent_name.LastIndexOf("/"))
+					End If
+
+
+
+					Debug.Print(Parent_name)
+
+					'While Parent_name.IndexOf("/") <> -1
+					'	Parent_name = Parent_name.Remove(Parent_name.LastIndexOf("/")
+					'End While
+
+
+					Parent_name = Parent_name.Substring(0, Parent_name.LastIndexOf("-"))
+					Debug.Print(Parent_name)
+					RecCusProp(6) = Parent_name
+
+
+					swPart = swParent.GetModelDoc2
+					pString = swChildComp.Name2
+
+					While pString.IndexOf("/") <> -1
+						pString = pString.Substring(pString.IndexOf("/") + 1)
+					End While
+
+					pString = pString.Substring(0, pString.LastIndexOf("-"))
 				End If
-
-
 
 				If pString IsNot "" Then
 
-					If swPart_Docs.Count > 0 Then
+					If swPart_Docs.Count > 0 And Used = False Then
 						For f = 0 To swPart_Docs.Count - 1
 							If swPart_Docs(f).subcomp = pString Then
 								Used = True
 								isAssy = False
 								isPart = False
+								swPart_Docs(f).Counter += 1
+							End If
+						Next
+					End If
+
+					If swHardware_Docs.Count > 0 And Used = False Then
+						For f = 0 To swHardware_Docs.Count - 1
+							If swHardware_Docs(f).subcomp = pString Then
+								Used = True
+								isAssy = False
+								isPart = False
+								isHardware = False
+								'Hardware_Count = swHardware_Docs(f).Counter + 1
+								swHardware_Docs(f).Counter += 1
 							End If
 						Next
 					End If
@@ -1958,7 +1793,7 @@ Public Class SWFunctions
 						swPart3 = swApp.ActivateDoc3(pString, 0, 1, errorval)
 
 						If swPart3.GetType = swDocumentTypes_e.swDocPART Then
-
+							isPart = True
 							swModelDocExt_Part = swPart3.Extension
 							CusProperties_Part = swModelDocExt_Part.CustomPropertyManager("")
 
@@ -1966,19 +1801,30 @@ Public Class SWFunctions
 								Dash_Name = CusProperties_Part.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
 							Next
 
-							If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
+							If CusProperties_Part.Get6(CusProp(0), True, ValOut, RecCusProp(0), wasResolved, linkToProp) = 2 Then
 								If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
 
 									Temp_Name = RecCusProp(0).Substring(0, 1)
 
 									If Temp_Name = "-" Then
 										Add_To_List = True
+
+									ElseIf CusProperties_Part.Get6(CusProp(6), True, ValOut, RecCusProp(7), wasResolved, linkToProp) = 2 Then
+
+										If RecCusProp(7).ToLower = "yes" Then
+											'Add_To_Hardware
+											isHardware = True
+											isPart = False
+											Add_To_List = True
+										End If
 									End If
 								End If
 
 							End If
 
 						ElseIf swPart3.GetType = swDocumentTypes_e.swDocASSEMBLY Then
+							isAssy = True
+							aString = pString
 
 							swModelDocExt_Assy = swPart3.Extension
 							CusProperties_Assy = swModelDocExt_Assy.CustomPropertyManager("")
@@ -1987,7 +1833,7 @@ Public Class SWFunctions
 								Dash_Name = CusProperties_Assy.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
 							Next
 
-							If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
+							If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecCusProp(0), wasResolved, linkToProp) = 2 Then
 								If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
 
 									Temp_Name = RecCusProp(0).Substring(0, 1)
@@ -2003,58 +1849,13 @@ Public Class SWFunctions
 						swApp.CloseDoc(pString)
 					End If
 
-
-				ElseIf swPart.GetType = swDocumentTypes_e.swDocPART Then
-
-					swModelDocExt_Part = swPart.Extension
-					CusProperties_Part = swModelDocExt_Part.CustomPropertyManager("")
-
-					For propNum = 0 To UBound(CusProp)
-						Dash_Name = CusProperties_Part.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
-					Next
-
-					If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
-						If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
-
-							Temp_Name = RecCusProp(0).Substring(0, 1)
-
-							If Temp_Name = "-" Then
-								Add_To_List = True
-							End If
-						End If
-
-					End If
-
-				ElseIf swPart.GetType = swDocumentTypes_e.swDocASSEMBLY Then
-
-					swModelDocExt_Assy = swPart.Extension
-					CusProperties_Assy = swModelDocExt_Assy.CustomPropertyManager("")
-
-					For propNum = 0 To UBound(CusProp)
-						Dash_Name = CusProperties_Assy.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
-					Next
-
-					If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
-						If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
-
-							Temp_Name = RecCusProp(0).Substring(0, 1)
-
-							If Temp_Name = "-" Then
-								Add_To_List = True
-							End If
-						End If
-
-					End If
-
 				End If
-
-				Add_To_Part = True
 
 				If isAssy = True And Add_To_List = True Then
 					isAssy = False
 					If swPart.GetType = swDocumentTypes_e.swDocASSEMBLY Then
 						swAssy_Docs.Add(New Assy_Docs(swComp_Assy, aString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
-													  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5)))
+													  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6), Hardware_Count))
 					End If
 				End If
 
@@ -2062,25 +1863,25 @@ Public Class SWFunctions
 					isPart = False
 					If swPart_Docs.Count = 0 Then
 						swPart_Docs.Add(New Part_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
-													  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5)))
-						Add_To_Part = False
-						'Else
-						'	For q = 0 To swPart_Docs.Count - 1
-						'		If swPart_Docs(q).subcomp = pString Then
-						'			Add_To_Part = False
-						'			Exit For
-						'		End If
-						'	Next
-					End If
-					If Add_To_Part = True Then
+														  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6), Hardware_Count))
+					Else
 						swPart_Docs.Add(New Part_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
-													  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5)))
-
-						Add_To_Part = False
+														  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6), Hardware_Count))
 					End If
 				End If
-				'Debug.Print(swChildComp.Name2)
-				Status = Add_Docs(swChildComp, nLevel + 1)
+
+				If isHardware = True And Add_To_List = True Then
+					isHardware = False
+					If swHardware_Docs.Count = 0 Then
+						swHardware_Docs.Add(New Hardware_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
+														  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6), Hardware_Count))
+					Else
+						swHardware_Docs.Add(New Hardware_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
+														  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5), RecCusProp(6), Hardware_Count))
+					End If
+				End If
+
+				Status = Add_Docs2(swChildComp, nLevel + 1)
 			End If
 		Next i
 
@@ -2089,21 +1890,305 @@ Public Class SWFunctions
 	End Function
 
 
+	'Old method do not use
+	'Shared Function Add_Docs(ByVal swComp As Component2, ByVal nLevel As Integer) 'try swApp.GetDocumentDependencies2 method
+
+	'	Dim swPart As ModelDoc2
+	'	Dim swPart2 As ModelDoc2
+	'	Dim swPart3 As ModelDoc2
+	'	Dim swPart4 As ModelDoc2
+	'	Dim swChildComp As Component2
+	'	Dim swParent As Component2
+
+	'	Dim vChildComp As Object
+
+	'	Dim Status As Boolean
+	'	Dim Used As Boolean
+	'	Dim Add_To_Part As Boolean
+	'	Dim Add_To_List As Boolean = False
+	'	Dim isAssy As Boolean = False
+	'	Dim isPart As Boolean = False
+
+
+	'	Dim ValOut = String.Empty
+	'	Dim Dash_XX = String.Empty
+	'	Dim wasResolved As Boolean
+	'	Dim linkToProp As Boolean
+	'	Dim Dash_Name = String.Empty
+	'	Dim Temp_Name = String.Empty
+
+	'	Dim errorval As Integer
+
+	'	Dim CusProp As String() = {"PART NUMBER", "NOMENCLATURE", "DESCRIPTION", "SPEC", "MATERIAL", "WEIGHT"}
+	'	Dim RecAssyCusProp As String() = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
+
+
+	'	If nLevel = 1 Then
+
+	'		'swAssy_Docs.Clear()
+	'		'swPart_Docs.Clear()
+	'		'swDwg_Docs.Clear()
+	'		swComp_Assy = swComp.Name2
+	'		swPart2 = swComp.GetModelDoc2
+
+	'		If swPart2.GetType = swDocumentTypes_e.swDocASSEMBLY Then
+
+	'			swModelDocExt_Assy = swPart2.Extension
+	'			CusProperties_Assy = swModelDocExt_Assy.CustomPropertyManager("")
+
+	'			For propNum = 0 To UBound(CusProp)
+	'				Dash_Name = CusProperties_Assy.Get6(CusProp(propNum), True, ValOut, RecAssyCusProp(propNum), wasResolved, linkToProp)
+	'			Next
+
+	'			If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
+	'				If RecAssyCusProp(0) <> "" And RecAssyCusProp(0) <> "-XX" Then
+
+	'					Temp_Name = RecAssyCusProp(0).Substring(0, 1)
+
+	'					If Temp_Name = "-" Then
+	'						Add_To_List = True
+	'					End If
+	'				End If
+
+	'			End If
+	'			If Add_To_List = True Then
+	'				swAssy_Docs.Add(New Assy_Docs(swComp_Assy, "Null", swComp.GetSelectByIDString(), RecAssyCusProp(0), RecAssyCusProp(1), RecAssyCusProp(2), RecAssyCusProp(3), RecAssyCusProp(4), RecAssyCusProp(5)))
+	'			End If
+
+	'		End If
+	'	End If
+
+	'	vChildComp = swComp.GetChildren
+	'	For i = 0 To UBound(vChildComp)
+
+	'		Used = False
+	'		Dim pString = String.Empty
+	'		Dim aString = String.Empty
+	'		Dim Part_To_Open = String.Empty
+	'		Dim RecCusProp = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A"}
+
+	'		swChildComp = vChildComp(i)
+
+	'		If swChildComp.IsSuppressed() = False Then
+	'			Add_To_List = False
+	'			swParent = swChildComp.GetParent
+
+	'			If swParent Is Nothing Then
+	'				swPart = swChildComp.GetModelDoc2
+	'				aString = swChildComp.Name2
+	'				'MsgBox("Assy - " + aString)
+
+	'				If swPart.GetType = 2 Then
+	'					isAssy = True
+	'					aString = aString.Substring(0, aString.LastIndexOf("-"))
+	'				ElseIf swPart.GetType = 1 Then
+	'					isPart = True
+	'					pString = aString.Substring(0, aString.LastIndexOf("-"))
+
+	'				End If
+
+	'			Else
+
+	'				Dim tString As String
+	'				swPart4 = swChildComp.GetModelDoc2
+	'				swPart = swParent.GetModelDoc2
+	'				If swPart4.GetType = 2 Then
+	'					'MsgBox("Assy ")
+	'					isAssy = True
+	'				ElseIf swPart4.GetType = 1 Then
+	'					'MsgBox("Part")
+	'					isPart = True
+	'				End If
+
+	'				tString = swParent.Name2.Substring(0, swParent.Name2.LastIndexOf("-"))
+	'				'aString = swChildComp.Name2
+
+	'				'If swPart.GetType = 2 Then
+	'				'	isAssy = True
+	'				'	aString = aString.Substring(0, aString.LastIndexOf("-"))
+	'				'ElseIf swPart.GetType = 1 Then
+	'				'	isPart = True
+	'				'	pString = aString.Substring(0, aString.LastIndexOf("-"))
+
+	'				'End If
+	'				pString = swChildComp.Name2
+	'				'MsgBox("Part - " + pString)
+
+	'				While pString.IndexOf("/") <> -1
+	'					pString = pString.Substring(pString.IndexOf("/") + 1)
+	'				End While
+
+	'				pString = pString.Substring(0, pString.LastIndexOf("-"))
+
+	'			End If
+
+
+
+	'			If pString IsNot "" Then
+
+	'				If swPart_Docs.Count > 0 Then
+	'					For f = 0 To swPart_Docs.Count - 1
+	'						If swPart_Docs(f).subcomp = pString Then
+	'							Used = True
+	'							isAssy = False
+	'							isPart = False
+	'						End If
+	'					Next
+	'				End If
+
+	'				If Used = False Then
+
+	'					swPart3 = swApp.ActivateDoc3(pString, 0, 1, errorval)
+
+	'					If swPart3.GetType = swDocumentTypes_e.swDocPART Then
+
+	'						swModelDocExt_Part = swPart3.Extension
+	'						CusProperties_Part = swModelDocExt_Part.CustomPropertyManager("")
+
+	'						For propNum = 0 To UBound(CusProp)
+	'							Dash_Name = CusProperties_Part.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
+	'						Next
+
+	'						If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
+	'							If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
+
+	'								Temp_Name = RecCusProp(0).Substring(0, 1)
+
+	'								If Temp_Name = "-" Then
+	'									Add_To_List = True
+	'								End If
+	'							End If
+
+	'						End If
+
+	'					ElseIf swPart3.GetType = swDocumentTypes_e.swDocASSEMBLY Then
+
+	'						swModelDocExt_Assy = swPart3.Extension
+	'						CusProperties_Assy = swModelDocExt_Assy.CustomPropertyManager("")
+
+	'						For propNum = 0 To UBound(CusProp)
+	'							Dash_Name = CusProperties_Assy.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
+	'						Next
+
+	'						If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
+	'							If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
+
+	'								Temp_Name = RecCusProp(0).Substring(0, 1)
+
+	'								If Temp_Name = "-" Then
+	'									Add_To_List = True
+	'								End If
+	'							End If
+
+	'						End If
+
+	'					End If
+	'					swApp.CloseDoc(pString)
+	'				End If
+
+
+	'			ElseIf swPart.GetType = swDocumentTypes_e.swDocPART Then
+
+	'				swModelDocExt_Part = swPart.Extension
+	'				CusProperties_Part = swModelDocExt_Part.CustomPropertyManager("")
+
+	'				For propNum = 0 To UBound(CusProp)
+	'					Dash_Name = CusProperties_Part.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
+	'				Next
+
+	'				If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
+	'					If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
+
+	'						Temp_Name = RecCusProp(0).Substring(0, 1)
+
+	'						If Temp_Name = "-" Then
+	'							Add_To_List = True
+	'						End If
+	'					End If
+
+	'				End If
+
+	'			ElseIf swPart.GetType = swDocumentTypes_e.swDocASSEMBLY Then
+
+	'				swModelDocExt_Assy = swPart.Extension
+	'				CusProperties_Assy = swModelDocExt_Assy.CustomPropertyManager("")
+
+	'				For propNum = 0 To UBound(CusProp)
+	'					Dash_Name = CusProperties_Assy.Get6(CusProp(propNum), True, ValOut, RecCusProp(propNum), wasResolved, linkToProp)
+	'				Next
+
+	'				If CusProperties_Assy.Get6(CusProp(0), True, ValOut, RecAssyCusProp(0), wasResolved, linkToProp) = 2 Then
+	'					If RecCusProp(0) <> "" And RecCusProp(0) <> "-XX" Then
+
+	'						Temp_Name = RecCusProp(0).Substring(0, 1)
+
+	'						If Temp_Name = "-" Then
+	'							Add_To_List = True
+	'						End If
+	'					End If
+
+	'				End If
+
+	'			End If
+
+	'			Add_To_Part = True
+
+	'			If isAssy = True And Add_To_List = True Then
+	'				isAssy = False
+	'				If swPart.GetType = swDocumentTypes_e.swDocASSEMBLY Then
+	'					swAssy_Docs.Add(New Assy_Docs(swComp_Assy, aString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
+	'												  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5)))
+	'				End If
+	'			End If
+
+	'			If isPart = True And Add_To_List = True Then
+	'				isPart = False
+	'				If swPart_Docs.Count = 0 Then
+	'					swPart_Docs.Add(New Part_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
+	'												  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5)))
+	'					Add_To_Part = False
+	'					'Else
+	'					'	For q = 0 To swPart_Docs.Count - 1
+	'					'		If swPart_Docs(q).subcomp = pString Then
+	'					'			Add_To_Part = False
+	'					'			Exit For
+	'					'		End If
+	'					'	Next
+	'				End If
+	'				If Add_To_Part = True Then
+	'					swPart_Docs.Add(New Part_Docs(swComp_Assy, pString, swChildComp.GetSelectByIDString(), RecCusProp(0), RecCusProp(1),
+	'												  RecCusProp(2), RecCusProp(3), RecCusProp(4), RecCusProp(5)))
+
+	'					Add_To_Part = False
+	'				End If
+	'			End If
+	'			'Debug.Print(swChildComp.Name2)
+	'			Status = Add_Docs(swChildComp, nLevel + 1)
+	'		End If
+	'	Next i
+
+	'	Return True
+
+	'End Function
+
+
 	Shared Function Compare()
 		Dim status As Boolean = True
 
 		Return status
 	End Function
 
-	Shared Function Out_Put()
+	Shared Function Out_Put(Direction As String)
 
 		Debug.Print("COPY BELLOW THIS")
 
 		If swAssy_Docs.Count > 0 Then
 
-			'swAssy_Docs = swAssy_Docs.OrderByDescending(Function(x) x.Part_Number).ToList
-			swAssy_Docs = swAssy_Docs.OrderBy(Function(x) x.Part_Number).ToList
-
+			If Direction = "Descending" Then
+				swAssy_Docs = swAssy_Docs.OrderByDescending(Function(x) x.Part_Number).ToList
+			Else
+				swAssy_Docs = swAssy_Docs.OrderBy(Function(x) x.Part_Number).ToList
+			End If
 
 			For z = 0 To swAssy_Docs.Count - 1
 				Debug.Print("Assembly - " & swAssy_Docs(z).instance_ID)
@@ -2127,8 +2212,11 @@ Public Class SWFunctions
 
 		If swPart_Docs.Count > 0 Then
 
-			'swPart_Docs = swPart_Docs.OrderByDescending(Function(x) x.Part_Number).ToList
-			swPart_Docs = swPart_Docs.OrderBy(Function(x) x.Part_Number).ToList
+			If Direction = "Descending" Then
+				swPart_Docs = swPart_Docs.OrderByDescending(Function(x) x.Part_Number).ToList
+			Else
+				swPart_Docs = swPart_Docs.OrderBy(Function(x) x.Part_Number).ToList
+			End If
 
 			For z = 0 To swPart_Docs.Count - 1
 				'MsgBox(swPart_Docs(z).Part_Number + "  -  " + swPart_Docs(z).Comp + "  -  " + swPart_Docs(z).subcomp)
@@ -2169,31 +2257,49 @@ Public Class SWFunctions
 
 		Dim i As Integer
 		Dim j As Integer
-		Dim Assy_row As Integer = 3 ' + swAssy_Docs.Count
-		Dim Assy_col As Integer = 1
-		Dim Part_row As Integer = Assy_row + swAssy_Docs.Count + 2
+		Dim k As Integer
+		Dim Hardware_row As Integer = 3 ' Part_row + swPart_Docs.Count + 1
+		Dim Hardware_Col As Integer = 1
+		Dim Part_row As Integer = Hardware_row + swHardware_Docs.Count + 1
 		Dim Part_col As Integer = 1
+
+		If swHardware_Docs.Count = 0 Then
+			Part_row = 3
+		End If
+
+		Dim Assy_row As Integer = Part_row + swPart_Docs.Count + 1
+		Dim Assy_col As Integer = 1
+
+		If swPart_Docs.Count = 0 Then
+			Assy_row = 3
+		End If
+
 
 		xlApp = New ApplicationClass
 
-		Dim Assy_Array(swAssy_Docs.Count - 1, 8) As String
+		Dim Assy_Array(swAssy_Docs.Count - 1, 9) As String
 		Dim Assy_Count = 0
 
-		Dim Part_Array(swPart_Docs.Count - 1, 8) As String
+		Dim Part_Array(swPart_Docs.Count - 1, 9) As String
 		Dim Part_Count = 0
+
+		Dim Hardware_Array(swHardware_Docs.Count - 1, 9) As String
+		Dim Hardware_Count = 0
 
 		'For Each Stringitem As Assy_Docs In swAssy_Docs
 		For i = 0 To swAssy_Docs.Count - 1
 
 			Assy_Array(Assy_Count, 0) = "Assembly"
 			Assy_Array(Assy_Count, 1) = swAssy_Docs(i).Comp
-			Assy_Array(Assy_Count, 2) = swAssy_Docs(i).subcomp
-			Assy_Array(Assy_Count, 3) = swAssy_Docs(i).Part_Number
-			Assy_Array(Assy_Count, 4) = swAssy_Docs(i).Nomenclature
-			Assy_Array(Assy_Count, 5) = swAssy_Docs(i).Description
-			Assy_Array(Assy_Count, 6) = swAssy_Docs(i).Spec
-			Assy_Array(Assy_Count, 7) = swAssy_Docs(i).Material
-			Assy_Array(Assy_Count, 8) = swAssy_Docs(i).Weight
+			Assy_Array(Assy_Count, 2) = swAssy_Docs(i).Counter
+			Assy_Array(Assy_Count, 3) = swAssy_Docs(i).subcomp
+			Assy_Array(Assy_Count, 4) = "$PRP:""SW-File Name(File Name)""" + swAssy_Docs(i).Part_Number
+			Assy_Array(Assy_Count, 5) = swAssy_Docs(i).Nomenclature
+			Assy_Array(Assy_Count, 6) = swAssy_Docs(i).Description
+			Assy_Array(Assy_Count, 7) = swAssy_Docs(i).Spec
+			Assy_Array(Assy_Count, 8) = swAssy_Docs(i).Material
+			Assy_Array(Assy_Count, 9) = swAssy_Docs(i).Weight
+
 
 			Assy_Count += 1
 
@@ -2204,20 +2310,37 @@ Public Class SWFunctions
 
 			Part_Array(Part_Count, 0) = "Part"
 			Part_Array(Part_Count, 1) = swPart_Docs(j).Comp
-			Part_Array(Part_Count, 2) = swPart_Docs(j).subcomp
-			Part_Array(Part_Count, 3) = swPart_Docs(j).Part_Number
-			Part_Array(Part_Count, 4) = swPart_Docs(j).Nomenclature
-			Part_Array(Part_Count, 5) = swPart_Docs(j).Description
-			Part_Array(Part_Count, 6) = swPart_Docs(j).Spec
-			Part_Array(Part_Count, 7) = swPart_Docs(j).Material
-			Part_Array(Part_Count, 8) = swPart_Docs(j).Weight
-			'Part_Array(Part_Count, 8) = Stringitem.Weight
+			Part_Array(Part_Count, 2) = swPart_Docs(j).Counter
+			Part_Array(Part_Count, 3) = swPart_Docs(j).subcomp
+			Part_Array(Part_Count, 4) = "$PRP:""SW-File Name(File Name)""" + swPart_Docs(j).Part_Number
+			Part_Array(Part_Count, 5) = swPart_Docs(j).Nomenclature
+			Part_Array(Part_Count, 6) = swPart_Docs(j).Description
+			Part_Array(Part_Count, 7) = swPart_Docs(j).Spec
+			Part_Array(Part_Count, 8) = swPart_Docs(j).Material
+			Part_Array(Part_Count, 9) = swPart_Docs(j).Weight
 
 			Part_Count += 1
 
 		Next
 
-		xlWorkBook = xlApp.Workbooks.Open("T:\Engineering\Non-Site Specific\PARTS\SW Macros\Model Creator\Resources\Part Numbers.xlsx")
+		For k = 0 To swHardware_Docs.Count - 1
+
+			Hardware_Array(Hardware_Count, 0) = "Hardware"
+			Hardware_Array(Hardware_Count, 1) = swHardware_Docs(k).Comp
+			Hardware_Array(Hardware_Count, 2) = swHardware_Docs(k).Counter
+			Hardware_Array(Hardware_Count, 3) = swHardware_Docs(k).subcomp
+			Hardware_Array(Hardware_Count, 4) = swHardware_Docs(k).Part_Number
+			Hardware_Array(Hardware_Count, 5) = swHardware_Docs(k).Nomenclature
+			Hardware_Array(Hardware_Count, 6) = swHardware_Docs(k).Description
+			Hardware_Array(Hardware_Count, 7) = swHardware_Docs(k).Spec
+			Hardware_Array(Hardware_Count, 8) = swHardware_Docs(k).Material
+			Hardware_Array(Hardware_Count, 9) = swHardware_Docs(k).Weight
+
+			Hardware_Count += 1
+
+		Next
+
+		xlWorkBook = xlApp.Workbooks.Open(Network_Locations.Excel_Part_Numbers_Path)
 		xlApp.WindowState = XlWindowState.xlMaximized
 		xlApp.Visible = True
 
@@ -2233,6 +2356,12 @@ Public Class SWFunctions
 			Range = .Range(.Cells(Part_row, Part_col), .Cells(UBound(Part_Array, 1) - LBound(Part_Array, 1) + Part_row, UBound(Part_Array, 2) - LBound(Part_Array, 2) + Part_col))
 		End With
 		Range.Value = Part_Array
+
+		With xlWorkSheet
+			Range = .Range(.Cells(Hardware_row, Hardware_Col), .Cells(UBound(Hardware_Array, 1) - LBound(Hardware_Array, 1) + Hardware_row, UBound(Hardware_Array, 2) -
+																	  LBound(Hardware_Array, 2) + Hardware_Col))
+		End With
+		Range.Value = Hardware_Array
 
 		Path = Path + "\" + Filename + " - Doc Data.xlsx"
 

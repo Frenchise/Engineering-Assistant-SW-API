@@ -29,6 +29,7 @@ Partial Class Start_Window
 		Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.AlwaysOnTopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.Help = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ProgramInformationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.UpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -72,37 +73,38 @@ Partial Class Start_Window
 		Me.Structural_Drawings = New System.Windows.Forms.Button()
 		Me.Frame_Station = New System.Windows.Forms.Button()
 		Me.Solidworks_Functions_Group = New System.Windows.Forms.GroupBox()
+		Me.Save_As_Type = New System.Windows.Forms.ComboBox()
 		Me.Cust_Prop_Update = New System.Windows.Forms.Button()
-		Me.Save_As_STL = New System.Windows.Forms.Button()
 		Me.PDF_Drawing = New System.Windows.Forms.Button()
-		Me.Remove_Config = New System.Windows.Forms.Button()
+		Me.Hide_Origin = New System.Windows.Forms.Button()
 		Me.Pack_N_Go = New System.Windows.Forms.Button()
 		Me.Add_Hardware = New System.Windows.Forms.Button()
 		Me.Sheet_Rename = New System.Windows.Forms.Button()
 		Me.New_Drawing = New System.Windows.Forms.Button()
+		Me.Save_As_STL = New System.Windows.Forms.Button()
 		Me.Library_Feature = New System.Windows.Forms.Button()
 		Me.Math_Functions_Group = New System.Windows.Forms.GroupBox()
-		Me.Load_Analysis_2 = New System.Windows.Forms.Button()
 		Me.Load_Analysis_Button = New System.Windows.Forms.Button()
 		Me.Radius_Finder_Button = New System.Windows.Forms.Button()
 		Me.Fastener_Data = New System.Windows.Forms.Button()
 		Me.Cross_Product = New System.Windows.Forms.Button()
+		Me.Load_Analysis_2 = New System.Windows.Forms.Button()
 		Me.Solidworks_Modeling_Group = New System.Windows.Forms.GroupBox()
-		Me.Test_Button = New System.Windows.Forms.Button()
+		Me.Pack_N_Go_Assy = New System.Windows.Forms.Button()
 		Me.Export_To_Excel = New System.Windows.Forms.Button()
 		Me.BOM_Weight_Tables = New System.Windows.Forms.Button()
 		Me.Note_Naming = New System.Windows.Forms.Button()
 		Me.Model_Properties = New System.Windows.Forms.Button()
 		Me.Contour_Plate_Modeling = New System.Windows.Forms.Button()
-		Me.Panel_Modeling = New System.Windows.Forms.Button()
+		Me.NOTE_UPDATING = New System.Windows.Forms.Button()
 		Me.Cad_Interfaces = New System.Windows.Forms.GroupBox()
-		Me.AutoCad_Interface = New System.Windows.Forms.CheckBox()
 		Me.SolidWorks_Interface = New System.Windows.Forms.CheckBox()
+		Me.AutoCad_Interface = New System.Windows.Forms.CheckBox()
 		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
 		Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-		Me.TEST = New System.Windows.Forms.Button()
 		Me.Save_As_DWG = New System.Windows.Forms.Button()
-		Me.Save_As_Type = New System.Windows.Forms.ComboBox()
+		Me.Doc_Backup_Group = New System.Windows.Forms.GroupBox()
+		Me.Backup = New System.Windows.Forms.Button()
 		Me.MenuStrip1.SuspendLayout()
 		Me.StatusStrip1.SuspendLayout()
 		Me.Sheet_Metal_Group.SuspendLayout()
@@ -112,6 +114,7 @@ Partial Class Start_Window
 		Me.Solidworks_Modeling_Group.SuspendLayout()
 		Me.Cad_Interfaces.SuspendLayout()
 		CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+		Me.Doc_Backup_Group.SuspendLayout()
 		Me.SuspendLayout()
 		'
 		'MenuStrip1
@@ -127,7 +130,7 @@ Partial Class Start_Window
 		'
 		'FileToolStripMenuItem
 		'
-		Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseToolStripMenuItem, Me.AlwaysOnTopToolStripMenuItem, Me.ProgramInformationToolStripMenuItem})
+		Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseToolStripMenuItem, Me.AlwaysOnTopToolStripMenuItem, Me.Help, Me.ProgramInformationToolStripMenuItem})
 		Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
 		Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
 		Me.FileToolStripMenuItem.Text = "File"
@@ -145,6 +148,12 @@ Partial Class Start_Window
 		Me.AlwaysOnTopToolStripMenuItem.Name = "AlwaysOnTopToolStripMenuItem"
 		Me.AlwaysOnTopToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
 		Me.AlwaysOnTopToolStripMenuItem.Text = "Always On Top"
+		'
+		'Help
+		'
+		Me.Help.Name = "Help"
+		Me.Help.Size = New System.Drawing.Size(186, 22)
+		Me.Help.Text = "Help"
 		'
 		'ProgramInformationToolStripMenuItem
 		'
@@ -302,7 +311,7 @@ Partial Class Start_Window
 		Me.StatusStrip1.BackColor = System.Drawing.SystemColors.Control
 		Me.StatusStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
 		Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SW_Doc, Me.Extra_Info})
-		Me.StatusStrip1.Location = New System.Drawing.Point(0, 589)
+		Me.StatusStrip1.Location = New System.Drawing.Point(0, 639)
 		Me.StatusStrip1.Name = "StatusStrip1"
 		Me.StatusStrip1.Size = New System.Drawing.Size(684, 22)
 		Me.StatusStrip1.SizingGrip = False
@@ -336,7 +345,7 @@ Partial Class Start_Window
 		Me.Sheet_Metal_Group.Controls.Add(Me.L_Angle_10133)
 		Me.Sheet_Metal_Group.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.Sheet_Metal_Group.Location = New System.Drawing.Point(277, 46)
-		Me.Sheet_Metal_Group.Margin = New System.Windows.Forms.Padding(15, 25, 15, 10)
+		Me.Sheet_Metal_Group.Margin = New System.Windows.Forms.Padding(15, 10, 15, 10)
 		Me.Sheet_Metal_Group.Name = "Sheet_Metal_Group"
 		Me.Sheet_Metal_Group.Size = New System.Drawing.Size(321, 155)
 		Me.Sheet_Metal_Group.TabIndex = 0
@@ -346,7 +355,7 @@ Partial Class Start_Window
 		'U_Channel
 		'
 		Me.U_Channel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.U_Channel.Location = New System.Drawing.Point(228, 90)
+		Me.U_Channel.Location = New System.Drawing.Point(228, 93)
 		Me.U_Channel.Name = "U_Channel"
 		Me.U_Channel.Size = New System.Drawing.Size(75, 23)
 		Me.U_Channel.TabIndex = 10
@@ -367,7 +376,7 @@ Partial Class Start_Window
 		'Gusset_Custom
 		'
 		Me.Gusset_Custom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Gusset_Custom.Location = New System.Drawing.Point(228, 61)
+		Me.Gusset_Custom.Location = New System.Drawing.Point(228, 64)
 		Me.Gusset_Custom.Name = "Gusset_Custom"
 		Me.Gusset_Custom.Size = New System.Drawing.Size(75, 23)
 		Me.Gusset_Custom.TabIndex = 7
@@ -377,7 +386,7 @@ Partial Class Start_Window
 		'Z_Angle_Custom
 		'
 		Me.Z_Angle_Custom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Z_Angle_Custom.Location = New System.Drawing.Point(123, 119)
+		Me.Z_Angle_Custom.Location = New System.Drawing.Point(123, 122)
 		Me.Z_Angle_Custom.Margin = New System.Windows.Forms.Padding(3, 3, 3, 10)
 		Me.Z_Angle_Custom.Name = "Z_Angle_Custom"
 		Me.Z_Angle_Custom.Size = New System.Drawing.Size(75, 23)
@@ -388,7 +397,7 @@ Partial Class Start_Window
 		'Z_Angle_10139
 		'
 		Me.Z_Angle_10139.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Z_Angle_10139.Location = New System.Drawing.Point(123, 90)
+		Me.Z_Angle_10139.Location = New System.Drawing.Point(123, 93)
 		Me.Z_Angle_10139.Name = "Z_Angle_10139"
 		Me.Z_Angle_10139.Size = New System.Drawing.Size(75, 23)
 		Me.Z_Angle_10139.TabIndex = 5
@@ -409,7 +418,7 @@ Partial Class Start_Window
 		'Z_Angle_10138
 		'
 		Me.Z_Angle_10138.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Z_Angle_10138.Location = New System.Drawing.Point(123, 61)
+		Me.Z_Angle_10138.Location = New System.Drawing.Point(123, 64)
 		Me.Z_Angle_10138.Name = "Z_Angle_10138"
 		Me.Z_Angle_10138.Size = New System.Drawing.Size(75, 23)
 		Me.Z_Angle_10138.TabIndex = 4
@@ -419,7 +428,7 @@ Partial Class Start_Window
 		'L_Angle_Custom
 		'
 		Me.L_Angle_Custom.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.L_Angle_Custom.Location = New System.Drawing.Point(18, 119)
+		Me.L_Angle_Custom.Location = New System.Drawing.Point(18, 122)
 		Me.L_Angle_Custom.Name = "L_Angle_Custom"
 		Me.L_Angle_Custom.Size = New System.Drawing.Size(75, 23)
 		Me.L_Angle_Custom.TabIndex = 3
@@ -429,7 +438,7 @@ Partial Class Start_Window
 		'L_Angle_10134
 		'
 		Me.L_Angle_10134.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.L_Angle_10134.Location = New System.Drawing.Point(18, 90)
+		Me.L_Angle_10134.Location = New System.Drawing.Point(18, 93)
 		Me.L_Angle_10134.Name = "L_Angle_10134"
 		Me.L_Angle_10134.Size = New System.Drawing.Size(75, 23)
 		Me.L_Angle_10134.TabIndex = 2
@@ -450,7 +459,7 @@ Partial Class Start_Window
 		'L_Angle_10133
 		'
 		Me.L_Angle_10133.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.L_Angle_10133.Location = New System.Drawing.Point(18, 61)
+		Me.L_Angle_10133.Location = New System.Drawing.Point(18, 64)
 		Me.L_Angle_10133.Name = "L_Angle_10133"
 		Me.L_Angle_10133.Size = New System.Drawing.Size(75, 23)
 		Me.L_Angle_10133.TabIndex = 1
@@ -475,9 +484,10 @@ Partial Class Start_Window
 		'Aircraft_Stringers
 		'
 		Me.Aircraft_Stringers.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Aircraft_Stringers.Location = New System.Drawing.Point(17, 122)
+		Me.Aircraft_Stringers.Location = New System.Drawing.Point(18, 122)
+		Me.Aircraft_Stringers.Margin = New System.Windows.Forms.Padding(15, 3, 15, 3)
 		Me.Aircraft_Stringers.Name = "Aircraft_Stringers"
-		Me.Aircraft_Stringers.Size = New System.Drawing.Size(154, 23)
+		Me.Aircraft_Stringers.Size = New System.Drawing.Size(187, 23)
 		Me.Aircraft_Stringers.TabIndex = 12
 		Me.Aircraft_Stringers.Text = "Aircraft Stringers"
 		Me.Aircraft_Stringers.UseVisualStyleBackColor = True
@@ -486,8 +496,9 @@ Partial Class Start_Window
 		'
 		Me.Electrical_Drawings.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.Electrical_Drawings.Location = New System.Drawing.Point(18, 93)
+		Me.Electrical_Drawings.Margin = New System.Windows.Forms.Padding(15, 3, 15, 3)
 		Me.Electrical_Drawings.Name = "Electrical_Drawings"
-		Me.Electrical_Drawings.Size = New System.Drawing.Size(154, 23)
+		Me.Electrical_Drawings.Size = New System.Drawing.Size(187, 23)
 		Me.Electrical_Drawings.TabIndex = 11
 		Me.Electrical_Drawings.Text = "Existing Electrical Drawings"
 		Me.Electrical_Drawings.UseVisualStyleBackColor = True
@@ -495,9 +506,10 @@ Partial Class Start_Window
 		'Structural_Drawings
 		'
 		Me.Structural_Drawings.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Structural_Drawings.Location = New System.Drawing.Point(18, 64)
+		Me.Structural_Drawings.Location = New System.Drawing.Point(17, 64)
+		Me.Structural_Drawings.Margin = New System.Windows.Forms.Padding(15, 3, 15, 3)
 		Me.Structural_Drawings.Name = "Structural_Drawings"
-		Me.Structural_Drawings.Size = New System.Drawing.Size(154, 23)
+		Me.Structural_Drawings.Size = New System.Drawing.Size(187, 23)
 		Me.Structural_Drawings.TabIndex = 10
 		Me.Structural_Drawings.Text = "Existing Structural Drawings"
 		Me.Structural_Drawings.UseVisualStyleBackColor = True
@@ -506,9 +518,9 @@ Partial Class Start_Window
 		'
 		Me.Frame_Station.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.Frame_Station.Location = New System.Drawing.Point(18, 35)
-		Me.Frame_Station.Margin = New System.Windows.Forms.Padding(15, 10, 15, 10)
+		Me.Frame_Station.Margin = New System.Windows.Forms.Padding(15, 10, 15, 3)
 		Me.Frame_Station.Name = "Frame_Station"
-		Me.Frame_Station.Size = New System.Drawing.Size(154, 23)
+		Me.Frame_Station.Size = New System.Drawing.Size(187, 23)
 		Me.Frame_Station.TabIndex = 9
 		Me.Frame_Station.Text = "Aircraft Frame Stations"
 		Me.Frame_Station.UseVisualStyleBackColor = True
@@ -518,7 +530,7 @@ Partial Class Start_Window
 		Me.Solidworks_Functions_Group.Controls.Add(Me.Save_As_Type)
 		Me.Solidworks_Functions_Group.Controls.Add(Me.Cust_Prop_Update)
 		Me.Solidworks_Functions_Group.Controls.Add(Me.PDF_Drawing)
-		Me.Solidworks_Functions_Group.Controls.Add(Me.Remove_Config)
+		Me.Solidworks_Functions_Group.Controls.Add(Me.Hide_Origin)
 		Me.Solidworks_Functions_Group.Controls.Add(Me.Pack_N_Go)
 		Me.Solidworks_Functions_Group.Controls.Add(Me.Add_Hardware)
 		Me.Solidworks_Functions_Group.Controls.Add(Me.Sheet_Rename)
@@ -532,6 +544,19 @@ Partial Class Start_Window
 		Me.Solidworks_Functions_Group.TabStop = False
 		Me.Solidworks_Functions_Group.Text = "SOLIDWORKS FUNCTIONS (1)"
 		'
+		'Save_As_Type
+		'
+		Me.Save_As_Type.BackColor = System.Drawing.Color.Gainsboro
+		Me.Save_As_Type.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Save_As_Type.ForeColor = System.Drawing.SystemColors.ControlText
+		Me.Save_As_Type.FormattingEnabled = True
+		Me.Save_As_Type.Items.AddRange(New Object() {".STL", ".STEP", ".DWG", ".PNG", ".IGS"})
+		Me.Save_As_Type.Location = New System.Drawing.Point(161, 64)
+		Me.Save_As_Type.Name = "Save_As_Type"
+		Me.Save_As_Type.Size = New System.Drawing.Size(125, 21)
+		Me.Save_As_Type.TabIndex = 28
+		Me.Save_As_Type.Text = "SAVE AS..."
+		'
 		'Cust_Prop_Update
 		'
 		Me.Cust_Prop_Update.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -542,16 +567,6 @@ Partial Class Start_Window
 		Me.Cust_Prop_Update.TabIndex = 20
 		Me.Cust_Prop_Update.Text = "PROP UPDATE"
 		Me.Cust_Prop_Update.UseVisualStyleBackColor = True
-		'
-		'Save_As_STL
-		'
-		Me.Save_As_STL.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Save_As_STL.Location = New System.Drawing.Point(609, 283)
-		Me.Save_As_STL.Name = "Save_As_STL"
-		Me.Save_As_STL.Size = New System.Drawing.Size(125, 23)
-		Me.Save_As_STL.TabIndex = 19
-		Me.Save_As_STL.Text = "SAVE AS STL"
-		Me.Save_As_STL.UseVisualStyleBackColor = True
 		'
 		'PDF_Drawing
 		'
@@ -564,15 +579,15 @@ Partial Class Start_Window
 		Me.PDF_Drawing.Text = "PDF DRAWING"
 		Me.PDF_Drawing.UseVisualStyleBackColor = True
 		'
-		'Remove_Config
+		'Hide_Origin
 		'
-		Me.Remove_Config.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Remove_Config.Location = New System.Drawing.Point(161, 122)
-		Me.Remove_Config.Name = "Remove_Config"
-		Me.Remove_Config.Size = New System.Drawing.Size(125, 23)
-		Me.Remove_Config.TabIndex = 18
-		Me.Remove_Config.Text = "REMOVE CONFIGS"
-		Me.Remove_Config.UseVisualStyleBackColor = True
+		Me.Hide_Origin.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Hide_Origin.Location = New System.Drawing.Point(161, 122)
+		Me.Hide_Origin.Name = "Hide_Origin"
+		Me.Hide_Origin.Size = New System.Drawing.Size(125, 23)
+		Me.Hide_Origin.TabIndex = 18
+		Me.Hide_Origin.Text = "HIDE ORIGIN DWG"
+		Me.Hide_Origin.UseVisualStyleBackColor = True
 		'
 		'Pack_N_Go
 		'
@@ -582,7 +597,7 @@ Partial Class Start_Window
 		Me.Pack_N_Go.Name = "Pack_N_Go"
 		Me.Pack_N_Go.Size = New System.Drawing.Size(125, 23)
 		Me.Pack_N_Go.TabIndex = 17
-		Me.Pack_N_Go.Text = "PACK N GO"
+		Me.Pack_N_Go.Text = "FINAL RELEASE RDY"
 		Me.Pack_N_Go.UseVisualStyleBackColor = True
 		'
 		'Add_Hardware
@@ -616,6 +631,16 @@ Partial Class Start_Window
 		Me.New_Drawing.Text = "NEW DRAWING"
 		Me.New_Drawing.UseVisualStyleBackColor = True
 		'
+		'Save_As_STL
+		'
+		Me.Save_As_STL.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Save_As_STL.Location = New System.Drawing.Point(609, 283)
+		Me.Save_As_STL.Name = "Save_As_STL"
+		Me.Save_As_STL.Size = New System.Drawing.Size(125, 23)
+		Me.Save_As_STL.TabIndex = 19
+		Me.Save_As_STL.Text = "SAVE AS STL"
+		Me.Save_As_STL.UseVisualStyleBackColor = True
+		'
 		'Library_Feature
 		'
 		Me.Library_Feature.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -629,31 +654,18 @@ Partial Class Start_Window
 		'
 		'Math_Functions_Group
 		'
-		Me.Math_Functions_Group.Controls.Add(Me.Load_Analysis_2)
 		Me.Math_Functions_Group.Controls.Add(Me.Load_Analysis_Button)
 		Me.Math_Functions_Group.Controls.Add(Me.Radius_Finder_Button)
 		Me.Math_Functions_Group.Controls.Add(Me.Fastener_Data)
 		Me.Math_Functions_Group.Controls.Add(Me.Cross_Product)
 		Me.Math_Functions_Group.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Math_Functions_Group.Location = New System.Drawing.Point(24, 224)
+		Me.Math_Functions_Group.Location = New System.Drawing.Point(24, 221)
 		Me.Math_Functions_Group.Margin = New System.Windows.Forms.Padding(15, 10, 15, 10)
 		Me.Math_Functions_Group.Name = "Math_Functions_Group"
-		Me.Math_Functions_Group.Size = New System.Drawing.Size(223, 197)
+		Me.Math_Functions_Group.Size = New System.Drawing.Size(223, 158)
 		Me.Math_Functions_Group.TabIndex = 20
 		Me.Math_Functions_Group.TabStop = False
-		Me.Math_Functions_Group.Text = "MATH FUNCTIONS"
-		'
-		'Load_Analysis_2
-		'
-		Me.Load_Analysis_2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Load_Analysis_2.Location = New System.Drawing.Point(18, 151)
-		Me.Load_Analysis_2.Margin = New System.Windows.Forms.Padding(15, 3, 15, 3)
-		Me.Load_Analysis_2.Name = "Load_Analysis_2"
-		Me.Load_Analysis_2.Size = New System.Drawing.Size(187, 23)
-		Me.Load_Analysis_2.TabIndex = 25
-		Me.Load_Analysis_2.Text = "LOAD ANALYSIS pt. 2"
-		Me.Load_Analysis_2.UseVisualStyleBackColor = True
-		Me.Load_Analysis_2.Visible = False
+		Me.Math_Functions_Group.Text = "MISC FUNCTIONS"
 		'
 		'Load_Analysis_Button
 		'
@@ -699,16 +711,28 @@ Partial Class Start_Window
 		Me.Cross_Product.Text = "CROSS PRODUCT"
 		Me.Cross_Product.UseVisualStyleBackColor = True
 		'
+		'Load_Analysis_2
+		'
+		Me.Load_Analysis_2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Load_Analysis_2.Location = New System.Drawing.Point(609, 325)
+		Me.Load_Analysis_2.Margin = New System.Windows.Forms.Padding(15, 3, 15, 3)
+		Me.Load_Analysis_2.Name = "Load_Analysis_2"
+		Me.Load_Analysis_2.Size = New System.Drawing.Size(187, 23)
+		Me.Load_Analysis_2.TabIndex = 25
+		Me.Load_Analysis_2.Text = "LOAD ANALYSIS pt. 2"
+		Me.Load_Analysis_2.UseVisualStyleBackColor = True
+		Me.Load_Analysis_2.Visible = False
+		'
 		'Solidworks_Modeling_Group
 		'
-		Me.Solidworks_Modeling_Group.Controls.Add(Me.Test_Button)
+		Me.Solidworks_Modeling_Group.Controls.Add(Me.Pack_N_Go_Assy)
 		Me.Solidworks_Modeling_Group.Controls.Add(Me.Export_To_Excel)
 		Me.Solidworks_Modeling_Group.Controls.Add(Me.BOM_Weight_Tables)
 		Me.Solidworks_Modeling_Group.Controls.Add(Me.Note_Naming)
 		Me.Solidworks_Modeling_Group.Controls.Add(Me.Model_Properties)
 		Me.Solidworks_Modeling_Group.Controls.Add(Me.Library_Feature)
 		Me.Solidworks_Modeling_Group.Controls.Add(Me.Contour_Plate_Modeling)
-		Me.Solidworks_Modeling_Group.Controls.Add(Me.Panel_Modeling)
+		Me.Solidworks_Modeling_Group.Controls.Add(Me.NOTE_UPDATING)
 		Me.Solidworks_Modeling_Group.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.Solidworks_Modeling_Group.Location = New System.Drawing.Point(277, 399)
 		Me.Solidworks_Modeling_Group.Margin = New System.Windows.Forms.Padding(15, 10, 15, 10)
@@ -718,16 +742,16 @@ Partial Class Start_Window
 		Me.Solidworks_Modeling_Group.TabStop = False
 		Me.Solidworks_Modeling_Group.Text = "SOLIDWORKS FUNCTIONS (2)"
 		'
-		'Test_Button
+		'Pack_N_Go_Assy
 		'
-		Me.Test_Button.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Test_Button.Location = New System.Drawing.Point(161, 93)
-		Me.Test_Button.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
-		Me.Test_Button.Name = "Test_Button"
-		Me.Test_Button.Size = New System.Drawing.Size(125, 23)
-		Me.Test_Button.TabIndex = 30
-		Me.Test_Button.Text = "Pack N Go Assy"
-		Me.Test_Button.UseVisualStyleBackColor = True
+		Me.Pack_N_Go_Assy.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Pack_N_Go_Assy.Location = New System.Drawing.Point(161, 93)
+		Me.Pack_N_Go_Assy.Margin = New System.Windows.Forms.Padding(3, 10, 3, 3)
+		Me.Pack_N_Go_Assy.Name = "Pack_N_Go_Assy"
+		Me.Pack_N_Go_Assy.Size = New System.Drawing.Size(125, 23)
+		Me.Pack_N_Go_Assy.TabIndex = 30
+		Me.Pack_N_Go_Assy.Text = "Pack N Go Assy"
+		Me.Pack_N_Go_Assy.UseVisualStyleBackColor = True
 		'
 		'Export_To_Excel
 		'
@@ -759,7 +783,7 @@ Partial Class Start_Window
 		Me.Note_Naming.Name = "Note_Naming"
 		Me.Note_Naming.Size = New System.Drawing.Size(125, 23)
 		Me.Note_Naming.TabIndex = 27
-		Me.Note_Naming.Text = "NAME NOTES"
+		Me.Note_Naming.Text = "UPDATE FORMAT"
 		Me.Note_Naming.UseVisualStyleBackColor = True
 		'
 		'Model_Properties
@@ -782,51 +806,50 @@ Partial Class Start_Window
 		Me.Contour_Plate_Modeling.Text = "CONTOUR PLATES"
 		Me.Contour_Plate_Modeling.UseVisualStyleBackColor = True
 		'
-		'Panel_Modeling
+		'NOTE_UPDATING
 		'
-		Me.Panel_Modeling.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Panel_Modeling.Location = New System.Drawing.Point(18, 122)
-		Me.Panel_Modeling.Margin = New System.Windows.Forms.Padding(15, 10, 15, 3)
-		Me.Panel_Modeling.Name = "Panel_Modeling"
-		Me.Panel_Modeling.Size = New System.Drawing.Size(125, 23)
-		Me.Panel_Modeling.TabIndex = 24
-		Me.Panel_Modeling.Text = "PANELS"
-		Me.Panel_Modeling.UseVisualStyleBackColor = True
+		Me.NOTE_UPDATING.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.NOTE_UPDATING.Location = New System.Drawing.Point(18, 122)
+		Me.NOTE_UPDATING.Margin = New System.Windows.Forms.Padding(15, 10, 15, 3)
+		Me.NOTE_UPDATING.Name = "NOTE_UPDATING"
+		Me.NOTE_UPDATING.Size = New System.Drawing.Size(125, 23)
+		Me.NOTE_UPDATING.TabIndex = 24
+		Me.NOTE_UPDATING.Text = "NOTE UPDATING"
+		Me.NOTE_UPDATING.UseVisualStyleBackColor = True
 		'
 		'Cad_Interfaces
 		'
-		Me.Cad_Interfaces.Controls.Add(Me.AutoCad_Interface)
 		Me.Cad_Interfaces.Controls.Add(Me.SolidWorks_Interface)
 		Me.Cad_Interfaces.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Cad_Interfaces.Location = New System.Drawing.Point(24, 441)
+		Me.Cad_Interfaces.Location = New System.Drawing.Point(24, 493)
 		Me.Cad_Interfaces.Margin = New System.Windows.Forms.Padding(15, 10, 15, 10)
 		Me.Cad_Interfaces.Name = "Cad_Interfaces"
-		Me.Cad_Interfaces.Size = New System.Drawing.Size(223, 113)
+		Me.Cad_Interfaces.Size = New System.Drawing.Size(223, 76)
 		Me.Cad_Interfaces.TabIndex = 25
 		Me.Cad_Interfaces.TabStop = False
 		Me.Cad_Interfaces.Text = "CAD INTERFACES"
-		'
-		'AutoCad_Interface
-		'
-		Me.AutoCad_Interface.AutoSize = True
-		Me.AutoCad_Interface.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.AutoCad_Interface.Location = New System.Drawing.Point(18, 71)
-		Me.AutoCad_Interface.Name = "AutoCad_Interface"
-		Me.AutoCad_Interface.Size = New System.Drawing.Size(121, 28)
-		Me.AutoCad_Interface.TabIndex = 1
-		Me.AutoCad_Interface.Text = "AUTOCAD"
-		Me.AutoCad_Interface.UseVisualStyleBackColor = True
 		'
 		'SolidWorks_Interface
 		'
 		Me.SolidWorks_Interface.AutoSize = True
 		Me.SolidWorks_Interface.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.SolidWorks_Interface.Location = New System.Drawing.Point(18, 37)
+		Me.SolidWorks_Interface.Location = New System.Drawing.Point(17, 35)
 		Me.SolidWorks_Interface.Name = "SolidWorks_Interface"
 		Me.SolidWorks_Interface.Size = New System.Drawing.Size(153, 28)
 		Me.SolidWorks_Interface.TabIndex = 0
 		Me.SolidWorks_Interface.Text = "SOLIDWORKS"
 		Me.SolidWorks_Interface.UseVisualStyleBackColor = True
+		'
+		'AutoCad_Interface
+		'
+		Me.AutoCad_Interface.AutoSize = True
+		Me.AutoCad_Interface.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.AutoCad_Interface.Location = New System.Drawing.Point(616, 367)
+		Me.AutoCad_Interface.Name = "AutoCad_Interface"
+		Me.AutoCad_Interface.Size = New System.Drawing.Size(121, 28)
+		Me.AutoCad_Interface.TabIndex = 1
+		Me.AutoCad_Interface.Text = "AUTOCAD"
+		Me.AutoCad_Interface.UseVisualStyleBackColor = True
 		'
 		'PictureBox1
 		'
@@ -838,16 +861,6 @@ Partial Class Start_Window
 		Me.PictureBox1.TabStop = False
 		Me.PictureBox1.Visible = False
 		'
-		'TEST
-		'
-		Me.TEST.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.TEST.Location = New System.Drawing.Point(609, 201)
-		Me.TEST.Name = "TEST"
-		Me.TEST.Size = New System.Drawing.Size(75, 23)
-		Me.TEST.TabIndex = 26
-		Me.TEST.Text = "TEST"
-		Me.TEST.UseVisualStyleBackColor = True
-		'
 		'Save_As_DWG
 		'
 		Me.Save_As_DWG.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -858,27 +871,38 @@ Partial Class Start_Window
 		Me.Save_As_DWG.Text = "SAVE AS DWG"
 		Me.Save_As_DWG.UseVisualStyleBackColor = True
 		'
-		'Save_As_Type
+		'Doc_Backup_Group
 		'
-		Me.Save_As_Type.BackColor = System.Drawing.Color.Gainsboro
-		Me.Save_As_Type.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Save_As_Type.ForeColor = System.Drawing.SystemColors.ControlText
-		Me.Save_As_Type.FormattingEnabled = True
-		Me.Save_As_Type.Items.AddRange(New Object() {".STL", ".STEP", ".DWG", ".PNG", ".IGS"})
-		Me.Save_As_Type.Location = New System.Drawing.Point(161, 64)
-		Me.Save_As_Type.Name = "Save_As_Type"
-		Me.Save_As_Type.Size = New System.Drawing.Size(125, 21)
-		Me.Save_As_Type.TabIndex = 28
-		Me.Save_As_Type.Text = "SAVE AS..."
+		Me.Doc_Backup_Group.Controls.Add(Me.Backup)
+		Me.Doc_Backup_Group.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold)
+		Me.Doc_Backup_Group.Location = New System.Drawing.Point(24, 399)
+		Me.Doc_Backup_Group.Margin = New System.Windows.Forms.Padding(15, 10, 15, 10)
+		Me.Doc_Backup_Group.Name = "Doc_Backup_Group"
+		Me.Doc_Backup_Group.Size = New System.Drawing.Size(223, 74)
+		Me.Doc_Backup_Group.TabIndex = 29
+		Me.Doc_Backup_Group.TabStop = False
+		Me.Doc_Backup_Group.Text = "DWG/PDF EXCEL"
+		'
+		'Backup
+		'
+		Me.Backup.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+		Me.Backup.Location = New System.Drawing.Point(18, 35)
+		Me.Backup.Name = "Backup"
+		Me.Backup.Size = New System.Drawing.Size(187, 23)
+		Me.Backup.TabIndex = 2
+		Me.Backup.Text = "NATIVE/PDF --> EXCEL DATA"
+		Me.Backup.UseVisualStyleBackColor = True
 		'
 		'Start_Window
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.SystemColors.Window
-		Me.ClientSize = New System.Drawing.Size(684, 611)
+		Me.ClientSize = New System.Drawing.Size(684, 661)
+		Me.Controls.Add(Me.AutoCad_Interface)
+		Me.Controls.Add(Me.Load_Analysis_2)
+		Me.Controls.Add(Me.Doc_Backup_Group)
 		Me.Controls.Add(Me.Save_As_DWG)
-		Me.Controls.Add(Me.TEST)
 		Me.Controls.Add(Me.Save_As_STL)
 		Me.Controls.Add(Me.Cad_Interfaces)
 		Me.Controls.Add(Me.Solidworks_Modeling_Group)
@@ -892,7 +916,8 @@ Partial Class Start_Window
 		Me.Cursor = System.Windows.Forms.Cursors.Default
 		Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
 		Me.MainMenuStrip = Me.MenuStrip1
-		Me.MinimumSize = New System.Drawing.Size(700, 650)
+		Me.MaximumSize = New System.Drawing.Size(700, 700)
+		Me.MinimumSize = New System.Drawing.Size(700, 700)
 		Me.Name = "Start_Window"
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "Engineering Assistant"
@@ -908,6 +933,7 @@ Partial Class Start_Window
 		Me.Cad_Interfaces.ResumeLayout(False)
 		Me.Cad_Interfaces.PerformLayout()
 		CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+		Me.Doc_Backup_Group.ResumeLayout(False)
 		Me.ResumeLayout(False)
 		Me.PerformLayout()
 
@@ -959,7 +985,7 @@ Partial Class Start_Window
 	Friend WithEvents Frame_Station As Button
 	Friend WithEvents Solidworks_Functions_Group As GroupBox
 	Friend WithEvents Library_Feature As Button
-	Friend WithEvents Remove_Config As Button
+	Friend WithEvents Hide_Origin As Button
 	Friend WithEvents Pack_N_Go As Button
 	Friend WithEvents Add_Hardware As Button
 	Friend WithEvents Sheet_Rename As Button
@@ -971,7 +997,7 @@ Partial Class Start_Window
 	Friend WithEvents Solidworks_Modeling_Group As GroupBox
 	Friend WithEvents Model_Properties As Button
 	Friend WithEvents Contour_Plate_Modeling As Button
-	Friend WithEvents Panel_Modeling As Button
+	Friend WithEvents NOTE_UPDATING As Button
 	Friend WithEvents Cust_Prop_Update As Button
 	Friend WithEvents Save_As_STL As Button
 	Friend WithEvents Extra_Info As ToolStripStatusLabel
@@ -986,9 +1012,12 @@ Partial Class Start_Window
 	Friend WithEvents SolidWorks_Interface As CheckBox
 	Friend WithEvents ToolTip1 As ToolTip
 	Friend WithEvents Load_Analysis_2 As Button
-	Friend WithEvents Test_Button As Button
+	Friend WithEvents Pack_N_Go_Assy As Button
 	Friend WithEvents Aircraft_Stringers As Button
-	Friend WithEvents TEST As Button
 	Friend WithEvents Save_As_DWG As Button
 	Friend WithEvents Save_As_Type As ComboBox
+	Friend WithEvents Doc_Backup_Group As GroupBox
+	Friend WithEvents Backup As Button
+	Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+	Friend WithEvents Help As ToolStripMenuItem
 End Class

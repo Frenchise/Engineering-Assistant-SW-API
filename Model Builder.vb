@@ -804,7 +804,7 @@ Public Class Model_Builder
 
 	Private Sub Extrusion_Load_Click(sender As Object, e As EventArgs) Handles Extrusion_Load.Click
 
-		swApp = CreateObject("SldWorks.Application")
+		swApp = SWFunctions.swApp
 
 		Extrusion_Input.ReadOnly = True
 		Extrusion_Input.BackColor = Color.Gray
@@ -823,9 +823,8 @@ Public Class Model_Builder
 			If Functions.Calling_Fun = "Gusset" Then
 				'Functions.Error_Form("Not Yet", "No " & Functions.Calling_Fun & " program logic yet",,,,, Me)
 				'Close()
-				MsgBox("2")
 
-				swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\GUSSET\GUSSET BASE MODEL.SLDPRT", 1, 0, "", fileerror, filewarning)
+				swDoc = swApp.OpenDoc6(Network_Locations.Gusset_Dir, 1, 0, "", fileerror, filewarning)
 				swDoc = swApp.ActiveDoc
 				config = swDoc.GetActiveConfiguration
 				Open_Config = swDoc.ShowConfiguration2("Default")
@@ -887,7 +886,7 @@ Public Class Model_Builder
 
 			If Functions.Calling_Fun = "U Channel" Then
 
-				swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\U CHANNELS\AND10137 EXTRUSION.SLDPRT", 1, 0, "", fileerror, filewarning)
+				swDoc = swApp.OpenDoc6(Network_Locations.AND10137_U_Extrusion, 1, 0, "", fileerror, filewarning)
 				swDoc = swApp.ActiveDoc
 
 				Model_Image.Visible = True
@@ -984,7 +983,7 @@ Public Class Model_Builder
 				Form_Resize()
 
 
-				swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\L ANGLES\Custom\L-Angle.SLDPRT", 1, 0, "", fileerror, filewarning)
+				swDoc = swApp.OpenDoc6(Network_Locations.Custom_LAngle, 1, 0, "", fileerror, filewarning)
 				swDoc = swApp.ActiveDoc
 
 				Label10.Text = PropertyDescription(9)
@@ -1007,7 +1006,7 @@ Public Class Model_Builder
 				Width = Width + Model_Image.Width
 				Form_Resize()
 
-				swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\ZEE ANGLES\Custom\Z-Angle.SLDPRT", 1, 0, "", fileerror, filewarning)
+				swDoc = swApp.OpenDoc6(Network_Locations.Custom_ZAngle, 1, 0, "", fileerror, filewarning)
 				swDoc = swApp.ActiveDoc
 
 				Label10.Text = PropertyDescription(9)
@@ -1042,14 +1041,14 @@ Public Class Model_Builder
 
 				If Functions.Calling_Fun = "10133" Then
 
-					swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\L ANGLES\EQUAL LEGS\AND10133 BASE L #0401-1604.SLDPRT", 1, 0, "", fileerror, filewarning)
+					swDoc = swApp.OpenDoc6(Network_Locations.AND10133_L_EqualExtrusion, 1, 0, "", fileerror, filewarning)
 					swDoc = swApp.ActiveDoc
 					config = swDoc.GetActiveConfiguration
 					Open_Config = swDoc.ShowConfiguration2(Extrusion_Num)
 
 				ElseIf Functions.Calling_Fun = "10134" Then
 
-					swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\L ANGLES\UNEQUAL LEGS\AND10134 BASE L #0501-1604.SLDPRT", 1, 0, "", fileerror, filewarning)
+					swDoc = swApp.OpenDoc6(Network_Locations.AND10134_L_Extrusion, 1, 0, "", fileerror, filewarning)
 					swDoc = swApp.ActiveDoc
 					config = swDoc.GetActiveConfiguration
 					Open_Config = swDoc.ShowConfiguration2(Extrusion_Num)
@@ -1100,14 +1099,14 @@ Public Class Model_Builder
 
 				If Functions.Calling_Fun = "10138" Then
 
-					swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\ZEE ANGLES\EQUAL LIPS\AND10138 BASE ZEE #0401-2405.SLDPRT", 1, 0, "", fileerror, filewarning)
+					swDoc = swApp.OpenDoc6(Network_Locations.AND10138_Z_EqualExtrusion, 1, 0, "", fileerror, filewarning)
 					swDoc = swApp.ActiveDoc
 					config = swDoc.GetActiveConfiguration
 					Open_Config = swDoc.ShowConfiguration2(Extrusion_Num)
 
 				ElseIf Functions.Calling_Fun = "10139" Then
 
-					swDoc = swApp.OpenDoc6("T:\Engineering\Non-Site Specific\PARTS\LIBRARY\ZEE ANGLES\UNEQUAL LIPS\AND10139 BASE ZEE #0401-3003.SLDPRT", 1, 0, "", fileerror, filewarning)
+					swDoc = swApp.OpenDoc6(Network_Locations.AND10139_Z_Extrusion, 1, 0, "", fileerror, filewarning)
 					swDoc = swApp.ActiveDoc
 					config = swDoc.GetActiveConfiguration
 					Open_Config = swDoc.ShowConfiguration2(Extrusion_Num)

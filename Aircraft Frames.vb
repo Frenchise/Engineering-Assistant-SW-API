@@ -3,11 +3,9 @@ Imports System.Runtime.InteropServices
 
 Public Class Aircraft_Frames
 
-    Dim dir = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Aircraft Frame Station"
     Dim PDF_dir As String
     Dim dir_Manufacturer As String
     Dim dir_Aircraft As String
-    Dim Dir_Exist As Boolean
     Dim PDF_Selected As Boolean = False
 
     Private Sub Form1_resizeEnd() Handles Me.Activated, Me.ResizeEnd
@@ -27,35 +25,33 @@ Public Class Aircraft_Frames
     Private Sub Aircraft_Frames_Load() Handles MyBase.Load
         Form1_resizeEnd()
 
-
-        Dir_Exist = Directory.Exists(dir)
         Aircraft_Type_Label.Visible = False
         Aircraft_Type.Visible = False
         Aircraft_PDF_Label.Visible = False
         Aircraft_PDF.Visible = False
 
-		If Dir_Exist Then
+        If Directory.Exists(Network_Locations.Frame_Stations) Then
 
-			Directory_Exist.Text = "Frame Station Directory Exists"
+            Directory_Exist.Text = "Frame Station Directory Exists"
 
-			Aircraft_Type.Items.Clear()
-			Aircraft_Type.Text = ""
-			Aircraft_PDF.Items.Clear()
-			Aircraft_PDF.Text = ""
+            Aircraft_Type.Items.Clear()
+            Aircraft_Type.Text = ""
+            Aircraft_PDF.Items.Clear()
+            Aircraft_PDF.Text = ""
 
-			Dim folder = String.Empty
-			Dim Folder_name = String.Empty
+            Dim folder = String.Empty
+            Dim Folder_name = String.Empty
 
-			For Each folder In System.IO.Directory.GetDirectories(dir)
+            For Each folder In System.IO.Directory.GetDirectories(Network_Locations.Frame_Stations)
 
-				Folder_name = System.IO.Path.GetFileNameWithoutExtension(folder)
-				Manufacturer.Items.Add(Folder_name)
+                Folder_name = System.IO.Path.GetFileNameWithoutExtension(folder)
+                Manufacturer.Items.Add(Folder_name)
 
-			Next
+            Next
 
-		Else
+        Else
 
-			Functions.Error_Form("Error", "Frame Station Directory Does not Exist",,,, False, Me)
+            Functions.Error_Form("Error", "Frame Station Directory Does not Exist",,,, False, Me)
 			Directory_Exist.Text = "Frame Station Directory Does not Exist"
 
 		End If
@@ -75,10 +71,9 @@ Public Class Aircraft_Frames
         Aircraft_PDF.Items.Clear()
         Aircraft_PDF.Text = ""
 
-        dir_Manufacturer = dir + "\" + Manufacturer.Text
+        dir_Manufacturer = Network_Locations.Frame_Stations + "\" + Manufacturer.Text
 
-        Dir_Exist = Directory.Exists(dir_Manufacturer)
-        If Dir_Exist Then
+        If Directory.Exists(dir_Manufacturer) Then
 
 
 
@@ -110,8 +105,8 @@ Public Class Aircraft_Frames
         'MsgBox(Aircraft_Type.Text)
         dir_Aircraft = dir_Manufacturer + "\" + Aircraft_Type.Text
         'MsgBox(Dir)
-        Dir_Exist = Directory.Exists(dir_Aircraft)
-        If Dir_Exist Then
+
+        If Directory.Exists(dir_Aircraft) Then
 
             Dim file = String.Empty
             Dim File_name = String.Empty

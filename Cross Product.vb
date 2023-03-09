@@ -2,6 +2,19 @@
 
 Public Class Cross_Product
 
+	Dim Bool_F_i As Boolean
+	Dim Bool_F_j As Boolean
+	Dim Bool_F_k As Boolean
+	Dim Dis_i As Decimal
+	Dim Dis_j As Decimal
+	Dim Dis_k As Decimal
+	Dim F_i As Decimal
+	Dim F_j As Decimal
+	Dim F_k As Decimal
+	Dim Val_F_i As String = Nothing
+	Dim Val_F_j As String = Nothing
+	Dim Val_F_k As String = Nothing
+
 	Private Sub Form_Resize() Handles Me.ResizeEnd
 		Functions.Form_resize(Me)
 	End Sub
@@ -15,20 +28,11 @@ Public Class Cross_Product
         Dim i As Decimal
         Dim j As Decimal
 		Dim k As Decimal
-		Dim Dis_i As Decimal
-        Dim Dis_j As Decimal
-        Dim Dis_k As Decimal
-        Dim F_i As Decimal
-        Dim F_j As Decimal
-        Dim F_k As Decimal
-        Dim Result As Decimal
-        Dim Val_F_i As String = Nothing
-        Dim Val_F_j As String = Nothing
-        Dim Val_F_k As String = Nothing
 
-        Dim Bool_F_i As Boolean
-        Dim Bool_F_j As Boolean
-		Dim Bool_F_k As Boolean
+		Dim Result As Decimal
+
+
+
 		Dim ER_Input As Boolean = False
 
         Dim ER_String() As String = {Nothing, Nothing, Nothing}
@@ -39,166 +43,170 @@ Public Class Cross_Product
         Z_Result.Text = "Z Result"
 		Resultant.Text = "Resultant"
 
-		If Distance_i.Text = "" Then
-            Distance_i.Text = 0
-        End If
-		If Decimal.TryParse(Distance_i.Text, Dis_i) Then
+#Region "Original Code"
 
-		Else
-			ER_String(0) = Distance_Vector.Text & " " & i_Vector.Text
-            Dis_i = 0
-            ER_Input = True
+		'If Distance_i.Text = "" Then
+		'	Distance_i.Text = 0
+		'End If
+		'If Decimal.TryParse(Distance_i.Text, Dis_i) Then
 
-        End If
+		'Else
+		'	ER_String(0) = Distance_Vector.Text & " " & i_Vector.Text
+		'	Dis_i = 0
+		'	ER_Input = True
 
-		If Distance_j.Text = "" Then
-            Distance_j.Text = 0
-        End If
-		If Decimal.TryParse(Distance_j.Text, Dis_j) Then
+		'End If
 
-		Else
-			ER_String(1) = Distance_Vector.Text & " " & j_Vector.Text
-            Dis_j = 0
-            ER_Input = True
+		'If Distance_j.Text = "" Then
+		'	Distance_j.Text = 0
+		'End If
+		'If Decimal.TryParse(Distance_j.Text, Dis_j) Then
 
-        End If
+		'Else
+		'	ER_String(1) = Distance_Vector.Text & " " & j_Vector.Text
+		'	Dis_j = 0
+		'	ER_Input = True
 
-		If Distance_k.Text = "" Then
-            Distance_k.Text = 0
-        End If
-		If Decimal.TryParse(Distance_k.Text, Dis_k) Then
+		'End If
 
-		Else
-			ER_String(2) = Distance_Vector.Text & " " & k_Vector.Text
-            Dis_k = 0
-            ER_Input = True
+		'If Distance_k.Text = "" Then
+		'	Distance_k.Text = 0
+		'End If
+		'If Decimal.TryParse(Distance_k.Text, Dis_k) Then
 
-        End If
+		'Else
+		'	ER_String(2) = Distance_Vector.Text & " " & k_Vector.Text
+		'	Dis_k = 0
+		'	ER_Input = True
 
-		If Force_i.Text = "" Then
-			Force_i.Text = 0
-		End If
-		If Decimal.TryParse(Force_i.Text, F_i) Then
+		'End If
 
-		Else
-			F_i = 1
-			Val_F_i = Force_i.Text
-			Bool_F_i = True
+		'If Force_i.Text = "" Then
+		'	Force_i.Text = 0
+		'End If
+		'If Decimal.TryParse(Force_i.Text, F_i) Then
 
-		End If
+		'Else
+		'	F_i = 1
+		'	Val_F_i = Force_i.Text
+		'	Bool_F_i = True
 
-		If Force_j.Text = "" Then
-            Force_j.Text = 0
-        End If
-		If Decimal.TryParse(Force_j.Text, F_j) Then
+		'End If
 
-		Else
-			F_j = 1
-			Val_F_j = Force_j.Text
-			Bool_F_j = True
+		'If Force_j.Text = "" Then
+		'	Force_j.Text = 0
+		'End If
+		'If Decimal.TryParse(Force_j.Text, F_j) Then
 
-		End If
+		'Else
+		'	F_j = 1
+		'	Val_F_j = Force_j.Text
+		'	Bool_F_j = True
 
-		If Force_k.Text = "" Then
-            Force_k.Text = 0
-        End If
-		If Decimal.TryParse(Force_k.Text, F_k) Then
+		'End If
 
-		Else
-			F_k = 1
-			Val_F_k = Force_k.Text
-			Bool_F_k = True
+		'If Force_k.Text = "" Then
+		'	Force_k.Text = 0
+		'End If
+		'If Decimal.TryParse(Force_k.Text, F_k) Then
 
-		End If
+		'Else
+		'	F_k = 1
+		'	Val_F_k = Force_k.Text
+		'	Bool_F_k = True
 
-		If ER_Input = False Then
+		'End If
 
-            i = (Dis_j * F_k) - (Dis_k * F_j)
+#End Region
 
-            j = -((Dis_i * F_k) - (Dis_k * F_i))
+		'If ER_Input = False Then
 
-            k = (Dis_i * F_j) - (Dis_j * F_i)
+		i = (Dis_j * F_k) - (Dis_k * F_j)
 
-			'This logic is messed up
-			If Bool_F_i = True Or Bool_F_j = True Or Bool_F_k = True Then
+		j = -((Dis_i * F_k) - (Dis_k * F_i))
 
-				'If Bool_F_k = True Then
-				If F_i = 1 And F_j = 1 And F_k = 1 Then
+		k = (Dis_i * F_j) - (Dis_j * F_i)
 
-					X_Result.Text = "( " & Dis_j & Val_F_k & " )" & " - ( " & Dis_k & Val_F_j & " )"
-					Y_Result.Text = "-(( " & Dis_i & Val_F_k & " )" & " - ( " & Dis_k & Val_F_i & " ))"
-					Z_Result.Text = "( " & Dis_i & Val_F_j & " )" & " - ( " & Dis_j & Val_F_i & " )"
+		'This logic is messed up
+		If Bool_F_i = True Or Bool_F_j = True Or Bool_F_k = True Then
 
-				ElseIf F_i = 1 And F_j = 1 Then
+			'If Bool_F_k = True Then
+			If F_i = 1 And F_j = 1 And F_k = 1 Then
 
-					X_Result.Text = "( " & (Dis_j * F_k) & " ) - ( " & Dis_k & Val_F_j & " )"
-					Y_Result.Text = "-(( " & (Dis_i * F_k) & " ) - ( " & Dis_k & Val_F_i & " ))"
-					Z_Result.Text = "( " & Dis_i & Val_F_j & " ) - ( " & Dis_j & Val_F_i & " )"
+				X_Result.Text = "( " & Dis_j & Val_F_k & " )" & " - ( " & Dis_k & Val_F_j & " )"
+				Y_Result.Text = "-(( " & Dis_i & Val_F_k & " )" & " - ( " & Dis_k & Val_F_i & " ))"
+				Z_Result.Text = "( " & Dis_i & Val_F_j & " )" & " - ( " & Dis_j & Val_F_i & " )"
 
-				ElseIf F_i = 1 And F_k = 1 Then
+			ElseIf F_i = 1 And F_j = 1 Then
 
-					X_Result.Text = "( " & Dis_j & Val_F_k & " ) - ( " & (Dis_k * F_j) & " )"
-					Y_Result.Text = "-(( " & Dis_i & Val_F_k & " ) - ( " & Dis_k & Val_F_i & " ))"
-					Z_Result.Text = "( " & (Dis_i * F_j) & " ) - ( " & Dis_j & Val_F_i & " )"
+				X_Result.Text = "( " & (Dis_j * F_k) & " ) - ( " & Dis_k & Val_F_j & " )"
+				Y_Result.Text = "-(( " & (Dis_i * F_k) & " ) - ( " & Dis_k & Val_F_i & " ))"
+				Z_Result.Text = "( " & Dis_i & Val_F_j & " ) - ( " & Dis_j & Val_F_i & " )"
 
-				ElseIf F_j = 1 And F_k = 1 Then
+			ElseIf F_i = 1 And F_k = 1 Then
 
-					X_Result.Text = "( " & Dis_j & Val_F_k & " ) - ( " & Dis_k & Val_F_j & " )"
-					Y_Result.Text = "-(( " & Dis_i & Val_F_k & " ) - ( " & (Dis_k * F_i) & " ))"
-					Z_Result.Text = "( " & Dis_i & Val_F_j & " ) - ( " & (Dis_j * F_i) & " )"
+				X_Result.Text = "( " & Dis_j & Val_F_k & " ) - ( " & (Dis_k * F_j) & " )"
+				Y_Result.Text = "-(( " & Dis_i & Val_F_k & " ) - ( " & Dis_k & Val_F_i & " ))"
+				Z_Result.Text = "( " & (Dis_i * F_j) & " ) - ( " & Dis_j & Val_F_i & " )"
 
-				ElseIf F_i = 1 Then
+			ElseIf F_j = 1 And F_k = 1 Then
 
-					X_Result.Text = (Dis_j * F_k) - (Dis_k * F_j)
-					Y_Result.Text = "-(( " & (Dis_i * F_k) & " ) - ( " & Dis_k & Val_F_i & "))"
-					Z_Result.Text = "( " & (Dis_j * F_k) & " ) - ( " & Dis_j & Val_F_i & ")"
+				X_Result.Text = "( " & Dis_j & Val_F_k & " ) - ( " & Dis_k & Val_F_j & " )"
+				Y_Result.Text = "-(( " & Dis_i & Val_F_k & " ) - ( " & (Dis_k * F_i) & " ))"
+				Z_Result.Text = "( " & Dis_i & Val_F_j & " ) - ( " & (Dis_j * F_i) & " )"
 
-				ElseIf F_j = 1 Then
+			ElseIf F_i = 1 Then
 
-					X_Result.Text = (Dis_j * F_k) & "- ( " & Dis_k & Val_F_j & ")"
-					Y_Result.Text = -((Dis_i * F_k) - (Dis_k * F_i))
-					Z_Result.Text = "(" & Dis_i & Val_F_j & " ) - ( " & (Dis_j * F_i) & " )"
+				X_Result.Text = (Dis_j * F_k) - (Dis_k * F_j)
+				Y_Result.Text = "-(( " & (Dis_i * F_k) & " ) - ( " & Dis_k & Val_F_i & "))"
+				Z_Result.Text = "( " & (Dis_j * F_k) & " ) - ( " & Dis_j & Val_F_i & ")"
 
-				ElseIf F_k = 1 Then
+			ElseIf F_j = 1 Then
 
-					X_Result.Text = "( " & Dis_j & Val_F_k & " )" & " - ( " & Dis_k * F_j & " )"
-					Y_Result.Text = "-(( " & Dis_i & Val_F_k & " ) - ( " & Dis_k * F_i & " ))"
-					Z_Result.Text = (Dis_i * F_j) - (Dis_j * F_i)
+				X_Result.Text = (Dis_j * F_k) & "- ( " & Dis_k & Val_F_j & ")"
+				Y_Result.Text = -((Dis_i * F_k) - (Dis_k * F_i))
+				Z_Result.Text = "(" & Dis_i & Val_F_j & " ) - ( " & (Dis_j * F_i) & " )"
 
-				End If
+			ElseIf F_k = 1 Then
 
-			Else
-				X_Result.Text = i & " " & Val_F_j
-                Y_Result.Text = j & " " & Val_F_i
-                Z_Result.Text = k & " " & Val_F_k
+				X_Result.Text = "( " & Dis_j & Val_F_k & " )" & " - ( " & Dis_k * F_j & " )"
+				Y_Result.Text = "-(( " & Dis_i & Val_F_k & " ) - ( " & Dis_k * F_i & " ))"
+				Z_Result.Text = (Dis_i * F_j) - (Dis_j * F_i)
 
-				'Cross_Product_Result.Text = Cross_Product_Result.Text & ": " & i & Val_F_j & "i " & j & Val_F_i & "j " & k & Val_F_k & "k"
-
-				Result = Sqrt((i ^ 2) + (j ^ 2) + (k ^ 2))
-                Result = System.Decimal.Round(Result, 3, MidpointRounding.AwayFromZero)
-                Resultant.Text = Resultant.Text & ": " & Result
-            End If
-
-			X_Result.Text = "i : " & X_Result.Text
-			Y_Result.Text = "j : " & Y_Result.Text
-			Z_Result.Text = "k : " & Z_Result.Text
-
-		Else
-
-            If ER_String(0) IsNot Nothing Then
-                ER_Message = ER_String(0) & " "
-            End If
-            If ER_String(1) IsNot Nothing Then
-				ER_Message = ER_Message & ", " & ER_String(1)
-			End If
-            If ER_String(2) IsNot Nothing Then
-				ER_Message = ER_Message & ", " & ER_String(2)
 			End If
 
-			Functions.Status = False
-			Functions.Error_Form("Cross Product Error", "Following Inputs Are Not Numbers", , ER_Message,, False, Me)
+		Else
+			X_Result.Text = i & " " & Val_F_j
+			Y_Result.Text = j & " " & Val_F_i
+			Z_Result.Text = k & " " & Val_F_k
 
+			'Cross_Product_Result.Text = Cross_Product_Result.Text & ": " & i & Val_F_j & "i " & j & Val_F_i & "j " & k & Val_F_k & "k"
+
+			Result = Sqrt((i ^ 2) + (j ^ 2) + (k ^ 2))
+			Result = System.Decimal.Round(Result, 3, MidpointRounding.AwayFromZero)
+			Resultant.Text = Resultant.Text & ": " & Result
 		End If
+
+		X_Result.Text = "i : " & X_Result.Text
+		Y_Result.Text = "j : " & Y_Result.Text
+		Z_Result.Text = "k : " & Z_Result.Text
+
+		'Else
+
+		'          If ER_String(0) IsNot Nothing Then
+		'              ER_Message = ER_String(0) & " "
+		'          End If
+		'          If ER_String(1) IsNot Nothing Then
+		'		ER_Message = ER_Message & ", " & ER_String(1)
+		'	End If
+		'          If ER_String(2) IsNot Nothing Then
+		'		ER_Message = ER_Message & ", " & ER_String(2)
+		'	End If
+
+		'	Functions.Status = False
+		'	Functions.Error_Form("Cross Product Error", "Following Inputs Are Not Numbers", , ER_Message,, False, Me)
+
+		'End If
 		Functions.Status = True
 	End Sub
 
@@ -212,4 +220,79 @@ Public Class Cross_Product
 		Force_k.Text = ""
 
 	End Sub
+
+#Region "Input Validating"
+
+	Private Sub Distance_i_TextChanged(sender As Object, e As EventArgs) Handles Distance_i.Validating
+		If Distance_i.Text <> "" Then
+			If Functions.Text_Validate(Distance_i, "Decimal", Me, "Distance input") = "Decimal" Then
+				Dis_i = Distance_i.Text
+			End If
+		End If
+	End Sub
+
+	Private Sub Distance_j_TextChanged(sender As Object, e As EventArgs) Handles Distance_j.Validating
+		If Distance_j.Text <> "" Then
+			If Functions.Text_Validate(Distance_j, "Decimal", Me, "Distance input") = "Decimal" Then
+				Dis_j = Distance_j.Text
+			End If
+		End If
+	End Sub
+
+	Private Sub Distance_k_TextChanged(sender As Object, e As EventArgs) Handles Distance_k.Validating
+		If Distance_k.Text <> "" Then
+			If Functions.Text_Validate(Distance_k, "Decimal", Me, "Distance input") = "Decimal" Then
+				Dis_k = Distance_k.Text
+			End If
+		End If
+	End Sub
+
+	Private Sub Force_i_TextChanged(sender As Object, e As EventArgs) Handles Force_i.Validating
+		If Force_i.Text <> "" Then
+			Val_F_i = ""
+			If Functions.Text_Validate(Force_i, "Decimal", Me, "Force input") = "Decimal" Then
+				F_i = Force_i.Text
+				Bool_F_i = False
+			ElseIf Functions.Text_Validate(Force_i, "Char", Me, "Force input") = "Char" Then
+				Val_F_i = Force_i.Text
+				Bool_F_i = True
+				F_i = 1
+			End If
+
+		End If
+    End Sub
+
+	Private Sub Force_j_TextChanged(sender As Object, e As EventArgs) Handles Force_j.Validating
+		If Force_j.Text <> "" Then
+			Val_F_j = ""
+			If Functions.Text_Validate(Force_j, "Decimal", Me, "Force input") = "Decimal" Then
+				F_j = Force_j.Text
+				Bool_F_j = False
+			ElseIf Functions.Text_Validate(Force_j, "Char", Me, "Force input") = "Char" Then
+				Val_F_j = Force_j.Text
+				Bool_F_j = True
+				F_j = 1
+			End If
+
+		End If
+	End Sub
+
+	Private Sub Force_k_TextChanged(sender As Object, e As EventArgs) Handles Force_k.Validating
+		If Force_k.Text <> "" Then
+			Val_F_k = ""
+			If Functions.Text_Validate(Force_k, "Decimal", Me, "Force input") = "Decimal" Then
+				F_k = Force_k.Text
+				Bool_F_k = False
+			ElseIf Functions.Text_Validate(Force_k, "Char", Me, "Force input") = "Char" Then
+				Val_F_k = Force_k.Text
+				Bool_F_k = True
+				F_k = 1
+			End If
+
+		End If
+	End Sub
+
+#End Region
+
+
 End Class

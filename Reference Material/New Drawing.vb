@@ -17,6 +17,8 @@ Public Class New_Drawing
 	Dim swModelDocExt_Part As ModelDocExtension
 	Dim swModelDocExt_Assy As ModelDocExtension
 	Dim Bool_Result As Boolean
+	ReadOnly DRAW_Template As String = "T:\Engineering\East Alton\ENGINEERING PROCEDURES\Structural Drawing Standards\B SIZE JULY 23 2021.DRWDOT"
+	ReadOnly SHEET_Template As String = "T:\Engineering\East Alton\ENGINEERING PROCEDURES\Structural Drawing Standards\2021 Cover Sheet.slddrt"
 	Dim PC_USER As String = System.Environment.UserName
 	Dim FullPathName As String
 	Dim swView As View
@@ -28,7 +30,7 @@ Public Class New_Drawing
 	Dim Add_Bom As Boolean = False
 	Dim Clicked As Boolean = False
 	Dim Title_ As String
-
+	Dim Dir As String = "T:\Engineering\Engineering Projects\East Alton"
 	Dim Aircraft_Num As String
 	Dim Add_View_Page As Integer
 	Dim Opened_Files_Names As New List(Of String)
@@ -61,9 +63,10 @@ Public Class New_Drawing
 		Functions.Form_resize(Me)
 	End Sub
 
-	Public Sub New_Drawing_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Reload.Click
+	Private Sub New_Drawing_Load(sender As Object, e As EventArgs) Handles MyBase.Load, Reload.Click
 
 		Dim PC_USER As String = System.Environment.UserName
+		Dim Dir As String = "T:\Engineering\Engineering Projects\East Alton"
 		Dim Start_Char As String
 
 
@@ -88,7 +91,6 @@ Public Class New_Drawing
 
 		Notes_Groups.Visible = True
 		Add_BOM_Hardware.Visible = True
-		File_Rename_Checkbox.Visible = True
 		Instructions_Label.Visible = False
 
 		Clicked = False
@@ -97,7 +99,7 @@ Public Class New_Drawing
 		Request.Enabled = True
 		Drawing_Num.Enabled = True
 
-		For Each Folder In System.IO.Directory.GetDirectories(Network_Locations.ALN_ENG_DIR)
+		For Each Folder In System.IO.Directory.GetDirectories(Dir)
 
 			'Dim file = String.Empty
 			Dim File_name As String = System.IO.Path.GetFileNameWithoutExtension(Folder)
@@ -308,14 +310,13 @@ Public Class New_Drawing
 
 			Notes_Groups.Visible = False
 			Add_BOM_Hardware.Visible = False
-			File_Rename_Checkbox.Visible = False
 
 			Title.Enabled = False
 			AC_Serial.Enabled = False
 			Request.Enabled = False
 			Drawing_Num.Enabled = False
 
-			swApp = SWFunctions.swApp
+			swApp = CreateObject("SldWorks.Application")
 			swDoc = swApp.ActiveDoc
 
 			count = swApp.GetDocumentCount
@@ -335,13 +336,10 @@ Public Class New_Drawing
 				Main_Assy_Name = swRootComp.Name2
 
 				If swDoc.GetType = swDocumentTypes_e.swDocASSEMBLY Then
-					'SWFunctions.Rename_Files = True
+					SWFunctions.Rename_Files = True
 					SWFunctions.Add_Docs2(swRootComp, 1)
-					If SWFunctions.Rename_Files = True Then
-						SWFunctions.Rename_Files_with_PN()
-					End If
-
-					SWFunctions.Out_Put("Ascending")
+					SWFunctions.Rename_Files_with_PN()
+					SWFunctions.Out_Put()
 					'TraverseComponent(swRootComp, 1) original
 					'SWFunctions.Add_Docs(swRootComp, 1)
 					InstanceID_Added = True
@@ -647,7 +645,7 @@ Public Class New_Drawing
 				Add_Sheet_Count += 1
 				Sheet_Num = Add_Sheet_Count.ToString
 				Sheet_name = "Sheet" + Sheet_Num
-				swDraw.NewSheet3(Sheet_name, 12, 12, 1, 1, False, Network_Locations.SW_AddSheet_Temp, 0, 0, "")
+				swDraw.NewSheet3(Sheet_name, 12, 12, 1, 1, False, "T:\Engineering\East Alton\ENGINEERING PROCEDURES\Structural Drawing Standards\2021 Additional Sheet.slddrt", 0, 0, "")
 				swDraw.ActivateSheet(Sheet_name)
 
 			Else
@@ -899,7 +897,7 @@ Public Class New_Drawing
 					Add_Sheet_Count += 1
 					Sheet_Num = Add_Sheet_Count.ToString
 					Sheet_Name = "Sheet" + Sheet_Num
-					swDraw.NewSheet3(Sheet_Name, 12, 12, 1, 1, False, Network_Locations.SW_AddSheet_Temp, 0, 0, "")
+					swDraw.NewSheet3(Sheet_Name, 12, 12, 1, 1, False, "T:\Engineering\East Alton\ENGINEERING PROCEDURES\Structural Drawing Standards\2021 Additional Sheet.slddrt", 0, 0, "")
 					swDraw.ActivateSheet(Sheet_Name)
 
 				Else
@@ -1040,7 +1038,7 @@ Public Class New_Drawing
 		Dim swLayerMgr As LayerMgr
 		Dim Sheet1_Notes As Object
 
-		swDoc = swApp.NewDocument(Network_Locations.SW_Draw_Temp, 0, 0, 0)
+		swDoc = swApp.NewDocument(DRAW_Template, 0, 0, 0)
 		swDraw = swDoc
 		swModelDocExt = swDoc.Extension
 		CusProperties = swModelDocExt.CustomPropertyManager("")
@@ -1112,14 +1110,8 @@ Public Class New_Drawing
 				PC_USER = "N. BROWN"
 			Case "lsova"
 				PC_USER = "L. SOVA"
-			Case "KArthurs"
-				PC_USER = "K. ARTHURS"
-			Case "acrowe"
-				PC_USER = "A. CROWE"
-			Case "dcarter"
-				PC_USER = "D. CARTER"
 			Case Else
-				PC_USER = ""
+				PC_USER = "UNKNOWN"
 				Functions.Error_Form("User Name Error", "User Name not defined",, "Manually input Drawnby name",, False, Me)
 
 		End Select
@@ -1227,7 +1219,7 @@ Public Class New_Drawing
 		Next
 
 		Functions.Error_Form("Done", "All Assemblies and Part files have been added",,,, False,)
-		SWFunctions.Out_Put("Ascending")
+		SWFunctions.Out_Put()
 		Me.Close()
 
 

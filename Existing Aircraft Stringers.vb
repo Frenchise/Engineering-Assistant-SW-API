@@ -3,8 +3,6 @@ Imports System.Runtime.InteropServices
 
 Public Class Existing_Aircrafts_Stringers
 
-	Dim dir = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Aircraft Stringer Charts"
-	Dim Native_Dir = "T:\Engineering\Non-Site Specific\APPROVED DOCUMENTS\NATIVE DOCUMENTS"
 	Dim Nat_Folder As String
 	Dim PDF_dir As String
 	Dim PDF_Analysis As String
@@ -44,7 +42,7 @@ Public Class Existing_Aircrafts_Stringers
 		Open_PDF.Visible = False
 		Form_Resize()
 
-		Dir_Exist = Directory.Exists(dir)
+		Dir_Exist = Directory.Exists(Network_Locations.Stringer_Charts)
 		Aircraft_Type_Label.Visible = False
 		Aircraft_Type.Visible = False
 		Existing_Structural_PDFs.Visible = False
@@ -60,7 +58,7 @@ Public Class Existing_Aircrafts_Stringers
 			Dim folder = String.Empty
 			Dim Folder_name = String.Empty
 
-			For Each folder In System.IO.Directory.GetDirectories(dir)
+			For Each folder In System.IO.Directory.GetDirectories(Network_Locations.Stringer_Charts)
 
 				Folder_name = System.IO.Path.GetFileNameWithoutExtension(folder)
 
@@ -93,7 +91,7 @@ Public Class Existing_Aircrafts_Stringers
 
 		Air.Manufacturer = Manufacturer.Text
 
-		dir_Manufacturer = dir + "\" + Manufacturer.Text
+		dir_Manufacturer = Network_Locations.Stringer_Charts + "\" + Manufacturer.Text
 
 		Dir_Exist = Directory.Exists(dir_Manufacturer)
 		If Dir_Exist Then
@@ -273,8 +271,8 @@ Public Class Existing_Aircrafts_Stringers
 
 	Private Sub Open_PDF_Click(sender As Object, e As EventArgs) Handles Open_PDF.Click
 
-		PDF_dir = dir & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.Serial & "\STRUCTURES\" & Air.struct_FileName + ".pdf"
-		PDF_Analysis = dir & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.struct_FileName + ".pdf"
+		PDF_dir = Network_Locations.Stringer_Charts & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.Serial & "\STRUCTURES\" & Air.struct_FileName + ".pdf"
+		PDF_Analysis = Network_Locations.Stringer_Charts & "\" & Air.Manufacturer & "\" & Air.Type & "\" & Air.struct_FileName + ".pdf"
 
 		'PDF_dir = dir_Aircraft + "\" + Aircraft_Serial + "\STRUCTURES\" + Structure_PDF + ".pdf"
 

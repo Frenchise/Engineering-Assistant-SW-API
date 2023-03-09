@@ -82,7 +82,7 @@ Partial Class Material_Data
 		'
 		'Material_Data_PDFs
 		'
-		Me.Material_Data_PDFs.SelectedPath = "T:\Engineering\Non-Site Specific\PARTS\LIBRARY\Structural Docs"
+		Me.Material_Data_PDFs.SelectedPath = Network_Locations.Structural_Docs_Dir
 		Me.Material_Data_PDFs.ShowNewFolderButton = False
 		'
 		'Directory_Display_ListView

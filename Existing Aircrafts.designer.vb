@@ -22,7 +22,7 @@ Partial Class Existing_Aircrafts
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-		Me.Label1 = New System.Windows.Forms.Label()
+		Me.Manufacturer_Label = New System.Windows.Forms.Label()
 		Me.Manufacturer = New System.Windows.Forms.ComboBox()
 		Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
 		Me.Directory_Exist = New System.Windows.Forms.ToolStripStatusLabel()
@@ -38,18 +38,22 @@ Partial Class Existing_Aircrafts
 		Me.Panel1 = New System.Windows.Forms.Panel()
 		Me.DWG_Num_Options = New System.Windows.Forms.ComboBox()
 		Me.Opt_DWG_NUM = New System.Windows.Forms.Label()
+		Me.PDF_Names_Label = New System.Windows.Forms.Label()
+		Me.Search_PDF_Names_Input = New System.Windows.Forms.TextBox()
+		Me.Search_Button = New System.Windows.Forms.Button()
+		Me.Clear_Button = New System.Windows.Forms.Button()
 		Me.StatusStrip1.SuspendLayout()
 		Me.Panel1.SuspendLayout()
 		Me.SuspendLayout()
 		'
-		'Label1
+		'Manufacturer_Label
 		'
-		Me.Label1.AutoSize = True
-		Me.Label1.Location = New System.Drawing.Point(21, 72)
-		Me.Label1.Name = "Label1"
-		Me.Label1.Size = New System.Drawing.Size(103, 13)
-		Me.Label1.TabIndex = 0
-		Me.Label1.Text = "Select Manufacturer"
+		Me.Manufacturer_Label.AutoSize = True
+		Me.Manufacturer_Label.Location = New System.Drawing.Point(21, 72)
+		Me.Manufacturer_Label.Name = "Manufacturer_Label"
+		Me.Manufacturer_Label.Size = New System.Drawing.Size(103, 13)
+		Me.Manufacturer_Label.TabIndex = 0
+		Me.Manufacturer_Label.Text = "Select Manufacturer"
 		'
 		'Manufacturer
 		'
@@ -65,9 +69,9 @@ Partial Class Existing_Aircrafts
 		Me.StatusStrip1.BackColor = System.Drawing.Color.White
 		Me.StatusStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
 		Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Directory_Exist})
-		Me.StatusStrip1.Location = New System.Drawing.Point(0, 464)
+		Me.StatusStrip1.Location = New System.Drawing.Point(0, 539)
 		Me.StatusStrip1.Name = "StatusStrip1"
-		Me.StatusStrip1.Size = New System.Drawing.Size(598, 22)
+		Me.StatusStrip1.Size = New System.Drawing.Size(599, 22)
 		Me.StatusStrip1.SizingGrip = False
 		Me.StatusStrip1.TabIndex = 2
 		Me.StatusStrip1.Text = "StatusStrip1"
@@ -98,7 +102,7 @@ Partial Class Existing_Aircrafts
 		'
 		'Open_PDF
 		'
-		Me.Open_PDF.Location = New System.Drawing.Point(230, 446)
+		Me.Open_PDF.Location = New System.Drawing.Point(230, 472)
 		Me.Open_PDF.Name = "Open_PDF"
 		Me.Open_PDF.Size = New System.Drawing.Size(75, 23)
 		Me.Open_PDF.TabIndex = 7
@@ -113,21 +117,21 @@ Partial Class Existing_Aircrafts
 		Me.Default_Spacing.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.Default_Spacing.Location = New System.Drawing.Point(141, 9)
 		Me.Default_Spacing.Name = "Default_Spacing"
-		Me.Default_Spacing.Size = New System.Drawing.Size(239, 16)
+		Me.Default_Spacing.Size = New System.Drawing.Size(238, 16)
 		Me.Default_Spacing.TabIndex = 10
 		Me.Default_Spacing.Text = "View An Aircraft's Structural PDFs"
 		'
 		'Existing_Structural_PDFs
 		'
 		Me.Existing_Structural_PDFs.FormattingEnabled = True
-		Me.Existing_Structural_PDFs.Location = New System.Drawing.Point(130, 150)
+		Me.Existing_Structural_PDFs.Location = New System.Drawing.Point(130, 176)
 		Me.Existing_Structural_PDFs.Name = "Existing_Structural_PDFs"
 		Me.Existing_Structural_PDFs.Size = New System.Drawing.Size(450, 290)
 		Me.Existing_Structural_PDFs.TabIndex = 11
 		'
 		'PDF_Amount
 		'
-		Me.PDF_Amount.Location = New System.Drawing.Point(12, 150)
+		Me.PDF_Amount.Location = New System.Drawing.Point(12, 176)
 		Me.PDF_Amount.Name = "PDF_Amount"
 		Me.PDF_Amount.Size = New System.Drawing.Size(112, 26)
 		Me.PDF_Amount.TabIndex = 12
@@ -135,7 +139,7 @@ Partial Class Existing_Aircrafts
 		'
 		'Open_Native_Folder
 		'
-		Me.Open_Native_Folder.Location = New System.Drawing.Point(355, 446)
+		Me.Open_Native_Folder.Location = New System.Drawing.Point(355, 472)
 		Me.Open_Native_Folder.Name = "Open_Native_Folder"
 		Me.Open_Native_Folder.Size = New System.Drawing.Size(75, 23)
 		Me.Open_Native_Folder.TabIndex = 13
@@ -192,12 +196,50 @@ Partial Class Existing_Aircrafts
 		Me.Opt_DWG_NUM.TabIndex = 17
 		Me.Opt_DWG_NUM.Text = "Optional Dwg Num Sort"
 		'
+		'PDF_Names_Label
+		'
+		Me.PDF_Names_Label.AutoSize = True
+		Me.PDF_Names_Label.Location = New System.Drawing.Point(6, 153)
+		Me.PDF_Names_Label.Name = "PDF_Names_Label"
+		Me.PDF_Names_Label.Size = New System.Drawing.Size(101, 13)
+		Me.PDF_Names_Label.TabIndex = 19
+		Me.PDF_Names_Label.Text = "Search PDF Names"
+		'
+		'Search_PDF_Names_Input
+		'
+		Me.Search_PDF_Names_Input.Location = New System.Drawing.Point(130, 150)
+		Me.Search_PDF_Names_Input.Name = "Search_PDF_Names_Input"
+		Me.Search_PDF_Names_Input.Size = New System.Drawing.Size(300, 20)
+		Me.Search_PDF_Names_Input.TabIndex = 20
+		'
+		'Search_Button
+		'
+		Me.Search_Button.Location = New System.Drawing.Point(436, 149)
+		Me.Search_Button.Name = "Search_Button"
+		Me.Search_Button.Size = New System.Drawing.Size(60, 20)
+		Me.Search_Button.TabIndex = 21
+		Me.Search_Button.Text = "Search"
+		Me.Search_Button.UseVisualStyleBackColor = True
+		'
+		'Clear_Button
+		'
+		Me.Clear_Button.Location = New System.Drawing.Point(502, 149)
+		Me.Clear_Button.Name = "Clear_Button"
+		Me.Clear_Button.Size = New System.Drawing.Size(60, 20)
+		Me.Clear_Button.TabIndex = 22
+		Me.Clear_Button.Text = "Clear"
+		Me.Clear_Button.UseVisualStyleBackColor = True
+		'
 		'Existing_Aircrafts
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.SystemColors.Window
-		Me.ClientSize = New System.Drawing.Size(598, 486)
+		Me.ClientSize = New System.Drawing.Size(599, 561)
+		Me.Controls.Add(Me.Clear_Button)
+		Me.Controls.Add(Me.Search_Button)
+		Me.Controls.Add(Me.Search_PDF_Names_Input)
+		Me.Controls.Add(Me.PDF_Names_Label)
 		Me.Controls.Add(Me.DWG_Num_Options)
 		Me.Controls.Add(Me.Opt_DWG_NUM)
 		Me.Controls.Add(Me.Panel1)
@@ -210,11 +252,11 @@ Partial Class Existing_Aircrafts
 		Me.Controls.Add(Me.Aircraft_Type_Label)
 		Me.Controls.Add(Me.StatusStrip1)
 		Me.Controls.Add(Me.Manufacturer)
-		Me.Controls.Add(Me.Label1)
+		Me.Controls.Add(Me.Manufacturer_Label)
 		Me.MaximizeBox = False
-		Me.MaximumSize = New System.Drawing.Size(614, 525)
+		Me.MaximumSize = New System.Drawing.Size(615, 600)
 		Me.MinimizeBox = False
-		Me.MinimumSize = New System.Drawing.Size(614, 525)
+		Me.MinimumSize = New System.Drawing.Size(615, 600)
 		Me.Name = "Existing_Aircrafts"
 		Me.ShowIcon = False
 		Me.Text = "Aircraft Structural Drawings"
@@ -227,7 +269,7 @@ Partial Class Existing_Aircrafts
 
 	End Sub
 
-	Friend WithEvents Label1 As Label
+	Friend WithEvents Manufacturer_Label As Label
     Friend WithEvents Manufacturer As ComboBox
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents Directory_Exist As ToolStripStatusLabel
@@ -243,4 +285,8 @@ Partial Class Existing_Aircrafts
 	Friend WithEvents Panel1 As Panel
 	Friend WithEvents DWG_Num_Options As ComboBox
 	Friend WithEvents Opt_DWG_NUM As Label
+	Friend WithEvents PDF_Names_Label As Label
+	Friend WithEvents Search_PDF_Names_Input As TextBox
+	Friend WithEvents Search_Button As Button
+	Friend WithEvents Clear_Button As Button
 End Class
