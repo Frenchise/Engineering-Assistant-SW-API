@@ -1100,24 +1100,9 @@ Public Class New_Drawing
 		End If
 
 		Select Case PC_USER
-			Case "mfrench"
-				PC_USER = "M. FRENCH"
-			Case "scisler"
-				PC_USER = "S. CISLER"
-			Case "ehaycraft"
-				PC_USER = "E. Haycraft"
-			Case "jfox"
-				PC_USER = "J. FOX"
-			Case "nbrown"
-				PC_USER = "N. BROWN"
-			Case "lsova"
-				PC_USER = "L. SOVA"
-			Case "KArthurs"
-				PC_USER = "K. ARTHURS"
-			Case "acrowe"
-				PC_USER = "A. CROWE"
-			Case "dcarter"
-				PC_USER = "D. CARTER"
+			Case ""
+				PC_USER = ""
+			
 			Case Else
 				PC_USER = ""
 				Functions.Error_Form("User Name Error", "User Name not defined",, "Manually input Drawnby name",, False, Me)
